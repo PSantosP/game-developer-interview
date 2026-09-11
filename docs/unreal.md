@@ -7,6 +7,8 @@
 <a id="ue-01"></a>
 ## 일반 C++ 객체와 UObject
 
+[예제와 해설로 이해하기](unreal-walkthroughs.md#ue-01)
+
 > “일반 C++ 객체와 UObject는 무엇이 다른가요?”
 
 - `UObject`는 Unreal의 객체 시스템에 참여하는 기본 클래스입니다. 리플렉션, 직렬화, GC 등 엔진 기능과 연결됩니다.
@@ -19,6 +21,8 @@
 
 <a id="ue-02"></a>
 ## UObject 포인터 선택
+
+[예제와 해설로 이해하기](unreal-walkthroughs.md#ue-02)
 
 > “TObjectPtr, TWeakObjectPtr, TSoftObjectPtr는 언제 사용하나요?”
 
@@ -37,6 +41,8 @@
 <a id="ue-03"></a>
 ## 생성자와 BeginPlay
 
+[예제와 해설로 이해하기](unreal-walkthroughs.md#ue-03)
+
 > “생성자와 BeginPlay는 어떤 작업을 나눠 맡아야 하나요?”
 
 - 생성자에서는 기본값과 기본 컴포넌트 구성을 설정합니다. 클래스 기본 객체(CDO) 생성 등에도 사용되므로 플레이 중인 월드가 준비되었다고 가정하지 않습니다.
@@ -49,6 +55,8 @@
 
 <a id="ue-04"></a>
 ## Destroy와 EndPlay
+
+[예제와 해설로 이해하기](unreal-walkthroughs.md#ue-04)
 
 > “Destroy를 호출하면 Actor의 메모리가 즉시 해제되나요?”
 
@@ -63,6 +71,8 @@
 <a id="ue-05"></a>
 ## 게임 전체 상태의 위치
 
+[예제와 해설로 이해하기](unreal-walkthroughs.md#ue-05)
+
 > “GameMode, GameState, GameInstance의 역할은 무엇인가요?”
 
 - `GameMode`: 규칙과 참가·스폰 등의 서버 측 판단을 담당합니다. 네트워크 클라이언트에는 해당 서버의 GameMode 인스턴스가 없습니다.
@@ -75,6 +85,8 @@
 
 <a id="ue-06"></a>
 ## 플레이어와 조종 대상
+
+[예제와 해설로 이해하기](unreal-walkthroughs.md#ue-06)
 
 > “PlayerController, Pawn, PlayerState를 구분하는 이유는 무엇인가요?”
 
@@ -90,6 +102,8 @@
 <a id="ue-07"></a>
 ## 변수 복제와 RPC
 
+[예제와 해설로 이해하기](unreal-walkthroughs.md#ue-07)
+
 > “변수 복제와 RPC는 어떻게 다른가요?”
 
 - 변수 복제는 서버의 상태를 클라이언트에 전달하는 데 사용합니다. 모든 중간 값 변화가 각각 이벤트처럼 도착하는 것은 아닙니다.
@@ -103,6 +117,8 @@
 
 <a id="ue-08"></a>
 ## 서버 권위 공격 판정
+
+[예제와 해설로 이해하기](unreal-walkthroughs.md#ue-08)
 
 > “클라이언트에서 공격했을 때 서버는 무엇을 검증해야 하나요?”
 
@@ -119,6 +135,8 @@
 <a id="ue-09"></a>
 ## GAS 구성 요소
 
+[예제와 해설로 이해하기](unreal-walkthroughs.md#ue-09)
+
 > “Ability, Effect, AttributeSet, ASC는 어떤 역할인가요?”
 
 - `GameplayAbility`: 공격·회피·회복 같은 행동의 실행 흐름을 표현합니다.
@@ -134,6 +152,8 @@
 <a id="ue-10"></a>
 ## C++ 자원 관리와 Unreal GC의 경계
 
+[예제와 해설로 이해하기](unreal-walkthroughs.md#ue-10)
+
 > “일반 C++ 스마트 포인터를 UObject에 그대로 사용해도 되나요?”
 
 - 일반 `std::unique_ptr`와 `std::shared_ptr`의 기본 삭제 방식으로 UObject의 수명을 관리하지 않습니다. 엔진 객체 시스템의 생성·종료·GC 경로를 사용합니다.
@@ -146,6 +166,8 @@
 
 <a id="ue-11"></a>
 ## 리플렉션·CDO·Blueprint
+
+[예제와 해설로 이해하기](unreal-walkthroughs.md#ue-11)
 
 > “UPROPERTY를 붙이는 것과 C++ 멤버를 선언하는 것은 어떻게 다른가요?”
 
@@ -162,6 +184,8 @@
 <a id="ue-12"></a>
 ## Component·Subsystem과 책임
 
+[예제와 해설로 이해하기](unreal-walkthroughs.md#ue-12)
+
 > “ActorComponent와 Subsystem은 어떻게 고르나요?”
 
 - Component는 Actor에 속한 기능을 나눕니다. 인벤토리나 상호작용처럼 여러 Actor에 조합할 기능에 사용할 수 있습니다.
@@ -175,6 +199,8 @@
 
 <a id="ue-13"></a>
 ## Delegate·Timer와 종료
+
+[예제와 해설로 이해하기](unreal-walkthroughs.md#ue-13)
 
 > “이벤트로 바꾸면 Tick보다 항상 좋은가요?”
 
@@ -190,6 +216,8 @@
 <a id="ue-14"></a>
 ## 입력에서 이동까지
 
+[예제와 해설로 이해하기](unreal-walkthroughs.md#ue-14)
+
 > “Input Action을 만들었는데 왜 입력이 들어오지 않을까요?”
 
 - Action은 행동과 값의 타입을 표현하고 Mapping Context는 키와 행동의 대응을 담습니다. 로컬 플레이어에 Context가 적용되고 입력 함수가 바인딩되는 경로를 확인합니다.
@@ -203,6 +231,8 @@
 
 <a id="ue-15"></a>
 ## Trace·Sweep과 공격 판정
+
+[예제와 해설로 이해하기](unreal-walkthroughs.md#ue-15)
 
 > “Overlap 이벤트와 Trace 질의는 어떤 차이가 있나요?”
 
@@ -218,6 +248,8 @@
 <a id="ue-16"></a>
 ## Montage·Notify·Root Motion
 
+[예제와 해설로 이해하기](unreal-walkthroughs.md#ue-16)
+
 > “공격 애니메이션이 끝나지 않고 중단되면 무엇을 정리해야 하나요?”
 
 - Montage는 애니메이션 재생을 섹션 등으로 제어합니다. Slot을 포함한 최종 포즈 경로도 맞아야 재생 결과가 보입니다.
@@ -232,6 +264,8 @@
 <a id="ue-17"></a>
 ## 에셋 비동기 로딩
 
+[예제와 해설로 이해하기](unreal-walkthroughs.md#ue-17)
+
 > “Soft 참조로 바꾸면 끊김이 없어지나요?”
 
 - Soft 참조는 경로를 가지고 필요할 때 로드하도록 설계할 수 있게 합니다. 동기 로드를 호출하면 여전히 기다림이 생길 수 있습니다.
@@ -245,6 +279,8 @@
 
 <a id="ue-18"></a>
 ## GAS의 활성화·비용·종료
+
+[예제와 해설로 이해하기](unreal-walkthroughs.md#ue-18)
 
 > “Ability가 한 번 실행된 뒤 다시 실행되지 않는다면 무엇을 확인하나요?”
 

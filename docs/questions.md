@@ -15,6 +15,8 @@
 <a id="session-01"></a>
 ## 1차시 — C++ 수명과 소유권
 
+[작은 단계로 실습하기 · 힌트 · 해설 기준](practice.md#session-01)
+
 원문 연결: [GC 질문](../질문%20모음집.md#garbage-collection). 메모리와 수명이라는 질문을 공유하되 C# GC의 답을 C++ 소멸자에 그대로 적용하지 않습니다.
 
 읽기: [객체 수명](cpp.md#cpp-01), [포인터·참조](cpp.md#cpp-02), [RAII](cpp.md#cpp-03), [스마트 포인터](cpp.md#cpp-04), [이동](cpp.md#cpp-05), [Rule of Zero](cpp.md#cpp-06).
@@ -31,6 +33,8 @@
 
 <a id="session-02"></a>
 ## 2차시 — const·다형성·빌드
+
+[작은 단계로 실습하기 · 힌트 · 해설 기준](practice.md#session-02)
 
 원문 연결: [객체지향과 패턴 질문](../질문%20모음집.md#object-oriented-programming--design-pattern). C#의 문법·객체 배치를 C++의 보장으로 취급하지 않습니다.
 
@@ -49,6 +53,8 @@
 <a id="session-03"></a>
 ## 3차시 — 컨테이너와 비용
 
+[작은 단계로 실습하기 · 힌트 · 해설 기준](practice.md#session-03)
+
 원문 연결: [메모리 최적화 질문](../질문%20모음집.md#memory-optimization). 관리형 할당과 C++ 컨테이너의 할당을 구분합니다.
 
 읽기: [size·capacity](cpp.md#cpp-08), [참조 무효화](cpp.md#cpp-09), [컨테이너·캐시](cpp.md#cpp-14).
@@ -65,6 +71,8 @@
 
 <a id="session-04"></a>
 ## 4차시 — 람다와 동시성
+
+[작은 단계로 실습하기 · 힌트 · 해설 기준](practice.md#session-04)
 
 원문 연결: [멀티스레딩·비동기 질문](../질문%20모음집.md#multi-threading--asynchronous-function).
 
@@ -83,6 +91,8 @@
 <a id="session-05"></a>
 ## 5차시 — UObject와 GC
 
+[작은 단계로 실습하기 · 힌트 · 해설 기준](practice.md#session-05)
+
 원문 연결: [GC](../질문%20모음집.md#garbage-collection), [Fake Null](../질문%20모음집.md#fake-null--null-object-pattern), [Reflection](../질문%20모음집.md#linq--reflection).
 
 읽기: [UObject](unreal.md#ue-01), [포인터 선택](unreal.md#ue-02), [생성자](unreal.md#ue-03), [종료](unreal.md#ue-04), [GC 경계](unreal.md#ue-10), [리플렉션](unreal.md#ue-11).
@@ -99,6 +109,8 @@
 
 <a id="session-06"></a>
 ## 6차시 — 프레임워크와 이벤트
+
+[작은 단계로 실습하기 · 힌트 · 해설 기준](practice.md#session-06)
 
 원문 연결: [객체지향·패턴](../질문%20모음집.md#object-oriented-programming--design-pattern).
 
@@ -117,6 +129,8 @@
 <a id="session-07"></a>
 ## 7차시 — 입력·수학·충돌
 
+[작은 단계로 실습하기 · 힌트 · 해설 기준](practice.md#session-07)
+
 원문 연결: [그래픽 렌더링 파이프라인](../README.md#그래픽-렌더링-파이프라인)의 좌표 변환 개념을 읽습니다. 입력과 충돌은 이 확장에서 추가한 주제입니다.
 
 읽기: [입력](unreal.md#ue-14), [벡터·좌표](game-fundamentals.md#math), [Trace](unreal.md#ue-15).
@@ -133,6 +147,8 @@
 
 <a id="session-08"></a>
 ## 8차시 — 애니메이션과 종료 경로
+
+[작은 단계로 실습하기 · 힌트 · 해설 기준](practice.md#session-08)
 
 원문 연결: [State 패턴](../README.md#state-패턴). 구체적인 Montage·Root Motion 동작은 Unreal 자료를 읽습니다.
 
@@ -151,6 +167,8 @@
 <a id="session-09"></a>
 ## 9차시 — 에셋과 렌더링
 
+[작은 단계로 실습하기 · 힌트 · 해설 기준](practice.md#session-09)
+
 원문 연결: [Addressable](../질문%20모음집.md#addressable), [Rendering](../질문%20모음집.md#rendering). 로드 시점과 자원 관리라는 문제를 연결하고 API는 구분합니다.
 
 읽기: [에셋 로딩](unreal.md#ue-17), [렌더링](game-fundamentals.md#rendering).
@@ -167,6 +185,8 @@
 
 <a id="session-10"></a>
 ## 10차시 — 네트워크
+
+[작은 단계로 실습하기 · 힌트 · 해설 기준](practice.md#session-10)
 
 원문 연결: [Network](../질문%20모음집.md#network), [멀티플레이어 구조](../README.md#멀티플레이어-게임의-구조).
 
@@ -185,6 +205,8 @@
 <a id="session-11"></a>
 ## 11차시 — GAS
 
+[작은 단계로 실습하기 · 힌트 · 해설 기준](practice.md#session-11)
+
 원문 연결: [객체지향·패턴](../질문%20모음집.md#object-oriented-programming--design-pattern), [Network](../질문%20모음집.md#network). GAS 자체는 확장에서 새로 다룹니다.
 
 읽기: [GAS 역할](unreal.md#ue-09), [활성화·종료](unreal.md#ue-18).
@@ -201,6 +223,8 @@
 
 <a id="session-12"></a>
 ## 12차시 — 최적화·패키징·경험 정리
+
+[작은 단계로 실습하기 · 힌트 · 해설 기준](practice.md#session-12)
 
 원문 연결: [Rendering Profiling](../질문%20모음집.md#rendering-profiling), [Memory Optimization](../질문%20모음집.md#memory-optimization).
 

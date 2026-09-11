@@ -31,10 +31,10 @@ Pull Request를 날려주시면 검토 후 반영하겠습니다. 😊
 ### 포크 확장: C++ & Unreal Engine
 
 * [C++ & Unreal 학습 안내와 차시 목차](./docs/README.md)
-* [C++ 읽기 자료](./docs/cpp.md)
-* [Unreal Engine 읽기 자료](./docs/unreal.md)
+* [C++ 읽기 자료](./docs/cpp.md) · [실행 예제 15개와 출력 해설](./docs/cpp-examples.md)
+* [Unreal Engine 읽기 자료](./docs/unreal.md) · [구현 흐름 18개](./docs/unreal-walkthroughs.md)
 * [게임 수학·렌더링·성능 읽기 자료](./docs/game-fundamentals.md)
-* [C++ & Unreal 질문 모음집 — 실습·검증·경험 질문](./docs/questions.md)
+* [C++ & Unreal 질문 모음집 — 실습·검증·경험 질문](./docs/questions.md) · [단계별 실습 안내](./docs/practice.md)
 
 위 문서는 이 포크에서 새로 작성한 확장 자료입니다. 원문의 작성자와 확장 자료를 구분하며, 구성 참고 및 변경 범위는 [확장 안내](./docs/README.md)에 기록합니다.
 

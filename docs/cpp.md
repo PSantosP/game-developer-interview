@@ -7,6 +7,8 @@
 <a id="cpp-01"></a>
 ## 객체의 수명과 저장 공간
 
+[예제와 해설로 이해하기](cpp-examples.md#cpp-01)
+
 > “객체의 수명과 메모리를 확보하는 것은 어떻게 다른가요?”
 
 - 저장 공간은 객체가 놓일 자리이고, 수명은 그 자리에서 객체를 유효하게 사용할 수 있는 기간입니다.
@@ -21,19 +23,23 @@
 <a id="cpp-02"></a>
 ## 포인터와 참조
 
+[예제와 해설로 이해하기](cpp-examples.md#cpp-02)
+
 > “포인터와 참조는 어떻게 다르고, 함수 인자는 어떻게 고르나요?”
 
 - 포인터는 주소를 값으로 가지며, `nullptr`로 대상이 없음을 표현하거나 다른 대상을 가리키도록 바꿀 수 있습니다.
-- 참조는 초기화할 때 대상에 연결되며 이후 다른 대상에 다시 연결할 수 없습니다. 유효한 대상을 전제로 하지만 대상의 수명을 자동으로 늘려 주지는 않습니다.
+- 참조는 초기화할 때 대상에 연결되며 이후 다른 대상에 다시 연결할 수 없습니다. 기존 객체를 참조하는 것만으로 그 수명이 늘어나지는 않습니다. 다만 지역 const 참조에 임시 객체를 직접 바인딩하는 등의 문맥에는 수명 연장 규칙이 있으므로 구분합니다.
 - 작은 값은 값 전달, 복사 비용이 있는 읽기 전용 입력은 `const T&`, 변경할 필수 대상은 `T&`, 대상 없음이 의미 있는 경우는 `T*` 등을 검토합니다.
 - 원시 포인터나 참조라는 표기만으로 소유권을 판단할 수는 없습니다. API의 수명 계약도 확인합니다.
 
 추가 질문: `const T*`와 `T* const`는 어떻게 다른가요? `const T&`를 멤버에 저장해도 대상이 계속 살아 있나요?
 
-참고: [C++ Core Guidelines — 함수 인자 전달](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rf-in).
+참고: [C++ Core Guidelines — 함수 인자 전달](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#rf-in).
 
 <a id="cpp-03"></a>
 ## RAII
+
+[예제와 해설로 이해하기](cpp-examples.md#cpp-03)
 
 > “RAII가 무엇이며 게임 개발에서 어디에 쓰이나요?”
 
@@ -45,10 +51,12 @@
 
 추가 질문: 잠금을 직접 `lock`/`unlock`하는 것보다 `lock_guard`를 쓰는 이유는 무엇인가요?
 
-참고: [C++ Core Guidelines — RAII](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rr-raii).
+참고: [C++ Core Guidelines — RAII](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#rr-raii).
 
 <a id="cpp-04"></a>
 ## 스마트 포인터와 소유권
+
+[예제와 해설로 이해하기](cpp-examples.md#cpp-04)
 
 > “unique_ptr, shared_ptr, weak_ptr의 차이는 무엇인가요?”
 
@@ -60,10 +68,12 @@
 
 추가 질문: 부모와 자식이 서로를 알아야 한다면 양쪽 모두 소유권이 필요한가요?
 
-참고: [C++ Core Guidelines — 스마트 포인터](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rr-smartptrs).
+참고: [C++ Core Guidelines — 스마트 포인터](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#rr-summary-smartptrs).
 
 <a id="cpp-05"></a>
 ## 복사와 이동
+
+[예제와 해설로 이해하기](cpp-examples.md#cpp-05)
 
 > “복사와 이동의 차이, std::move의 역할을 설명해 보세요.”
 
@@ -95,6 +105,8 @@ auto second = std::move(first);
 <a id="cpp-06"></a>
 ## Rule of Zero와 Rule of Five
 
+[예제와 해설로 이해하기](cpp-examples.md#cpp-06)
+
 > “자원을 소유하는 클래스에서 복사와 소멸을 함께 생각해야 하는 이유는 무엇인가요?”
 
 - 원시 포인터로 자원을 직접 소유하면서 기본 복사를 사용하면 주소만 복사될 수 있습니다. 두 객체가 같은 자원을 해제하면 문제가 됩니다.
@@ -103,10 +115,12 @@ auto second = std::move(first);
 
 추가 질문: `unique_ptr` 멤버가 있는 클래스의 기본 복사는 가능한가요?
 
-참고: [C++ Core Guidelines — 특별 멤버 함수](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rc-zero).
+참고: [C++ Core Guidelines — 특별 멤버 함수](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#rc-zero).
 
 <a id="cpp-07"></a>
 ## 가상 소멸자
+
+[예제와 해설로 이해하기](cpp-examples.md#cpp-07)
 
 > “기반 클래스 포인터로 파생 객체를 삭제할 때 무엇을 주의해야 하나요?”
 
@@ -136,6 +150,8 @@ struct IAttackRule
 <a id="cpp-08"></a>
 ## vector의 크기와 용량
 
+[예제와 해설로 이해하기](cpp-examples.md#cpp-08)
+
 > “reserve와 resize는 어떻게 다른가요?”
 
 - `size()`는 존재하는 원소 수, `capacity()`는 재할당 없이 담을 수 있는 원소 수입니다.
@@ -150,6 +166,8 @@ struct IAttackRule
 <a id="cpp-09"></a>
 ## vector와 참조 무효화
 
+[예제와 해설로 이해하기](cpp-examples.md#cpp-09)
+
 > “원소를 추가한 뒤 기존 포인터가 위험해지는 이유는 무엇인가요?”
 
 - 재할당이 발생하면 저장 공간이 바뀌어 기존 원소를 가리키던 포인터·참조·반복자가 무효화됩니다.
@@ -163,6 +181,8 @@ struct IAttackRule
 <a id="cpp-10"></a>
 ## 람다와 수명
 
+[예제와 해설로 이해하기](cpp-examples.md#cpp-10)
+
 > “참조 캡처를 비동기 작업에 사용할 때 무엇을 주의해야 하나요?”
 
 - 작업이 실행될 때 참조 대상이 이미 파괴되었다면 댕글링 참조가 됩니다.
@@ -172,10 +192,12 @@ struct IAttackRule
 
 추가 질문: 비동기 콜백이 실행되기 전에 화면이나 Actor가 사라질 수 있다면 어떻게 설계하겠습니까?
 
-참고: [C++ Core Guidelines — 외부로 전달되는 람다의 참조 캡처](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rf-capture-vs-reference).
+참고: [C++ Core Guidelines — 외부로 전달되는 람다의 참조 캡처](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#rf-value-capture).
 
 <a id="cpp-11"></a>
 ## const와 캐스팅
+
+[예제와 해설로 이해하기](cpp-examples.md#cpp-11)
 
 > “const가 붙으면 객체가 어떤 경로로도 바뀌지 않나요?”
 
@@ -193,6 +215,8 @@ struct IAttackRule
 <a id="cpp-12"></a>
 ## 가상 호출과 객체 배치
 
+[예제와 해설로 이해하기](cpp-examples.md#cpp-12)
+
 > “virtual 호출은 일반 함수 호출과 무엇이 다른가요?”
 
 - 가상 호출은 객체의 동적 타입에 맞는 재정의 함수를 선택합니다. 흔한 구현은 가상 함수 테이블과 이를 가리키는 포인터를 사용하지만 정확한 배치가 C++ 표준으로 고정되어 있지는 않습니다.
@@ -207,6 +231,8 @@ struct IAttackRule
 <a id="cpp-13"></a>
 ## 템플릿과 컴파일·링크
 
+[예제와 해설로 이해하기](cpp-examples.md#cpp-13)
+
 > “템플릿 구현은 왜 헤더에 두는 경우가 많나요?”
 
 - 템플릿은 타입·값을 매개변수로 코드를 표현합니다. 특수화를 인스턴스화하려면 보통 정의가 보여야 하므로 헤더에 구현을 둡니다. 명시적 인스턴스화로 분리하는 방식도 있습니다.
@@ -220,6 +246,8 @@ struct IAttackRule
 
 <a id="cpp-14"></a>
 ## 컨테이너 선택과 캐시
+
+[예제와 해설로 이해하기](cpp-examples.md#cpp-14)
 
 > “해시 테이블은 항상 배열보다 빠른가요?”
 
@@ -236,6 +264,8 @@ struct IAttackRule
 <a id="cpp-15"></a>
 ## 동시성과 데이터 경쟁
 
+[예제와 해설로 이해하기](cpp-examples.md#cpp-15)
+
 > “atomic으로 바꾸면 멀티스레드 로직이 안전해지나요?”
 
 - 동기화되지 않은 충돌 접근 중 쓰기가 있고 비원자적 데이터가 관여하는 데이터 경쟁은 C++에서 정의되지 않은 동작입니다.
@@ -246,4 +276,4 @@ struct IAttackRule
 
 추가 질문: 작업 스레드가 게임 스레드를 기다리고 게임 스레드도 그 작업을 기다리면 어떻게 되나요?
 
-참고: [C++ Core Guidelines — Concurrency](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#S-concurrency).
+참고: [C++ Core Guidelines — Concurrency](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#s-concurrency).
