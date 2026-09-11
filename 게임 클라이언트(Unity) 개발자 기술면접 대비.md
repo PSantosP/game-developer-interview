@@ -1,5 +1,9 @@
 # 게임 클라이언트(Unity) 개발자 기술면접 대비
 
+> **Unity/C# + C++ + Unreal 함께 공부하기:** [통합 학습 목차](./docs/README.md) · [12차시 질문·실습](./docs/questions.md)
+>
+> C++·Unreal 확장 자료는 이 포크의 `docs/cpp-unreal-study` 브랜치에 있습니다. 휴대폰에서는 [이 브랜치의 README](https://github.com/PSantosP/game-developer-interview/tree/docs/cpp-unreal-study#readme)를 즐겨찾기하세요.
+
 최초 작성일: 2024년 7월  
 최종 편집일: 2026년 1월
 
@@ -52,6 +56,9 @@ Pull Request를 날려주시면 검토 후 반영하겠습니다. 😊
 * [기술면접 대비 예상 질문 (목차)](#기술면접-대비-예상-질문)
 * [Unity & C# 스크립팅](#unity--c-스크립팅)
 * [Unity 그래픽스](#unity-그래픽스)
+* [C++ — 수명·소유권·STL·템플릿·동시성](./docs/cpp.md)
+* [Unreal Engine — UObject·프레임워크·게임플레이·네트워크·GAS](./docs/unreal.md)
+* [게임 수학·렌더링·성능·패키징](./docs/game-fundamentals.md)
 * [객체지향 프로그래밍](#객체지향-프로그래밍)
 * [디자인 패턴](#디자인-패턴)
 * [운영체제](#운영체제)
@@ -61,6 +68,8 @@ Pull Request를 날려주시면 검토 후 반영하겠습니다. 😊
 ### 부록
 
 * [질문 모음집](./질문%20모음집.md) **⭐ 추천!**
+* [C++ & Unreal 질문 모음집 — 12차시·84개 질문](./docs/questions.md)
+* [원문과 함께 공부하는 순서](./docs/README.md)
 
 ---
 
