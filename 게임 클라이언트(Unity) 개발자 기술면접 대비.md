@@ -1,6 +1,8 @@
-# 게임 클라이언트(Unity) 개발자 기술면접 대비
+# 게임 클라이언트 개발자 기술면접 대비 — Unity/C# · C++ · Unreal
 
-> **Unity/C# + C++ + Unreal 함께 공부하기:** [통합 학습 목차](./docs/README.md) · [12차시 질문·실습](./docs/questions.md)
+> **Unity/C# + C++ + Unreal:** [전체 목차](#목차) · [C++](#cpp-study) · [Unreal](#unreal-study) · [질문과 실습](#study-questions)
+>
+> 개념·코드·출력 해설·실습을 이 README에서 이어서 읽습니다.
 >
 > C++·Unreal 확장 자료는 이 포크의 `docs/cpp-unreal-study` 브랜치에 있습니다. 휴대폰에서는 [이 브랜치의 README](https://github.com/PSantosP/game-developer-interview/tree/docs/cpp-unreal-study#readme)를 즐겨찾기하세요.
 
@@ -28,16 +30,6 @@ Pull Request를 날려주시면 검토 후 반영하겠습니다. 😊
 
 ## 목차
 
-### 포크 확장: C++ & Unreal Engine
-
-* [C++ & Unreal 학습 안내와 차시 목차](./docs/README.md)
-* [C++ 읽기 자료](./docs/cpp.md) · [실행 예제 15개와 출력 해설](./docs/cpp-examples.md)
-* [Unreal Engine 읽기 자료](./docs/unreal.md) · [구현 흐름 18개](./docs/unreal-walkthroughs.md)
-* [게임 수학·렌더링·성능 읽기 자료](./docs/game-fundamentals.md)
-* [C++ & Unreal 질문 모음집 — 실습·검증·경험 질문](./docs/questions.md) · [단계별 실습 안내](./docs/practice.md)
-
-위 문서는 이 포크에서 새로 작성한 확장 자료입니다. 원문의 작성자와 확장 자료를 구분하며, 구성 참고 및 변경 범위는 [확장 안내](./docs/README.md)에 기록합니다.
-
 ### 1부: 팁과 개인적 조언
 
 * [큰 그림](#큰-그림)
@@ -56,9 +48,45 @@ Pull Request를 날려주시면 검토 후 반영하겠습니다. 😊
 * [기술면접 대비 예상 질문 (목차)](#기술면접-대비-예상-질문)
 * [Unity & C# 스크립팅](#unity--c-스크립팅)
 * [Unity 그래픽스](#unity-그래픽스)
-* [C++ — 수명·소유권·STL·템플릿·동시성](./docs/cpp.md)
-* [Unreal Engine — UObject·프레임워크·게임플레이·네트워크·GAS](./docs/unreal.md)
-* [게임 수학·렌더링·성능·패키징](./docs/game-fundamentals.md)
+* [C++ — 개념·실행 예제·출력 해설](#cpp-study)
+  * [객체의 수명과 저장 공간](#cpp-01)
+  * [포인터와 참조](#cpp-02)
+  * [RAII](#cpp-03)
+  * [스마트 포인터와 소유권](#cpp-04)
+  * [복사와 이동](#cpp-05)
+  * [Rule of Zero와 Rule of Five](#cpp-06)
+  * [가상 소멸자](#cpp-07)
+  * [vector의 크기와 용량](#cpp-08)
+  * [vector와 참조 무효화](#cpp-09)
+  * [람다와 수명](#cpp-10)
+  * [const와 캐스팅](#cpp-11)
+  * [가상 호출과 객체 배치](#cpp-12)
+  * [템플릿과 컴파일·링크](#cpp-13)
+  * [컨테이너 선택과 캐시](#cpp-14)
+  * [동시성과 데이터 경쟁](#cpp-15)
+* [Unreal Engine — 개념·구현 흐름·실패 처리](#unreal-study)
+  * [일반 C++ 객체와 UObject](#ue-01)
+  * [UObject 포인터 선택](#ue-02)
+  * [생성자와 BeginPlay](#ue-03)
+  * [Destroy와 EndPlay](#ue-04)
+  * [게임 전체 상태의 위치](#ue-05)
+  * [플레이어와 조종 대상](#ue-06)
+  * [변수 복제와 RPC](#ue-07)
+  * [서버 권위 공격 판정](#ue-08)
+  * [GAS 구성 요소](#ue-09)
+  * [C++ 자원 관리와 Unreal GC의 경계](#ue-10)
+  * [리플렉션·CDO·Blueprint](#ue-11)
+  * [Component·Subsystem과 책임](#ue-12)
+  * [Delegate·Timer와 종료](#ue-13)
+  * [입력에서 이동까지](#ue-14)
+  * [Trace·Sweep과 공격 판정](#ue-15)
+  * [Montage·Notify·Root Motion](#ue-16)
+  * [에셋 비동기 로딩](#ue-17)
+  * [GAS의 활성화·비용·종료](#ue-18)
+* [게임 수학·렌더링·성능·패키징](#game-study)
+  * [위치·방향·회전](#math)
+  * [렌더링과 병목](#rendering)
+  * [성능 측정과 패키징](#profiling)
 * [객체지향 프로그래밍](#객체지향-프로그래밍)
 * [디자인 패턴](#디자인-패턴)
 * [운영체제](#운영체제)
@@ -68,8 +96,22 @@ Pull Request를 날려주시면 검토 후 반영하겠습니다. 😊
 ### 부록
 
 * [질문 모음집](./질문%20모음집.md) **⭐ 추천!**
-* [C++ & Unreal 질문 모음집 — 12차시·84개 질문](./docs/questions.md)
-* [원문과 함께 공부하는 순서](./docs/README.md)
+* [C++·Unreal 질문과 실습 — 12차시·84문항](#study-questions)
+  * [1차시 — C++ 수명과 소유권](#session-01)
+  * [2차시 — const·다형성·빌드](#session-02)
+  * [3차시 — 컨테이너와 비용](#session-03)
+  * [4차시 — 람다와 동시성](#session-04)
+  * [5차시 — UObject와 GC](#session-05)
+  * [6차시 — 프레임워크와 이벤트](#session-06)
+  * [7차시 — 입력·수학·충돌](#session-07)
+  * [8차시 — 애니메이션과 종료 경로](#session-08)
+  * [9차시 — 에셋과 렌더링](#session-09)
+  * [10차시 — 네트워크](#session-10)
+  * [11차시 — GAS](#session-11)
+  * [12차시 — 최적화·패키징·경험 정리](#session-12)
+* [원문과 함께 공부하는 순서](#study-guide)
+* [실습 준비](#study-practice)
+* [검증 기록](#study-verification)
 
 ---
 
@@ -2043,3 +2085,2350 @@ public class Main
 
 * RPC와 REST의 차이
   * https://aws.amazon.com/ko/compare/the-difference-between-rpc-and-rest/
+
+<!-- INLINE_STUDY_START -->
+
+<a id="study-guide"></a>
+## C++·Unreal 학습 안내
+
+이하 확장 자료는 이 포크에서 새로 작성했습니다. 원문의 작성 기여자는 안단태·이주연이며, 확장 설명·예제의 작성과 검토를 원저자에게 귀속하지 않습니다. 원본의 저작자 표시와 [CC BY-NC 4.0 라이선스](./LICENSE)를 유지합니다.
+
+**이 README에서 개념·예제·출력 해설·실습을 이어서 읽을 수 있습니다.** 목차의 주제를 선택하고, 코드 결과를 예상한 뒤 접힌 해설을 펼치세요. 이미 아는 내용은 요약을 확인하고 바로 변형 과제로 넘어가도 됩니다.
+
+C++ 독립 프로그램 15개는 MSVC C++17로 컴파일하고 예상 출력과 대조했습니다. Unreal 조각은 읽기용 구현 사례이며 엔진 빌드·PIE는 미검증입니다. 버전과 범위는 [검증 기록](#study-verification)을 확인하세요.
+
+공식 링크는 기술 근거를 확인할 때 사용합니다. 기본 설명을 읽기 위해 다른 파일로 이동할 필요는 없습니다. 실습에서는 사용하는 엔진 버전과 프로젝트 구조를 먼저 확인합니다.
+
+
+<a id="cpp-study"></a>
+## C++
+
+<a id="cpp-01"></a>
+### 객체의 수명과 저장 공간
+
+[예제와 해설로 이해하기](#cpp-example-01)
+
+> “객체의 수명과 메모리를 확보하는 것은 어떻게 다른가요?”
+
+- 저장 공간은 객체가 놓일 자리이고, 수명은 그 자리에서 객체를 유효하게 사용할 수 있는 기간입니다.
+- 일반적인 클래스 객체는 초기화가 완료되면 수명이 시작됩니다. 생성자가 필요한 타입이라면 공간만 확보했다고 사용할 수 있는 객체가 되지는 않습니다.
+- 자동 저장 기간의 지역 객체는 보통 스택을 이용하지만, C++ 개념을 단순히 ‘지역 변수는 무조건 스택’으로 외우지는 않습니다.
+- 지역 `vector` 객체의 수명과 그 객체가 관리하는 동적 원소 저장 공간을 구분해야 합니다.
+
+추가 질문: 지역 변수의 주소를 반환하면 왜 위험한가요? `vector`를 함수에서 값으로 반환하는 것도 같은 문제인가요?
+
+참고: [Microsoft — 소멸자와 객체 수명 종료](https://learn.microsoft.com/en-us/cpp/cpp/destructors-cpp?view=msvc-170), [vector](https://learn.microsoft.com/en-us/cpp/standard-library/vector-class?view=msvc-170).
+
+<a id="cpp-example-01"></a>
+#### 1. 저장 공간과 객체의 수명
+
+장비 목록을 함수 안에서 만들었다고 생각해 봅시다. vector라는 관리 객체와 실제 장비가 들어 있는 공간은 구분됩니다. 목록을 값으로 반환하는 것과 지역 객체의 주소를 반환하는 것도 다릅니다.
+
+~~~cpp
+#include <iostream>
+#include <vector>
+struct Item {
+    int id;
+    explicit Item(int n) : id(n) { std::cout << "create " << id << '\n'; }
+    ~Item() { std::cout << "destroy " << id << '\n'; }
+};
+int main() {
+    std::cout << "before\n";
+    {
+        std::vector<Item> items;
+        items.reserve(1);
+        items.emplace_back(7);
+        std::cout << "inside " << items.size() << '\n';
+    }
+    std::cout << "after\n";
+}
+~~~
+
+<details>
+<summary>예상 출력과 해설</summary>
+
+~~~text
+before
+create 7
+inside 1
+destroy 7
+after
+~~~
+
+reserve는 자리를 확보할 뿐 Item을 만들지 않습니다. emplace_back에서 Item이 만들어집니다. 안쪽 스코프가 끝나면 vector가 원소를 파괴하고 저장 공간을 해제합니다. 하나만 넣어 재할당 중 복사·소멸 로그가 섞이지 않도록 했습니다.
+
+</details>
+
+직접 변형: inside 출력 직후 items.clear()를 넣으세요. Item의 소멸 시점과 vector 자체의 수명 종료를 구분할 수 있나요?
+
+추가 질문 해설: vector를 값으로 반환하면 반환된 객체가 원소를 소유할 수 있습니다. 지역 변수의 주소만 반환하면 대상의 수명이 끝난 뒤 주소만 남습니다. 반환 시 복사 생략·이동 여부는 표현식과 타입에 따라 판단합니다.
+
+[↑ 전체 목차](#목차)
+
+
+<a id="cpp-02"></a>
+### 포인터와 참조
+
+[예제와 해설로 이해하기](#cpp-example-02)
+
+> “포인터와 참조는 어떻게 다르고, 함수 인자는 어떻게 고르나요?”
+
+- 포인터는 주소를 값으로 가지며, `nullptr`로 대상이 없음을 표현하거나 다른 대상을 가리키도록 바꿀 수 있습니다.
+- 참조는 초기화할 때 대상에 연결되며 이후 다른 대상에 다시 연결할 수 없습니다. 기존 객체를 참조하는 것만으로 그 수명이 늘어나지는 않습니다. 다만 지역 const 참조에 임시 객체를 직접 바인딩하는 등의 문맥에는 수명 연장 규칙이 있으므로 구분합니다.
+- 작은 값은 값 전달, 복사 비용이 있는 읽기 전용 입력은 `const T&`, 변경할 필수 대상은 `T&`, 대상 없음이 의미 있는 경우는 `T*` 등을 검토합니다.
+- 원시 포인터나 참조라는 표기만으로 소유권을 판단할 수는 없습니다. API의 수명 계약도 확인합니다.
+
+추가 질문: `const T*`와 `T* const`는 어떻게 다른가요? `const T&`를 멤버에 저장해도 대상이 계속 살아 있나요?
+
+참고: [C++ Core Guidelines — 함수 인자 전달](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#rf-in).
+
+<a id="cpp-example-02"></a>
+#### 2. 참조와 임시 객체 수명 연장
+
+참조는 별명입니다. 기존 객체에 별명을 붙였다고 대상이 영구히 살아 있지는 않습니다. 다만 임시 객체를 참조로 직접 초기화하는 특정 문맥에는 별도의 수명 연장 규칙이 있습니다.
+
+~~~cpp
+#include <iostream>
+struct Token {
+    Token() { std::cout << "create\n"; }
+    ~Token() { std::cout << "destroy\n"; }
+};
+int main() {
+    {
+        const Token& token = Token{};
+        (void)token;
+        std::cout << "still alive\n";
+    }
+    std::cout << "finished\n";
+}
+~~~
+
+<details>
+<summary>예상 출력과 해설</summary>
+
+~~~text
+create
+still alive
+destroy
+finished
+~~~
+
+이 선언의 임시 Token은 세미콜론에서 사라지지 않고 지역 참조의 수명까지 살아 있습니다. 이미 수명이 끝난 지역 객체의 참조를 반환하면 이 규칙으로 구제되지 않습니다. 참조를 다른 참조에 연결해도 수명이 계속 연장되지는 않습니다.
+
+</details>
+
+직접 변형: 참조 대신 일반 지역 Token을 만들고 출력이 같아도 생성 방식은 어떻게 다른지 설명하세요.
+
+추가 질문 해설: 함수 인자의 const 참조를 멤버에 저장해도 호출자가 준 객체의 수명이 그 멤버에 맞춰 연장되지는 않습니다. 임시 객체 직접 바인딩의 예외와 기존 객체 참조를 구분합니다. [공식 설명](https://learn.microsoft.com/en-us/cpp/cpp/temporary-objects?view=msvc-170).
+
+[↑ 전체 목차](#목차)
+
+
+<a id="cpp-03"></a>
+### RAII
+
+[예제와 해설로 이해하기](#cpp-example-03)
+
+> “RAII가 무엇이며 게임 개발에서 어디에 쓰이나요?”
+
+- 자원의 획득과 해제를 관리 객체의 수명에 연결하는 방식입니다. 메모리뿐 아니라 파일, 잠금, 그래픽스 자원에도 적용합니다.
+- 정상적으로 스코프를 벗어나거나 예외로 스택이 풀릴 때 소멸자가 정리하므로, 여러 반환 경로마다 해제 코드를 반복할 필요가 줄어듭니다.
+- 프로그램의 강제 종료까지 소멸자 실행을 보장한다는 뜻은 아닙니다.
+
+예: 파일을 관리하는 객체를 지역 변수로 두면 함수 중간에서 반환해도 그 객체가 파일을 닫습니다.
+
+추가 질문: 잠금을 직접 `lock`/`unlock`하는 것보다 `lock_guard`를 쓰는 이유는 무엇인가요?
+
+참고: [C++ Core Guidelines — RAII](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#rr-raii).
+
+<a id="cpp-example-03"></a>
+#### 3. 중간 반환에서도 정리되는 RAII
+
+데이터 검증 실패로 함수 중간에서 반환할 때도 자원 정리는 필요합니다. 반환 경로마다 해제를 반복하는 대신 정리 책임을 지역 관리 객체에 맡깁니다.
+
+~~~cpp
+#include <iostream>
+struct Scope {
+    Scope() { std::cout << "acquire\n"; }
+    ~Scope() { std::cout << "release\n"; }
+};
+void Load(bool valid) {
+    Scope resource;
+    if (!valid) { std::cout << "reject\n"; return; }
+    std::cout << "use\n";
+}
+int main() { Load(false); Load(true); }
+~~~
+
+<details>
+<summary>예상 출력과 해설</summary>
+
+~~~text
+acquire
+reject
+release
+acquire
+use
+release
+~~~
+
+첫 호출도 return하면서 소멸자를 실행합니다. Scope는 수명 관찰용 모형이며 실제 파일·잠금은 fstream, lock_guard 등 자원에 맞는 타입을 사용합니다. 프로세스 강제 종료까지 소멸자 실행을 보장하지는 않습니다.
+
+</details>
+
+직접 변형: 실패 조건을 둘로 늘려도 release 호출을 직접 추가하지 않고 정리를 유지하세요.
+
+추가 질문 해설: lock_guard는 정상적인 스코프 종료 때 잠금을 해제하므로 unlock 누락을 줄입니다. 다만 잘못된 잠금 순서의 교착 상태까지 해결하는 것은 아닙니다.
+
+[↑ 전체 목차](#목차)
+
+
+<a id="cpp-04"></a>
+### 스마트 포인터와 소유권
+
+[예제와 해설로 이해하기](#cpp-example-04)
+
+> “unique_ptr, shared_ptr, weak_ptr의 차이는 무엇인가요?”
+
+- `unique_ptr`: 한 소유자가 객체를 관리합니다. 복사할 수 없고 이동으로 소유권을 넘깁니다.
+- `shared_ptr`: 여러 소유자가 수명을 공유합니다. 마지막 강한 소유자가 사라지면 관리 대상이 파괴됩니다.
+- `weak_ptr`: 공유 대상을 소유하지 않고 관찰합니다. `lock()`으로 사용 가능한 `shared_ptr`를 얻었는지 확인합니다.
+- 서로를 `shared_ptr`로 소유하면 순환 때문에 해제되지 않을 수 있습니다. 관계 중 소유하지 않는 쪽을 약한 참조로 표현할 수 있습니다.
+- `shared_ptr`는 대상 객체의 멤버 접근까지 스레드 안전하게 만들지 않습니다.
+
+추가 질문: 부모와 자식이 서로를 알아야 한다면 양쪽 모두 소유권이 필요한가요?
+
+참고: [C++ Core Guidelines — 스마트 포인터](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#rr-summary-smartptrs).
+
+<a id="cpp-example-04"></a>
+#### 4. 소유와 관찰을 구분하기
+
+부모와 자식이 서로를 알아야 해도 양쪽 모두 서로를 소유해야 하는 것은 아닙니다. 탐색 관계와 소유 관계를 구분해야 순환 소유를 피할 수 있습니다.
+
+~~~cpp
+#include <iostream>
+#include <memory>
+struct Node {
+    ~Node() { std::cout << "destroy\n"; }
+};
+int main() {
+    std::weak_ptr<Node> observer;
+    {
+        auto owner = std::make_shared<Node>();
+        observer = owner;
+        {
+            auto second = observer.lock();
+            std::cout << "owners " << owner.use_count() << '\n';
+        }
+        std::cout << "owners " << owner.use_count() << '\n';
+    }
+    std::cout << "expired " << observer.expired() << '\n';
+}
+~~~
+
+<details>
+<summary>예상 출력과 해설</summary>
+
+~~~text
+owners 2
+owners 1
+destroy
+expired 1
+~~~
+
+observer는 강한 소유자 수를 늘리지 않습니다. lock이 성공해 second가 만들어진 동안은 소유자가 둘입니다. 대상 소멸과 제어 블록 해제는 다릅니다. weak_ptr가 남아 있으면 대상이 소멸해도 관련 제어 정보는 더 오래 유지될 수 있습니다.
+
+</details>
+
+직접 변형: 부모는 자식을 shared_ptr, 자식은 부모를 weak_ptr로 가리키게 하세요. 외부 소유자를 제거했을 때 두 소멸 로그를 확인하세요.
+
+추가 질문 해설: 양방향 shared_ptr이면 외부 소유자가 없어져도 서로의 강한 참조가 남을 수 있습니다. use_count는 이 단일 스레드 예제의 관찰 도구이며 동시 접근 안전성 판정 수단이 아닙니다.
+
+[↑ 전체 목차](#목차)
+
+
+<a id="cpp-05"></a>
+### 복사와 이동
+
+[예제와 해설로 이해하기](#cpp-example-05)
+
+> “복사와 이동의 차이, std::move의 역할을 설명해 보세요.”
+
+- 복사는 대상의 상태를 복제하고, 이동은 타입이 제공하는 이동 연산을 통해 자원을 넘겨받을 기회를 줍니다.
+- `std::move` 자체는 데이터를 옮기는 함수가 아닙니다. 이동 연산이 선택될 수 있도록 표현식의 값 범주를 변환합니다.
+- 실제로 이동할지는 타입과 오버로드에 달려 있습니다. 이동 연산이 없거나 `const` 조건 등이 맞지 않으면 복사가 일어날 수 있습니다.
+- 이동 후 상태를 무조건 ‘비어 있음’으로 가정하면 안 됩니다. 해당 타입의 계약을 확인합니다.
+
+<details>
+<summary>예제 — 어느 줄에서 소유권이 이동하나요?</summary>
+
+```cpp
+#include <memory>
+#include <utility>
+
+auto first = std::make_unique<int>(42);
+auto second = std::move(first);
+// second가 소유합니다. unique_ptr의 이동 후 first는 비어 있습니다.
+```
+
+`std::move(first)`로 얻은 표현식을 사용해 `second`의 이동 생성자가 호출될 때 소유권이 넘어갑니다.
+
+</details>
+
+추가 질문: 이름이 있는 `T&&` 변수는 표현식으로 사용할 때도 항상 rvalue인가요?
+
+참고: [Microsoft — rvalue 참조와 이동](https://learn.microsoft.com/en-us/cpp/cpp/rvalue-reference-declarator-amp-amp?view=msvc-170).
+
+<a id="cpp-example-05"></a>
+#### 5. std::move와 실제 이동은 다른 단계
+
+큰 버퍼를 넘기기 전에 어느 생성자가 선택되는지부터 관찰합니다. 아래 Box는 실제 자원이 없는 호출 관찰용 타입입니다.
+
+~~~cpp
+#include <iostream>
+#include <utility>
+struct Box {
+    Box() = default;
+    Box(const Box&) { std::cout << "copy\n"; }
+    Box(Box&&) noexcept { std::cout << "move\n"; }
+};
+int main() {
+    Box a;
+    Box b(a);
+    Box c(std::move(a));
+    const Box fixed;
+    Box d(std::move(fixed));
+}
+~~~
+
+<details>
+<summary>예상 출력과 해설</summary>
+
+~~~text
+copy
+move
+copy
+~~~
+
+a는 이름이 있는 lvalue라 복사 생성자가 선택됩니다. std::move(a)에는 이동 생성자가 맞습니다. 하지만 std::move는 fixed의 const를 제거하지 않습니다. 일반적인 Box&& 이동 생성자에 연결할 수 없어 const Box& 복사 생성자가 선택됩니다.
+
+</details>
+
+직접 변형: 이동 생성자를 제거한 경우와 삭제 선언한 경우를 각각 빌드하세요. 후보 자체가 없는 경우와 선택된 후보가 삭제된 경우는 다릅니다.
+
+추가 질문 해설: 이름이 있는 T&& 변수도 그 이름을 표현식으로 쓰면 lvalue입니다. 전달 참조 문맥의 forward와 의도적인 move는 목적이 다릅니다. 이동 후 상태는 타입의 계약을 따라야 합니다.
+
+[↑ 전체 목차](#목차)
+
+
+<a id="cpp-06"></a>
+### Rule of Zero와 Rule of Five
+
+[예제와 해설로 이해하기](#cpp-example-06)
+
+> “자원을 소유하는 클래스에서 복사와 소멸을 함께 생각해야 하는 이유는 무엇인가요?”
+
+- 원시 포인터로 자원을 직접 소유하면서 기본 복사를 사용하면 주소만 복사될 수 있습니다. 두 객체가 같은 자원을 해제하면 문제가 됩니다.
+- 직접 관리해야 한다면 소멸자, 복사 생성자, 복사 대입, 이동 생성자, 이동 대입을 함께 검토합니다. 반드시 다섯 함수를 모두 직접 구현하라는 뜻은 아닙니다. 필요한 연산을 삭제할 수도 있습니다.
+- 가능하면 `vector`, `string`, `unique_ptr`처럼 수명을 관리하는 멤버를 사용해 특별 멤버 함수의 직접 구현을 피합니다. 이것이 Rule of Zero의 방향입니다.
+
+추가 질문: `unique_ptr` 멤버가 있는 클래스의 기본 복사는 가능한가요?
+
+참고: [C++ Core Guidelines — 특별 멤버 함수](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#rc-zero).
+
+<a id="cpp-example-06"></a>
+#### 6. Rule of Zero가 실제로 줄이는 코드
+
+이미 자원 관리를 제공하는 컨테이너를 멤버로 두면 클래스가 복사·소멸을 직접 구현하지 않아도 됩니다.
+
+~~~cpp
+#include <iostream>
+#include <memory>
+#include <type_traits>
+#include <vector>
+struct Inventory { std::vector<int> ids{1, 2}; };
+struct Exclusive { std::unique_ptr<int> id; };
+int main() {
+    Inventory a;
+    Inventory b = a;
+    b.ids[0] = 9;
+    std::cout << a.ids[0] << ' ' << b.ids[0] << '\n';
+    std::cout << std::is_copy_constructible_v<Exclusive> << ' '
+              << std::is_move_constructible_v<Exclusive> << '\n';
+}
+~~~
+
+<details>
+<summary>예상 출력과 해설</summary>
+
+~~~text
+1 9
+0 1
+~~~
+
+vector 멤버 복사는 원소를 복사해 a와 b의 값이 독립적입니다. Exclusive는 unique_ptr 멤버 때문에 기본 복사가 불가능합니다. 특별 멤버 함수를 직접 작성하지 않아도 멤버의 계약이 반영됩니다.
+
+</details>
+
+직접 변형: Exclusive에 사용자 선언 소멸자를 추가하고 이동 가능 여부를 다시 확인하세요. 자동 이동 생성 조건을 조사한 뒤 필요한 연산을 명시적으로 default하는 방식을 검토하세요.
+
+추가 질문 해설: Rule of Five는 다섯 함수를 기계적으로 구현하라는 뜻이 아닙니다. 자원을 직접 관리한다면 각 연산을 구현·삭제·기본화할지 함께 결정해야 합니다.
+
+[↑ 전체 목차](#목차)
+
+
+<a id="cpp-07"></a>
+### 가상 소멸자
+
+[예제와 해설로 이해하기](#cpp-example-07)
+
+> “기반 클래스 포인터로 파생 객체를 삭제할 때 무엇을 주의해야 하나요?”
+
+- 일반적인 다형적 삭제에서 기반 소멸자가 비가상이면 정의되지 않은 동작이 됩니다. 단순히 ‘파생 소멸자만 생략된다’고 설명하면 부족합니다.
+- 기반 포인터로 삭제하도록 설계했다면 공개 가상 소멸자를 제공합니다.
+- 기반 타입을 통해 삭제하지 못하게 설계할 때는 보호된 비가상 소멸자라는 선택도 있습니다.
+
+<details>
+<summary>예제 — 다형적으로 소유하는 인터페이스</summary>
+
+```cpp
+struct IAttackRule
+{
+    virtual ~IAttackRule() = default;
+    virtual int Evaluate() const = 0;
+};
+```
+
+일반 C++ 인터페이스의 개념 예제입니다. Unreal의 `UINTERFACE` 작성 예제는 아닙니다.
+
+</details>
+
+추가 질문: 가상 함수가 전혀 없는 클래스에도 항상 가상 소멸자가 필요한가요?
+
+참고: [Microsoft — 가상 소멸자](https://learn.microsoft.com/en-us/cpp/cpp/destructors-cpp?view=msvc-170).
+
+<a id="cpp-example-07"></a>
+#### 7. 기반 타입으로 소유하는 객체의 소멸
+
+~~~cpp
+#include <iostream>
+#include <memory>
+struct Rule {
+    virtual ~Rule() { std::cout << "base\n"; }
+};
+struct HeavyRule : Rule {
+    ~HeavyRule() override { std::cout << "derived\n"; }
+};
+int main() { std::unique_ptr<Rule> rule = std::make_unique<HeavyRule>(); }
+~~~
+
+<details>
+<summary>예상 출력과 해설</summary>
+
+~~~text
+derived
+base
+~~~
+
+unique_ptr의 대상 타입은 Rule이지만 가상 소멸자를 통해 파생 소멸 절차가 수행됩니다. virtual을 제거한 뒤 base만 출력된다는 관찰로 동작을 규정하면 안 됩니다. 일반적인 기반 포인터 삭제에서 실제 타입이 다르고 소멸자가 비가상이면 정의되지 않은 동작입니다.
+
+</details>
+
+직접 변형: 파생 객체에 vector 멤버를 추가하고 멤버 정리가 어느 소멸 단계에 연결되는지 설명하세요.
+
+추가 질문 해설: 모든 클래스에 가상 소멸자가 필요한 것은 아닙니다. 다형적 삭제를 허용하는지 결정하고, 허용하지 않는 기반 타입은 접근 제어로 삭제 경로를 막는 설계도 가능합니다.
+
+[↑ 전체 목차](#목차)
+
+
+<a id="cpp-08"></a>
+### vector의 크기와 용량
+
+[예제와 해설로 이해하기](#cpp-example-08)
+
+> “reserve와 resize는 어떻게 다른가요?”
+
+- `size()`는 존재하는 원소 수, `capacity()`는 재할당 없이 담을 수 있는 원소 수입니다.
+- `reserve(n)`은 필요한 용량을 확보하며 원소 수를 늘리지 않습니다.
+- `resize(n)`은 원소 수를 바꿉니다. 커지면 원소를 추가하고 작아지면 뒤쪽 원소를 파괴합니다.
+- `reserve(100)` 후 `size()`가 0이라면 `v[0]`에 쓰면 안 됩니다.
+
+추가 질문: 매번 `push_back` 직전에 `reserve(size() + 1)`을 호출하면 어떤 비용이 생길 수 있나요?
+
+참고: [Microsoft — vector](https://learn.microsoft.com/en-us/cpp/standard-library/vector-class?view=msvc-170).
+
+<a id="cpp-example-08"></a>
+#### 8. 예약한 자리와 존재하는 원소
+
+~~~cpp
+#include <iostream>
+#include <vector>
+int main() {
+    std::vector<int> values;
+    values.reserve(4);
+    std::cout << values.size() << ' ' << (values.capacity() >= 4) << '\n';
+    values.resize(2);
+    std::cout << values.size() << ' ' << values[0] << '\n';
+    values.push_back(9);
+    std::cout << values.size() << ' ' << values.back() << '\n';
+}
+~~~
+
+<details>
+<summary>예상 출력과 해설</summary>
+
+~~~text
+0 1
+2 0
+3 9
+~~~
+
+reserve 직후 원소 수는 0입니다. 기본 allocator의 int 원소는 resize로 추가할 때 0으로 초기화됩니다. capacity는 최소 요구치 이상이라는 조건만 사용했으며 정확히 4라고 가정하지 않았습니다.
+
+</details>
+
+직접 변형: clear 이후 size와 capacity를 비교하세요. shrink_to_fit은 비구속 요청이라는 점도 문서에서 확인하세요.
+
+추가 질문 해설: 매번 reserve(size+1)하면 컨테이너의 기하급수적 성장 전략을 방해해 재할당·이동을 반복하게 만들 수 있습니다. 예상량이 있으면 묶어서 예약하고 실제 성장 패턴을 관찰합니다.
+
+[↑ 전체 목차](#목차)
+
+
+<a id="cpp-09"></a>
+### vector와 참조 무효화
+
+[예제와 해설로 이해하기](#cpp-example-09)
+
+> “원소를 추가한 뒤 기존 포인터가 위험해지는 이유는 무엇인가요?”
+
+- 재할당이 발생하면 저장 공간이 바뀌어 기존 원소를 가리키던 포인터·참조·반복자가 무효화됩니다.
+- 재할당이 없더라도 삽입·삭제 위치에 따라 일부 반복자와 참조가 무효화됩니다.
+- 인덱스를 저장하면 주소 변경은 피할 수 있지만, 삭제나 정렬 이후에도 같은 개체를 뜻한다는 보장은 없습니다. 안정적인 개체 식별이 필요하면 ID와 조회 구조를 별도로 설계합니다.
+
+추가 질문: `reserve`를 했다는 이유만으로 저장한 포인터가 게임 종료까지 안전하다고 할 수 있나요?
+
+참고: [Microsoft — vector의 재할당과 무효화](https://learn.microsoft.com/en-us/cpp/standard-library/vector-class?view=msvc-170).
+
+<a id="cpp-example-09"></a>
+#### 9. 인덱스가 유효해도 같은 아이템은 아니다
+
+~~~cpp
+#include <algorithm>
+#include <iostream>
+#include <vector>
+struct Item { int id; };
+int main() {
+    std::vector<Item> items{{10}, {20}};
+    const int wanted = items[0].id;
+    items.erase(items.begin());
+    std::cout << "index0 " << items[0].id << '\n';
+    auto found = std::find_if(items.begin(), items.end(),
+        [wanted](const Item& item) { return item.id == wanted; });
+    std::cout << "found " << (found != items.end()) << '\n';
+}
+~~~
+
+<details>
+<summary>예상 출력과 해설</summary>
+
+~~~text
+index0 20
+found 0
+~~~
+
+원소를 삭제하면 뒤 원소가 이동합니다. 인덱스 0은 유효하지만 다른 아이템입니다. ID는 찾으려는 개체를 명시하며 조회 실패를 처리할 수 있게 합니다. ID 재사용 시스템에는 세대 번호 같은 정책이 추가로 필요할 수 있습니다.
+
+</details>
+
+직접 변형: 삭제 대신 역순 정렬을 하고 인덱스 조회와 ID 조회를 비교하세요.
+
+추가 질문 해설: reserve는 일부 재할당을 피할 뿐, 삭제·삽입에 따른 무효화와 논리적 식별 문제를 모두 해결하지 않습니다. 이미 무효화된 포인터를 역참조하는 실습은 하지 않습니다.
+
+[↑ 전체 목차](#목차)
+
+
+<a id="cpp-10"></a>
+### 람다와 수명
+
+[예제와 해설로 이해하기](#cpp-example-10)
+
+> “참조 캡처를 비동기 작업에 사용할 때 무엇을 주의해야 하나요?”
+
+- 작업이 실행될 때 참조 대상이 이미 파괴되었다면 댕글링 참조가 됩니다.
+- 값 캡처는 값을 저장하지만, 원시 포인터를 값으로 복사해도 가리키는 객체의 수명은 늘어나지 않습니다. `[this]`도 객체 전체를 복사하지 않습니다.
+- 필요한 데이터를 독립된 값으로 넘기거나, 소유권 공유·약한 참조·취소 및 작업 완료 대기 중 요구사항에 맞는 방법을 선택합니다.
+- 수명이 보장되어도 여러 스레드의 동시 접근 문제는 별도로 해결해야 합니다.
+
+추가 질문: 비동기 콜백이 실행되기 전에 화면이나 Actor가 사라질 수 있다면 어떻게 설계하겠습니까?
+
+참고: [C++ Core Guidelines — 외부로 전달되는 람다의 참조 캡처](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#rf-value-capture).
+
+<a id="cpp-example-10"></a>
+#### 10. 등록 당시 값과 실행 당시 값
+
+~~~cpp
+#include <iostream>
+int main() {
+    int score = 10;
+    auto snapshot = [score] { return score; };
+    auto live = [&score] { return score; };
+    score = 20;
+    std::cout << snapshot() << ' ' << live() << '\n';
+}
+~~~
+
+<details>
+<summary>예상 출력과 해설</summary>
+
+~~~text
+10 20
+~~~
+
+snapshot은 등록 당시 int 값을 저장했습니다. live는 살아 있는 score에 접근합니다. 두 호출 모두 score의 수명 안에 있어 안전합니다. 외부로 콜백을 반환하는 순간 대상 수명을 다시 검토해야 합니다.
+
+</details>
+
+직접 변형: shared_ptr를 값 캡처하고 외부 소유자를 reset한 뒤 실행하세요. 원시 포인터 값 캡처와 차이를 설명하세요.
+
+추가 질문 해설: 비동기는 완료를 지금 기다리지 않는 구조, 병렬은 작업이 실제로 동시에 진행되는 성질입니다. UObject가 사라질 수 있는 콜백은 엔진의 약한 참조와 취소·결과 폐기 정책을 검토합니다.
+
+[↑ 전체 목차](#목차)
+
+
+<a id="cpp-11"></a>
+### const와 캐스팅
+
+[예제와 해설로 이해하기](#cpp-example-11)
+
+> “const가 붙으면 객체가 어떤 경로로도 바뀌지 않나요?”
+
+- `const T*`는 그 포인터를 통한 대상 변경을 제한합니다. 원래 객체가 비상수라면 다른 비상수 접근 경로에서 변경될 수 있습니다.
+- `T* const`는 포인터 자체의 재지정을 막습니다. 대상의 변경을 막는 표기는 아닙니다.
+- `static_cast`는 다운캐스팅 시 실제 동적 타입을 검사하지 않습니다. `dynamic_cast`는 다형적 타입의 런타임 검사가 필요한 경우 사용합니다. UObject의 `Cast`는 엔진의 별도 체계입니다.
+- `const_cast`로 표기를 벗겨도 원래 상수인 객체를 수정하면 정의되지 않은 동작입니다. `reinterpret_cast`도 아무 타입으로 역참조해도 된다는 허가가 아닙니다.
+
+예측: `int n = 1; const int* p = &n; n = 2;` 이후 `*p`는 2입니다. `p`를 통한 변경만 제한했기 때문입니다.
+
+추가 질문: 다운캐스팅 대신 공통 인터페이스를 사용할 수 있는 상황은 무엇인가요?
+
+참고: [Microsoft — const](https://learn.microsoft.com/en-us/cpp/cpp/const-cpp?view=msvc-170), [Casting](https://learn.microsoft.com/en-us/cpp/cpp/casting?view=msvc-170).
+
+<a id="cpp-example-11"></a>
+#### 11. const가 제한하는 대상
+
+~~~cpp
+#include <iostream>
+int main() {
+    int a = 10;
+    int b = 20;
+    const int* readOnly = &a;
+    int* const fixedAddress = &a;
+    *fixedAddress = 30;
+    std::cout << *readOnly << '\n';
+    readOnly = &b;
+    std::cout << *readOnly << '\n';
+}
+~~~
+
+<details>
+<summary>예상 출력과 해설</summary>
+
+~~~text
+30
+20
+~~~
+
+readOnly를 통한 쓰기는 막았지만 원래 a는 상수 객체가 아닙니다. fixedAddress는 재지정 불가능하지만 대상은 변경할 수 있습니다.
+
+</details>
+
+직접 변형: readOnly를 통해 값을 쓰는 문장과 fixedAddress를 다른 주소로 바꾸는 문장을 각각 추가해 컴파일 오류를 확인하세요. 캐스팅으로 오류를 숨기지 않습니다.
+
+추가 질문 해설: 다운캐스팅이 반복되면 기반 인터페이스가 실제 요구를 표현하는지 검토합니다. 런타임 타입 분기가 정당한 경우도 있으므로 캐스팅 횟수만으로 설계가 나쁘다고 결론내리지 않습니다.
+
+[↑ 전체 목차](#목차)
+
+
+<a id="cpp-12"></a>
+### 가상 호출과 객체 배치
+
+[예제와 해설로 이해하기](#cpp-example-12)
+
+> “virtual 호출은 일반 함수 호출과 무엇이 다른가요?”
+
+- 가상 호출은 객체의 동적 타입에 맞는 재정의 함수를 선택합니다. 흔한 구현은 가상 함수 테이블과 이를 가리키는 포인터를 사용하지만 정확한 배치가 C++ 표준으로 고정되어 있지는 않습니다.
+- 다중 상속, 정렬, 패딩, ABI에 따라 크기와 주소 관계가 달라집니다. ‘가상 함수가 있으면 항상 몇 바이트 증가한다’고 일반화하지 않습니다.
+- 기반 객체에 값으로 복사하면 파생 부분이 잘리는 슬라이싱이 발생할 수 있습니다. 다형적으로 다루려면 참조·포인터와 수명 정책을 함께 설계합니다.
+- 성능은 호출 수, 인라이닝 가능성, 메모리 접근 패턴 등을 측정합니다. 컴파일러가 구체 타입을 알아 가상 호출을 최적화할 수도 있습니다.
+
+추가 질문: 포인터 배열의 순회에서 가상 호출과 캐시 미스 비용을 어떻게 나누겠습니까?
+
+참고: [Microsoft — Virtual Functions](https://learn.microsoft.com/en-us/cpp/cpp/virtual-functions?view=msvc-170).
+
+<a id="cpp-example-12"></a>
+#### 12. 슬라이싱은 virtual로 되돌릴 수 없다
+
+~~~cpp
+#include <iostream>
+struct Enemy {
+    virtual ~Enemy() = default;
+    virtual int Damage() const { return 1; }
+};
+struct Boss : Enemy {
+    int Damage() const override { return 10; }
+};
+int ByValue(Enemy enemy) { return enemy.Damage(); }
+int ByReference(const Enemy& enemy) { return enemy.Damage(); }
+int main() {
+    Boss boss;
+    std::cout << ByValue(boss) << ' ' << ByReference(boss) << '\n';
+}
+~~~
+
+<details>
+<summary>예상 출력과 해설</summary>
+
+~~~text
+1 10
+~~~
+
+ByValue는 새 Enemy 객체를 만들며 Boss의 기반 부분만 복사합니다. ByReference는 원래 Boss를 참조해 재정의된 함수가 호출됩니다.
+
+</details>
+
+직접 변형: vector<Enemy>와 vector<unique_ptr<Enemy>>에 Boss를 저장하는 경우를 비교하세요. 다형성과 할당·간접 접근 비용을 함께 설명하세요.
+
+추가 질문 해설: 가상 호출 비용을 측정할 때 객체 배치를 같게 두고 호출 방식을 바꾸는 등 한 조건을 분리해야 합니다. 메모리 배치까지 바꾸면 캐시 효과가 섞입니다.
+
+[↑ 전체 목차](#목차)
+
+
+<a id="cpp-13"></a>
+### 템플릿과 컴파일·링크
+
+[예제와 해설로 이해하기](#cpp-example-13)
+
+> “템플릿 구현은 왜 헤더에 두는 경우가 많나요?”
+
+- 템플릿은 타입·값을 매개변수로 코드를 표현합니다. 특수화를 인스턴스화하려면 보통 정의가 보여야 하므로 헤더에 구현을 둡니다. 명시적 인스턴스화로 분리하는 방식도 있습니다.
+- 컴파일러는 번역 단위를 처리하고 링커는 생성된 코드와 라이브러리 사이의 심벌을 연결합니다. 선언만 있고 정의가 없거나 라이브러리가 빠지면 링크 오류가 날 수 있습니다.
+- 헤더 가드는 한 번역 단위에서 중복 포함을 막습니다. 여러 번역 단위에 비인라인 함수 정의를 중복해서 두는 문제까지 해결하지 않습니다.
+- Unreal에서는 C++ 컴파일·링크와 UHT의 리플렉션 코드 생성 단계도 구분합니다.
+
+추가 질문: ‘헤더를 포함했으니 링크도 된다’는 설명은 왜 부족한가요?
+
+참고: [Microsoft — Templates](https://learn.microsoft.com/en-us/cpp/cpp/templates-cpp?view=msvc-170), [Translation units and linkage](https://learn.microsoft.com/en-us/cpp/cpp/program-and-linkage-cpp?view=msvc-170).
+
+<a id="cpp-example-13"></a>
+#### 13. 템플릿과 번역 단위
+
+~~~cpp
+#include <iostream>
+template<class T>
+T Add(T a, T b) { return a + b; }
+int main() {
+    std::cout << Add(2, 3) << '\n';
+    std::cout << Add(1.5, 2.5) << '\n';
+}
+~~~
+
+<details>
+<summary>예상 출력과 해설</summary>
+
+~~~text
+5
+4
+~~~
+
+호출 타입에 맞는 템플릿 특수화가 사용됩니다. 아무 타입이나 가능한 것이 아니라 + 연산과 반환 변환 등 요구사항을 만족해야 합니다.
+
+</details>
+
+직접 변형:
+
+1. 일반 함수 AddInt의 선언만 add.h에 넣고 main에서 호출해 링크 오류를 확인합니다.
+2. 정의를 add.cpp에 넣고 두 cpp를 함께 빌드합니다.
+3. 템플릿으로 바꾸어 선언만 헤더에 둔 경우와 정의까지 헤더에 둔 경우를 비교합니다.
+4. 명시적 인스턴스화로 지원 타입을 고정하는 선택과 헤더 구현을 비교합니다.
+
+추가 질문 해설: 헤더 포함은 선언을 보여 주는 일이고 링크는 정의를 연결하는 일입니다. 헤더 가드가 여러 번역 단위의 비인라인 정의 중복까지 해결하지는 않습니다.
+
+[↑ 전체 목차](#목차)
+
+
+<a id="cpp-14"></a>
+### 컨테이너 선택과 캐시
+
+[예제와 해설로 이해하기](#cpp-example-14)
+
+> “해시 테이블은 항상 배열보다 빠른가요?”
+
+- `vector`는 연속 저장이라 순회와 인덱스 접근에 적합합니다. 중간 삽입·삭제에는 뒤 원소 이동 비용이 생길 수 있습니다.
+- `unordered_map`은 평균적으로 빠른 키 조회를 제공하지만 해시 계산, 충돌, 할당 비용이 있습니다. 최악 복잡도와 평균 복잡도를 구분합니다.
+- `map`은 정렬된 키 순서와 로그 시간 연산을 제공합니다. `list`의 상수 시간 삽입은 삽입 위치를 이미 알고 있는 등의 조건을 따집니다.
+- 빅오는 입력 크기 증가 경향을 설명합니다. 작은 데이터와 순회 위주 작업에서는 캐시 지역성 등으로 실제 결과가 달라집니다.
+- 비교 시 같은 데이터와 연산, 최적화 빌드, 반복 횟수, 결과 소비, 워밍업을 기록합니다. 시간 측정 루프 안에 로그를 넣지 않습니다.
+
+추가 질문: 적 20마리와 아이템 ID 10만 개 조회에 같은 구조를 고르겠습니까?
+
+참고: [Microsoft — Containers](https://learn.microsoft.com/en-us/cpp/standard-library/stl-containers?view=msvc-170), [unordered_map](https://learn.microsoft.com/en-us/cpp/standard-library/unordered-map-class?view=msvc-170).
+
+<a id="cpp-example-14"></a>
+#### 14. 비교 횟수와 실행 시간은 다르다
+
+~~~cpp
+#include <algorithm>
+#include <iostream>
+#include <unordered_map>
+#include <vector>
+int main() {
+    std::vector<int> ids{10, 20, 30, 40};
+    int comparisons = 0;
+    auto found = std::find_if(ids.begin(), ids.end(), [&](int id) {
+        ++comparisons;
+        return id == 40;
+    });
+    std::unordered_map<int, int> index{{10, 0}, {20, 1}, {30, 2}, {40, 3}};
+    std::cout << (found != ids.end()) << ' ' << comparisons << '\n';
+    std::cout << index.at(40) << '\n';
+}
+~~~
+
+<details>
+<summary>예상 출력과 해설</summary>
+
+~~~text
+1 4
+3
+~~~
+
+선형 탐색은 네 번 비교했습니다. 해시 조회가 한 CPU 명령으로 끝났다는 뜻은 아닙니다. 해시 계산·충돌 확인·메모리 접근과 구성 비용이 있습니다. 이 예제는 타이밍 벤치마크가 아닙니다.
+
+</details>
+
+직접 변형: 입력 크기를 16·1,024·65,536으로 늘려 성공·실패 조회를 섞으세요. 구성 시간과 조회 시간을 분리하고 Release 빌드에서 측정합니다. 결과 합계를 소비하고 타이밍 루프에서 로그를 제거합니다.
+
+추가 질문 해설: 작은 데이터에서 연속 메모리의 단순 탐색이 유리할 수 있습니다. 큰 데이터의 키 조회가 많으면 해시 구조가 유리할 수 있으나 순서·갱신·최악 시간 요구를 함께 봅니다.
+
+[↑ 전체 목차](#목차)
+
+
+<a id="cpp-15"></a>
+### 동시성과 데이터 경쟁
+
+[예제와 해설로 이해하기](#cpp-example-15)
+
+> “atomic으로 바꾸면 멀티스레드 로직이 안전해지나요?”
+
+- 동기화되지 않은 충돌 접근 중 쓰기가 있고 비원자적 데이터가 관여하는 데이터 경쟁은 C++에서 정의되지 않은 동작입니다.
+- `atomic`은 해당 원자 연산을 보장합니다. 여러 연산으로 구성된 ‘재고가 있을 때만 감소’ 같은 복합 규칙을 저절로 보장하지는 않습니다.
+- `mutex`와 RAII 잠금으로 임계 구역을 보호할 수 있습니다. 일관된 잠금 순서와 짧은 잠금 범위를 검토합니다.
+- 수명 보장과 동시 접근 보장은 별개입니다. 공유 포인터가 살아 있어도 대상의 동시 변경이 안전한 것은 아닙니다.
+- 작업 스레드에서 계산한다면 입력 복사, 결과 전달, 취소·종료 순서를 명확히 합니다.
+
+추가 질문: 작업 스레드가 게임 스레드를 기다리고 게임 스레드도 그 작업을 기다리면 어떻게 되나요?
+
+참고: [C++ Core Guidelines — Concurrency](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#s-concurrency).
+
+<a id="cpp-example-15"></a>
+#### 15. 원자 연산과 복합 규칙
+
+~~~cpp
+#include <atomic>
+#include <iostream>
+#include <thread>
+int main() {
+    std::atomic<int> count{0};
+    auto work = [&count] {
+        for (int i = 0; i < 1000; ++i) ++count;
+    };
+    std::thread a(work);
+    std::thread b(work);
+    a.join();
+    b.join();
+    std::cout << count.load() << '\n';
+}
+~~~
+
+<details>
+<summary>예상 출력과 해설</summary>
+
+~~~text
+2000
+~~~
+
+원자 증가가 갱신을 잃지 않도록 하고 join이 작업 완료 뒤 읽게 합니다. count의 수명도 작업보다 깁니다. 비원자 int에서 우연히 2000이 나와도 안전성 증거는 아닙니다.
+
+</details>
+
+직접 생각할 반례: stock을 읽어 양수이면 감소하는 두 단계에서, 두 작업이 모두 1을 읽고 차례로 감소하면 -1이 될 수 있습니다. 각 단계가 원자적이어도 합친 규칙은 하나의 원자 연산이 아닙니다.
+
+추가 질문 해설: 전체 판정을 mutex로 보호하거나 올바른 비교 후 교환 루프를 설계합니다. 잠금 순서가 순환하고 서로 기다리면 교착이 가능하므로 일관된 순서·수명·대기 관계를 함께 봅니다.
+
+[↑ 전체 목차](#목차)
+
+
+<a id="unreal-study"></a>
+## Unreal Engine
+
+<a id="ue-01"></a>
+### 일반 C++ 객체와 UObject
+
+[예제와 해설로 이해하기](#ue-example-01)
+
+> “일반 C++ 객체와 UObject는 무엇이 다른가요?”
+
+- `UObject`는 Unreal의 객체 시스템에 참여하는 기본 클래스입니다. 리플렉션, 직렬화, GC 등 엔진 기능과 연결됩니다.
+- 일반적인 UObject 인스턴스는 `NewObject`, Actor는 `SpawnActor`, 생성자에서 기본 서브오브젝트는 `CreateDefaultSubobject`처럼 목적에 맞는 엔진 경로로 생성합니다.
+- `UObject`에 대한 원시 포인터를 지역 변수로 보관하는 것만으로 GC가 그 참조를 추적한다고 가정하면 안 됩니다.
+
+추가 질문: 계산만 수행하는 작은 자료형까지 모두 UObject로 만들 필요가 있나요?
+
+참고: [Epic — Object Pointers](https://dev.epicgames.com/documentation/en-us/unreal-engine/object-pointers-in-unreal-engine), [Actor Lifecycle](https://dev.epicgames.com/documentation/en-us/unreal-engine/unreal-engine-actor-lifecycle).
+
+<a id="ue-example-01"></a>
+#### 1. 무기 설정을 생성할 때 new를 바로 쓰면 안 되는 이유
+
+무기 수치만 계산하는 일반 C++ 구조체와 에디터·GC에 참여하는 UObject는 관리 체계가 다릅니다. 모든 데이터를 UObject로 만들 필요도 없고, UObject를 일반 포인터 소유권 규칙으로 해제해서도 안 됩니다.
+
+| 대상 | 생성 의도 | 종료 책임 |
+|---|---|---|
+| 일반 값 구조체 | 계산·복사 | 일반 C++ 수명 |
+| UObject | 엔진 객체 생성 | 엔진 객체 시스템과 GC |
+| Actor | World에 참여 | Destroy·EndPlay 후 GC |
+| 기본 Component | 클래스 기본 구성 | 소유 Actor와 엔진 수명 |
+
+~~~cpp
+// UObject 파생 UWeaponSettings가 이미 선언되어 있다는 전제.
+// 살아 있는 UObject 소유자의 멤버:
+UPROPERTY()
+TObjectPtr<UWeaponSettings> Settings;
+
+// 소유자의 런타임 초기화 함수 일부:
+Settings = NewObject<UWeaponSettings>(this);
+~~~
+
+흐름: 소유자가 객체를 생성 → GC가 추적하는 멤버로 참조 → 필요한 동안 사용 → 참조와 도달 가능성이 사라지면 엔진이 회수합니다. Outer와 GC 강한 참조는 동일한 개념이 아닙니다. Outer를 넘겼다는 이유만으로 임의의 모든 자식 수명이 보장된다고 외우지 않습니다.
+
+확인 질문: 지역 변수에만 NewObject 결과를 저장하고 함수를 끝내면 누가 유지하나요? 다른 도달 가능한 참조가 없다면 장기 보관 계약이 없습니다. Actor는 World에 등록되는 생성 경로라는 점도 일반 UObject와 구분해야 합니다.
+
+근거: [Object Handling](https://dev.epicgames.com/documentation/en-us/unreal-engine/unreal-object-handling-in-unreal-engine).
+
+[↑ 전체 목차](#목차)
+
+
+<a id="ue-02"></a>
+### UObject 포인터 선택
+
+[예제와 해설로 이해하기](#ue-example-02)
+
+> “TObjectPtr, TWeakObjectPtr, TSoftObjectPtr는 언제 사용하나요?”
+
+| 형태 | 대표 용도 | 주의점 |
+|---|---|---|
+| `UPROPERTY()`의 `TObjectPtr<T>` | 살아 있는 UObject가 유지하는 강한 참조 | 멤버가 GC 추적 경로에 있어야 함 |
+| `TWeakObjectPtr<T>` | 사라질 수 있는 대상 관찰 | 사용 직전 유효성 확인 |
+| `TSoftObjectPtr<T>` | 경로로 에셋을 가리키고 필요할 때 로드 | 선언만으로 로드되지 않음 |
+
+`TObjectPtr`라는 타입명만으로 어디서든 GC 안전성이 확보되지는 않습니다. 또한 강한 참조가 있어도 Actor의 명시적인 `Destroy()`를 막지는 않습니다.
+
+추가 질문: 적을 조준하는 참조와 나중에 로드할 무기 에셋 참조에 같은 포인터를 고르겠습니까?
+
+참고: [Epic — Object Pointers](https://dev.epicgames.com/documentation/en-us/unreal-engine/object-pointers-in-unreal-engine).
+
+<a id="ue-example-02"></a>
+#### 2. 조준 대상과 무기 에셋에는 다른 참조가 필요하다
+
+조준한 적은 죽을 수 있습니다. 반면 인벤토리에 표시할 무기 이미지는 아직 로드하지 않았을 수 있습니다. '포인터 하나'라는 공통점보다 필요한 수명과 로딩 의도를 먼저 봅니다.
+
+~~~cpp
+// UCLASS의 멤버 예:
+TWeakObjectPtr<AActor> AimTarget;
+
+UPROPERTY(EditDefaultsOnly)
+TSoftObjectPtr<UTexture2D> Icon;
+
+// 게임 스레드에서 조준 대상 사용:
+if (AActor* Target = AimTarget.Get())
+{
+    const FVector Position = Target->GetActorLocation();
+    // Position으로 표시 위치를 계산한다.
+}
+~~~
+
+위 Target 사용은 유효한 객체를 얻은 같은 동기 흐름 안의 예입니다. 얻은 원시 포인터를 나중의 비동기 콜백에 저장하면 수명 문제가 다시 생깁니다. Icon.Get이 null이라는 사실만으로 에셋 경로가 비었다고 판단하지도 않습니다. 유효 경로지만 미로드 상태일 수 있습니다.
+
+<details>
+<summary>대상이 사라지면 무엇이 달라져야 하나요?</summary>
+
+조준 UI는 표시를 해제하고 다음 대상을 찾을 수 있어야 합니다. 무기 아이콘은 로딩 중 대체 표시를 사용하고 완료 후 다시 갱신할 수 있습니다. 강한 참조를 잡아 조준 대상의 명시적인 Actor 파괴까지 막으려는 설계는 맞지 않습니다.
+
+</details>
+
+근거: [Object Pointers](https://dev.epicgames.com/documentation/en-us/unreal-engine/object-pointers-in-unreal-engine).
+
+[↑ 전체 목차](#목차)
+
+
+<a id="ue-03"></a>
+### 생성자와 BeginPlay
+
+[예제와 해설로 이해하기](#ue-example-03)
+
+> “생성자와 BeginPlay는 어떤 작업을 나눠 맡아야 하나요?”
+
+- 생성자에서는 기본값과 기본 컴포넌트 구성을 설정합니다. 클래스 기본 객체(CDO) 생성 등에도 사용되므로 플레이 중인 월드가 준비되었다고 가정하지 않습니다.
+- `BeginPlay`는 플레이 시작 단계의 초기화에 사용합니다. 다른 Actor의 `BeginPlay`가 모두 끝났거나 클라이언트에 필요한 참조가 모두 복제되었다고 보장하지는 않습니다.
+- 로드된 Actor, 스폰된 Actor, 에디터에서 복제된 Actor는 그 이전 경로가 다를 수 있습니다. 모든 경로를 하나의 단순한 호출 순서로 외우지 않습니다.
+
+추가 질문: 다른 Actor를 찾는 코드가 생성자에서는 실패하고 플레이 중에는 성공하는 이유는 무엇일까요?
+
+참고: [Epic — Actor Lifecycle](https://dev.epicgames.com/documentation/en-us/unreal-engine/unreal-engine-actor-lifecycle).
+
+<a id="ue-example-03"></a>
+#### 3. 생성자에 기본 구성, BeginPlay에 플레이 시작 작업
+
+문 Actor가 항상 Mesh를 갖는다는 구조는 생성자에, 플레이 시작 때 문 상태를 표시하는 일은 런타임에 둡니다. 생성자는 CDO 구성에도 관여하므로 실행 중 플레이어가 있다고 가정하면 안 됩니다.
+
+~~~cpp
+// ADoorLab 생성자의 일부. Mesh는 선언된 UStaticMeshComponent 멤버.
+Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("DoorMesh"));
+SetRootComponent(Mesh);
+~~~
+
+~~~cpp
+// ADoorLab::BeginPlay 본문 일부
+Super::BeginPlay();
+UE_LOG(LogTemp, Log, TEXT("Door ready: %s"), *GetName());
+~~~
+
+여기서 CreateDefaultSubobject는 장면마다 임의의 Actor를 찾는 작업이 아닙니다. 클래스의 기본 구성 요소를 만드는 작업입니다. 스폰된 Actor와 로드된 Actor는 BeginPlay 이전 초기화 경로가 다를 수 있습니다.
+
+디버깅 순서: 생성자에서 실패한 World 조회를 BeginPlay로 옮기기 전에 그 참조가 정말 시작 때 준비되는지 판단 → 다른 Actor와의 의존이 있다면 명시적인 등록·준비 이벤트 설계 → 클라이언트에서는 복제 도착 시점까지 구분합니다.
+
+근거: [Actor Lifecycle](https://dev.epicgames.com/documentation/en-us/unreal-engine/unreal-engine-actor-lifecycle).
+
+[↑ 전체 목차](#목차)
+
+
+<a id="ue-04"></a>
+### Destroy와 EndPlay
+
+[예제와 해설로 이해하기](#ue-example-04)
+
+> “Destroy를 호출하면 Actor의 메모리가 즉시 해제되나요?”
+
+- 게임플레이에서의 종료와 메모리 회수를 구분해야 합니다. `Destroy`로 종료 절차를 밟고, 실제 메모리 회수는 이후 GC 단계에서 이루어집니다.
+- `EndPlay`는 명시적 파괴 외에도 레벨 전환이나 플레이 종료 등으로 호출될 수 있습니다.
+- 등록한 이벤트, 타이머, 진행 중인 작업은 대상 수명에 맞게 정리합니다. 특히 파괴 이후 콜백에서 예전 대상을 사용하는 경로를 확인합니다.
+
+추가 질문: 포인터가 `nullptr`이 아니면 파괴 중인 Actor도 사용해도 되나요?
+
+참고: [Epic — Actor Lifecycle](https://dev.epicgames.com/documentation/en-us/unreal-engine/unreal-engine-actor-lifecycle).
+
+<a id="ue-example-04"></a>
+#### 4. 파괴 요청·플레이 종료·메모리 회수
+
+체력이 0인 적이 아직 메모리에 있다고 다시 공격 대상으로 사용하면 안 됩니다. 게임에서 끝났다는 상태와 메모리가 반환됐다는 상태는 다릅니다.
+
+~~~text
+피해 처리
+  → 사망 규칙 결정
+  → Destroy 요청
+  → EndPlay 등 플레이 종료 처리
+  → 이후 GC 과정에서 객체 메모리 정리
+~~~
+
+Actor의 Destroy는 즉시 delete와 같지 않습니다. 호출이 허용되지 않아 실패하는 경우도 있고, 즉시 파괴·메모리 반환을 가정하면 안 됩니다. 정리 로그는 EndPlay의 이유와 Actor 식별자를 함께 남깁니다.
+
+~~~cpp
+// AEnemyLab::EndPlay 본문 일부
+GetWorldTimerManager().ClearTimer(AttackTimer);
+UE_LOG(LogTemp, Log, TEXT("EndPlay %s reason=%d"),
+       *GetName(), static_cast<int32>(EndPlayReason));
+Super::EndPlay(EndPlayReason);
+~~~
+
+AttackTimer는 이 Actor가 관리하는 타이머 핸들이라는 전제입니다. 일반 람다 등 객체와 직접 연결되지 않은 작업도 별도 해제 책임이 있는지 봅니다. 레벨 전환·PIE 종료도 검사하므로 EndPlay를 '사망 전용 함수'로 쓰지 않습니다.
+
+반례: 파괴 직후 포인터가 null이 아닌 것만 확인하고 접근하면 종료 중인 대상을 사용할 수 있습니다. 게임플레이 유효성 검사와 콜백 취소를 함께 설계합니다.
+
+근거: [Actor Lifecycle](https://dev.epicgames.com/documentation/en-us/unreal-engine/unreal-engine-actor-lifecycle).
+
+[↑ 전체 목차](#목차)
+
+
+<a id="ue-05"></a>
+### 게임 전체 상태의 위치
+
+[예제와 해설로 이해하기](#ue-example-05)
+
+> “GameMode, GameState, GameInstance의 역할은 무엇인가요?”
+
+- `GameMode`: 규칙과 참가·스폰 등의 서버 측 판단을 담당합니다. 네트워크 클라이언트에는 해당 서버의 GameMode 인스턴스가 없습니다.
+- `GameState`: 남은 시간이나 경기 상태처럼 클라이언트들이 알아야 하는 게임 상태를 담고 복제합니다.
+- `GameInstance`: 게임 인스턴스 수명 동안 유지되어 맵 전환을 넘는 데이터에 사용할 수 있습니다. 서버와 클라이언트 사이에 자동으로 공유·복제되는 저장소는 아닙니다.
+
+추가 질문: 라운드 승패와 로컬 옵션 설정은 각각 어디에 두겠습니까?
+
+참고: [Epic — Gameplay Framework](https://dev.epicgames.com/documentation/en-us/unreal-engine/gameplay-framework-in-unreal-engine).
+
+<a id="ue-example-05"></a>
+#### 5. 라운드 규칙과 화면 표시의 소유자
+
+라운드가 끝났는지 판단하는 곳과 남은 시간을 보여 주는 곳을 분리합니다. 클라이언트 UI가 서버 전용 GameMode를 찾는 방식은 멀티플레이에서 성립하지 않습니다.
+
+~~~text
+서버 GameMode: 승리 조건 판정
+        ↓
+서버 GameState: 공개할 경기 상태 갱신
+        ↓ 복제
+클라이언트 GameState → 로컬 UI 표시
+
+각 실행 인스턴스의 GameInstance: 맵을 넘어 유지할 로컬 데이터
+~~~
+
+| 데이터 | 가능한 위치 | 먼저 물어볼 조건 |
+|---|---|---|
+| 라운드 종료 규칙 | GameMode | 서버가 결정하는가 |
+| 모두가 보는 점수판 | GameState 또는 PlayerState | 누구에게 복제할 것인가 |
+| 로컬 옵션 | GameInstance 계열 서비스 | 맵 전환 뒤에도 필요한가 |
+
+정답 암기보다 요구조건을 설명하세요. GameInstance에 넣었다고 네트워크 동기화가 되지는 않습니다. 데이터 위치와 복제 정책은 각각 필요합니다.
+
+근거: [Gameplay Framework](https://dev.epicgames.com/documentation/en-us/unreal-engine/gameplay-framework-in-unreal-engine).
+
+[↑ 전체 목차](#목차)
+
+
+<a id="ue-06"></a>
+### 플레이어와 조종 대상
+
+[예제와 해설로 이해하기](#ue-example-06)
+
+> “PlayerController, Pawn, PlayerState를 구분하는 이유는 무엇인가요?”
+
+- `PlayerController`: 플레이어의 제어 주체입니다. 서버와 해당 소유 클라이언트에 존재하며 다른 모든 클라이언트에 똑같이 존재하지는 않습니다.
+- `Pawn`: 실제로 조종되는 월드 내 대상입니다. `Character`는 캐릭터 이동 등을 제공하는 Pawn의 하위 클래스입니다.
+- `PlayerState`: 점수 등 플레이어 상태를 표현하고 다른 클라이언트에도 복제할 수 있습니다.
+- 캐릭터 사망과 재스폰 시 Pawn을 교체할 수 있으므로, 함께 사라질 데이터와 남길 데이터를 수명에 따라 구분합니다. 맵 전환에서의 유지·복사는 별도 정책을 확인합니다.
+
+추가 질문: 차량에 탑승해 Pawn이 바뀌어도 유지해야 하는 점수는 어디에 두겠습니까?
+
+참고: [Epic — Gameplay Framework](https://dev.epicgames.com/documentation/en-us/unreal-engine/gameplay-framework-in-unreal-engine).
+
+<a id="ue-example-06"></a>
+#### 6. 재스폰에서 바뀌는 몸과 남는 플레이어
+
+죽은 Pawn을 새 Pawn으로 교체할 때 점수까지 사라지면 데이터가 잘못된 수명에 묶였을 수 있습니다.
+
+~~~text
+PlayerController ── Possess ──> Pawn A
+       │                         체력 0 → 종료
+       └──────── Possess ──> Pawn B
+                                 새 체력
+
+PlayerState: 같은 플레이어의 점수 등
+~~~
+
+실습에서는 체력과 점수를 동시에 바꾸지 말고 먼저 Pawn 교체 전후 이름만 관찰합니다. 그 다음 체력 초기화, 마지막으로 점수 유지 조건을 붙입니다. PlayerState도 맵 이동·연결 종료까지 무조건 유지되는 저장 파일은 아닙니다.
+
+<details>
+<summary>관찰 클라이언트의 PlayerController를 찾으면 될까요?</summary>
+
+다른 플레이어의 Controller가 모든 클라이언트에 존재하는 것은 아닙니다. 다른 플레이어를 표시할 때 필요한 공개 상태는 PlayerState 등의 복제 경로로 읽도록 설계합니다. 소유자만 필요한 정보와 모두에게 필요한 정보를 구분합니다.
+
+</details>
+
+근거: [Gameplay Framework](https://dev.epicgames.com/documentation/en-us/unreal-engine/gameplay-framework-in-unreal-engine).
+
+[↑ 전체 목차](#목차)
+
+
+<a id="ue-07"></a>
+### 변수 복제와 RPC
+
+[예제와 해설로 이해하기](#ue-example-07)
+
+> “변수 복제와 RPC는 어떻게 다른가요?”
+
+- 변수 복제는 서버의 상태를 클라이언트에 전달하는 데 사용합니다. 모든 중간 값 변화가 각각 이벤트처럼 도착하는 것은 아닙니다.
+- RPC는 지정된 원격 실행 규칙에 따라 함수를 호출하는 방법입니다. 호출 방향, Actor 소유권, 연결, 복제 설정을 함께 확인해야 합니다.
+- 계속 유지되어야 하는 상태와 일회성 요청을 구분합니다. 체력은 상태이며 공격 버튼 입력은 서버에 전달할 요청이 될 수 있습니다.
+- `Reliable`은 게임 규칙 검증이나 과거 호출의 재생을 대신하지 않습니다. 늦게 접속한 사람에게 과거 Multicast가 자동 재생되지는 않습니다.
+
+추가 질문: 문을 열었다는 Multicast만 보냈다면 나중에 접속한 사람은 열린 문을 볼 수 있나요?
+
+참고: [Epic — Networking Overview](https://dev.epicgames.com/documentation/en-us/unreal-engine/networking-overview-for-unreal-engine).
+
+<a id="ue-example-07"></a>
+#### 7. 문 열기에서 배우는 상태 복제
+
+문이 열렸다는 순간의 연출과 현재 열림 상태를 분리합니다. 늦게 접속한 사용자는 과거 이벤트를 보지 못해도 현재 상태를 알아야 합니다.
+
+~~~cpp
+// 복제되는 Actor의 선언 일부:
+UPROPERTY(ReplicatedUsing=OnRep_Open)
+bool bOpen = false;
+
+UFUNCTION()
+void OnRep_Open();
+~~~
+
+~~~cpp
+// GetLifetimeReplicatedProps 본문 일부:
+// #include "Net/UnrealNetwork.h"
+Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+DOREPLIFETIME(ADoorLab, bOpen);
+~~~
+
+Actor의 복제 활성화 등 전체 설정이 필요합니다. OnRep는 클라이언트에서 복제 상태를 표시하는 진입점으로 사용하고, C++ 서버의 일반 대입이 같은 OnRep를 자동으로 호출한다고 가정하지 않습니다. 공통 표시 함수로 서버 표시와 클라이언트 표시를 연결할 수 있습니다.
+
+| 관찰 시점 | 기대할 내용 |
+|---|---|
+| 서버가 문 상태 변경 | 서버 원본 값이 변경 |
+| 기존 클라이언트 | 해당 Actor가 관련 있고 복제되면 상태 반영 |
+| 늦은 접속 | 현재 상태 수신 후 표시 |
+| 연속 변경 | 모든 중간 값 이벤트가 각각 도착한다고 가정하지 않음 |
+
+근거: [Networking Overview](https://dev.epicgames.com/documentation/en-us/unreal-engine/networking-overview-for-unreal-engine).
+
+[↑ 전체 목차](#목차)
+
+
+<a id="ue-08"></a>
+### 서버 권위 공격 판정
+
+[예제와 해설로 이해하기](#ue-example-08)
+
+> “클라이언트에서 공격했을 때 서버는 무엇을 검증해야 하나요?”
+
+- 서버가 최종 게임 상태를 결정하는 모델에서는 클라이언트가 보낸 피해량과 피격 결과를 그대로 확정하지 않습니다.
+- 요청자의 소유권과 현재 행동 가능 상태, 자원·쿨다운, 대상·거리 등 게임 규칙을 서버에서 판단하도록 설계합니다.
+- 클라이언트는 입력 반응을 빠르게 보여 줄 수 있지만, 서버 결과와 다를 때 보정할 흐름이 필요합니다.
+
+설계 예: ‘적 체력을 30 줄여라’보다 ‘이 공격을 시도했다’를 전달하고, 서버가 유효한 공격인지 판단해 체력을 변경합니다. 구체적인 판정 시점과 지연 보상은 게임 요구사항에 따라 정합니다.
+
+추가 질문: 서버가 현재 위치만으로 판정하면 지연이 큰 플레이어에게 어떤 문제가 생기나요?
+
+참고: [Epic — Networking Overview](https://dev.epicgames.com/documentation/en-us/unreal-engine/networking-overview-for-unreal-engine). 검증 항목과 예시는 서버 권위 모델을 적용한 설계 예입니다.
+
+<a id="ue-example-08"></a>
+#### 8. 요청 권한과 공격 규칙은 두 번 확인한다
+
+클라이언트가 서버 RPC를 보낼 수 있는 소유 경로와 서버가 공격을 인정하는 규칙은 다릅니다. 호출이 도착했다는 사실은 공격 유효성의 증거가 아닙니다.
+
+~~~text
+의사코드:
+소유 클라이언트: 입력 → 자신의 Controller/Pawn을 통해 서버 요청
+서버:
+  요청한 행동을 지금 할 수 있는가?
+  거리·쿨다운·자원·대상은 유효한가?
+  유효하면 서버 상태 변경
+클라이언트:
+  복제된 확정 상태를 표시
+~~~
+
+월드의 문 Actor를 클라이언트가 소유하지 않는데 그 Actor에서 Server RPC를 호출하는 예제는 실행 경로부터 막힐 수 있습니다. 소유한 객체를 통해 요청하고 서버가 대상 문을 검증하는 경로를 검토합니다. Client가 보내는 임의 피해량을 그대로 적용하지 않습니다.
+
+확인 순서: RPC 미도착이면 소유·복제·호출 위치 → 도착 후 거부면 규칙 로그 → 서버 값은 맞는데 화면이 다르면 복제·표시 경로. 이 세 문제를 한 번에 고치려고 하지 않습니다.
+
+근거: [RPC 실행 규칙](https://dev.epicgames.com/documentation/en-us/unreal-engine/remote-procedure-calls-in-unreal-engine).
+
+[↑ 전체 목차](#목차)
+
+
+<a id="ue-09"></a>
+### GAS 구성 요소
+
+[예제와 해설로 이해하기](#ue-example-09)
+
+> “Ability, Effect, AttributeSet, ASC는 어떤 역할인가요?”
+
+- `GameplayAbility`: 공격·회피·회복 같은 행동의 실행 흐름을 표현합니다.
+- `GameplayEffect`: 피해·버프 등 속성 및 태그에 영향을 주는 효과를 표현합니다.
+- `AttributeSet`: 체력·공격력 같은 속성의 정의와 관련 처리를 담습니다.
+- `AbilitySystemComponent`: 어빌리티와 효과 등을 관리하는 중심 컴포넌트입니다.
+- `GameplayTag`: 행동과 상태를 이름의 계층으로 표현합니다. 태그 이름만 만들었다고 행동 차단이 저절로 구현되지는 않습니다.
+
+추가 질문: 공격 모션은 실행됐는데 피해가 적용되지 않는다면 Ability 실행, Effect 적용, Attribute 변경 중 어디까지 확인하겠습니까?
+
+참고: [Epic — Gameplay Ability System](https://dev.epicgames.com/documentation/en-us/unreal-engine/gameplay-ability-system-for-unreal-engine).
+
+<a id="ue-example-09"></a>
+#### 9. GAS에서 '회복 행동'의 경로
+
+처음에는 공격·애니메이션·예측을 모두 넣지 말고 회복 수치 하나의 흐름을 봅니다.
+
+~~~text
+입력
+ → ASC에 부여된 Ability 활성화 요청
+ → 활성화 조건 검사
+ → GameplayEffect 적용
+ → AttributeSet의 Health 변화
+ → 상태 변경을 받은 UI 갱신
+ → Ability 종료
+~~~
+
+Ability는 실행 흐름, Effect는 적용할 효과, AttributeSet은 속성 정의와 처리, ASC는 이를 관리하는 연결점입니다. UI가 Effect를 직접 해석해 체력을 계산하는 대신 확정된 속성 변화에 반응하게 설계합니다.
+
+실패 분리: 부여가 안 됨 / 활성화 조건 거부 / Effect 생성 또는 적용 실패 / 속성은 바뀌었지만 UI 구독 없음 / 종료 누락. 각 단계에 한 로그를 두면 'GAS가 안 된다'를 구체적인 질문으로 바꿀 수 있습니다.
+
+직접 답하기: Health는 감소했는데 연출이 안 나오면 피해 계산부터 다시 작성해야 할까요? 속성 변화 증거를 보존하고 표현 단계로 조사 범위를 좁힙니다.
+
+근거: [GAS 구성](https://dev.epicgames.com/documentation/en-us/unreal-engine/gameplay-ability-system-for-unreal-engine).
+
+[↑ 전체 목차](#목차)
+
+
+<a id="ue-10"></a>
+### C++ 자원 관리와 Unreal GC의 경계
+
+[예제와 해설로 이해하기](#ue-example-10)
+
+> “일반 C++ 스마트 포인터를 UObject에 그대로 사용해도 되나요?”
+
+- 일반 `std::unique_ptr`와 `std::shared_ptr`의 기본 삭제 방식으로 UObject의 수명을 관리하지 않습니다. 엔진 객체 시스템의 생성·종료·GC 경로를 사용합니다.
+- 일반 C++ 자료의 소유권과 UObject에 대한 참조 유지는 별개의 문제입니다.
+- UObject 멤버의 추적되는 참조, 비소유 관찰, 에셋 경로 참조를 구분해 객체 포인터를 고릅니다. 일반 C++ 객체에서 GC 강한 참조가 필요한 경우에는 `TStrongObjectPtr` 같은 엔진의 지원 수단을 검토합니다.
+
+추가 질문: ‘스마트 포인터니까 자동으로 안전하다’는 설명에서 빠진 조건은 무엇인가요?
+
+참고: [Epic — Object Pointers](https://dev.epicgames.com/documentation/en-us/unreal-engine/object-pointers-in-unreal-engine).
+
+<a id="ue-example-10"></a>
+#### 10. 일반 데이터와 UObject를 함께 사용할 때
+
+경로 탐색 결과처럼 순수 데이터는 일반 C++ 값으로 전달하고, 결과를 적용할 Actor는 약한 참조로 다시 확인하는 식으로 경계를 나눌 수 있습니다.
+
+~~~text
+작업 입력: 복사 가능한 숫자·좌표 목록
+       ↓
+백그라운드 계산: UObject를 임의로 수정하지 않음
+       ↓
+게임 스레드로 결과 전달
+       ↓
+요청 세대 확인 + 대상 유효성 확인
+       ↓
+살아 있는 대상에만 적용
+~~~
+
+이는 설계 예이며 구체적인 작업 API 코드는 아닙니다. std::shared_ptr를 썼다고 UObject의 생성·종료 경로가 일반 delete로 바뀌는 것은 아닙니다. 반대로 순수 자료까지 모두 UObject로 만들면 GC와 엔진 의존성을 불필요하게 늘릴 수 있습니다.
+
+꼬리 질문 해설: 로컬 원시 포인터 사용 자체가 금지되는 것은 아닙니다. 장기 보관·비동기 사용·GC 추적이 필요한 문맥인지가 중요합니다.
+
+근거: [Object Pointers](https://dev.epicgames.com/documentation/en-us/unreal-engine/object-pointers-in-unreal-engine).
+
+[↑ 전체 목차](#목차)
+
+
+<a id="ue-11"></a>
+### 리플렉션·CDO·Blueprint
+
+[예제와 해설로 이해하기](#ue-example-11)
+
+> “UPROPERTY를 붙이는 것과 C++ 멤버를 선언하는 것은 어떻게 다른가요?”
+
+- 리플렉션은 엔진이 타입·멤버 정보를 다룰 수 있게 합니다. UHT가 관련 선언을 처리하고 생성 코드를 C++ 빌드에 연결합니다.
+- `UPROPERTY`의 지정자에 따라 에디터 편집, Blueprint 접근, 직렬화 등 참여 방식이 달라집니다. 아무 지정자 없이 모든 기능이 활성화되는 것은 아닙니다.
+- CDO는 클래스의 기본값을 가진 객체입니다. 생성자에서 실행 중인 플레이어를 찾거나 세계 상태를 바꾸면 기본값 구성과 런타임 작업이 섞입니다.
+- Blueprint에 저장된 재정의 값이 있다면 C++ 기본값을 바꾸어도 그 값이 그대로 남을 수 있습니다.
+- C++에는 재사용할 규칙과 불변 조건을, Blueprint에는 조합과 콘텐츠 설정을 두는 설계를 검토합니다. 이는 절대적인 성능 규칙이 아니라 변경 빈도와 협업을 고려한 선택입니다.
+
+추가 질문: 에디터에서 편집 가능하다는 것과 Blueprint에서 쓰기 가능하다는 것은 같은가요?
+
+참고: [Epic — Unreal Object Handling](https://dev.epicgames.com/documentation/en-us/unreal-engine/unreal-object-handling-in-unreal-engine).
+
+<a id="ue-example-11"></a>
+#### 11. C++ 기본값을 바꿨는데 에디터 값은 그대로인 이유
+
+먼저 세 층을 구분합니다. C++ 클래스 기본값, Blueprint 클래스가 저장한 기본값, 배치 인스턴스의 재정의 값입니다. 어느 층을 보고 있는지 모르면 같은 수치를 계속 수정하게 됩니다.
+
+~~~cpp
+// UCLASS의 멤버 선언 일부:
+UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Combat")
+float BaseDamage = 10.0f;
+~~~
+
+| 지정자 | 설명할 질문 |
+|---|---|
+| EditDefaultsOnly | 클래스 기본값을 어디서 바꿀 수 있는가 |
+| EditInstanceOnly | 배치 인스턴스마다 조정할 값인가 |
+| BlueprintReadOnly | Blueprint 읽기와 쓰기를 어떻게 제한하는가 |
+| Replicated | 네트워크 설정을 추가로 어떻게 연결하는가 |
+
+UPROPERTY 하나만 붙이면 편집·Blueprint 쓰기·복제가 모두 된다는 뜻이 아닙니다. 지정자들의 목적이 다릅니다.
+
+실습 순서: 새 기본값과 재정의된 값을 각각 확인 → C++ 기본값 변경 → Blueprint 기본값과 배치 인스턴스를 나누어 확인 → 재정의 초기화 전후 비교. 중요한 재정의 값을 무작정 초기화하지 말고 연습 에셋으로 비교합니다.
+
+근거: [Object Handling](https://dev.epicgames.com/documentation/en-us/unreal-engine/unreal-object-handling-in-unreal-engine).
+
+[↑ 전체 목차](#목차)
+
+
+<a id="ue-12"></a>
+### Component·Subsystem과 책임
+
+[예제와 해설로 이해하기](#ue-example-12)
+
+> “ActorComponent와 Subsystem은 어떻게 고르나요?”
+
+- Component는 Actor에 속한 기능을 나눕니다. 인벤토리나 상호작용처럼 여러 Actor에 조합할 기능에 사용할 수 있습니다.
+- Subsystem은 GameInstance·World·LocalPlayer 등 선택한 대상의 수명에 연결되는 서비스에 사용할 수 있습니다. 모든 Subsystem이 프로세스에 하나인 전역 객체는 아닙니다.
+- 시작·종료 책임과 참조 대상의 수명을 먼저 결정합니다. 맵 전환을 넘는 서비스가 이전 World의 Actor를 계속 잡고 있지 않은지 확인합니다.
+- 클래스를 분리했다고 결합도가 자동으로 줄지는 않습니다. 호출 방향, 데이터 소유자, 초기화 의존성을 함께 봅니다.
+
+추가 질문: 로컬 사용자별 UI 서비스와 월드별 적 목록에 같은 Subsystem 수명이 맞을까요?
+
+참고: [Epic — Subsystems](https://dev.epicgames.com/documentation/en-us/unreal-engine/programming-subsystems-in-unreal-engine).
+
+<a id="ue-example-12"></a>
+#### 12. 전역 관리자부터 만들지 않기
+
+적 목록은 World마다 다를 수 있고, UI는 로컬 플레이어마다 다를 수 있습니다. '어디서나 접근 가능'보다 '누구와 함께 시작하고 끝나는가'를 먼저 결정합니다.
+
+~~~text
+Actor → ActorComponent: 그 Actor의 기능
+World → WorldSubsystem: 해당 World 범위 서비스
+GameInstance → GameInstanceSubsystem: 맵 전환을 넘는 서비스
+LocalPlayer → LocalPlayerSubsystem: 로컬 사용자별 기능
+~~~
+
+맵 전환 뒤 서비스가 살아도 이전 Actor가 계속 살아 있다는 뜻은 아닙니다. 장수명 서비스에서 단수명 대상을 추적한다면 등록·해제·약한 참조·World 종료 처리를 설계합니다. 서버 프로세스와 클라이언트 프로세스 사이의 전역 공유도 아닙니다.
+
+실습은 먼저 인스턴스별 식별자를 로그에 남겨 서로 다른 PIE World를 구분합니다. 그 다음 등록 수가 종료 후 줄어드는지 확인합니다. 테스트를 위해 새 클래스를 만들 때는 선택한 Subsystem 부모의 지원 범위와 초기화 API를 사용하는 엔진 버전에서 확인합니다.
+
+근거: [Subsystems](https://dev.epicgames.com/documentation/en-us/unreal-engine/programming-subsystems-in-unreal-engine).
+
+[↑ 전체 목차](#목차)
+
+
+<a id="ue-13"></a>
+### Delegate·Timer와 종료
+
+[예제와 해설로 이해하기](#ue-example-13)
+
+> “이벤트로 바꾸면 Tick보다 항상 좋은가요?”
+
+- 상태가 바뀔 때만 필요한 갱신은 이벤트가 적합할 수 있습니다. 매 프레임 필요한 연속 계산은 Tick이 자연스러울 수 있습니다. Timer도 작업량을 없애 주지는 않습니다.
+- 단일·멀티캐스트, Dynamic 여부와 바인딩 대상에 따라 용도와 비용이 다릅니다. Blueprint 연결이 필요한지도 판단합니다.
+- UObject를 인식하는 바인딩과 원시 포인터·일반 람다 캡처의 수명 처리는 같지 않습니다. `this`를 캡처한 람다가 객체를 소유한다고 가정하지 않습니다.
+- 구독과 해제를 짝지어 중복 등록을 막고, 타이머 핸들을 보관해 필요할 때 취소합니다. 객체에 연결되지 않은 람다 타이머는 객체별 일괄 정리만으로 충분한지 확인해야 합니다.
+
+추가 질문: UI를 열고 닫을 때마다 동일한 이벤트를 구독하면 세 번째 열기에서 어떤 현상이 생길까요?
+
+참고: [Epic — Delegates](https://dev.epicgames.com/documentation/en-us/unreal-engine/delegates-and-lambda-functions-in-unreal-engine), [Timers](https://dev.epicgames.com/documentation/en-us/unreal-engine/gameplay-timers-in-unreal-engine).
+
+<a id="ue-example-13"></a>
+#### 13. UI가 열릴수록 콜백이 늘어나는 버그
+
+~~~text
+잘못된 흐름:
+열기 → 구독
+닫기 → 화면만 숨김
+다시 열기 → 다시 구독
+체력 변경 → 같은 UI에 여러 알림
+~~~
+
+해결은 화면 갱신 함수를 빠르게 만드는 것보다 구독 수명부터 맞추는 것입니다.
+
+~~~cpp
+// 선언된 native multicast delegate와 FDelegateHandle을 사용하는 예:
+HealthHandle = Source->OnHealthChanged.AddUObject(
+    this, &UHealthView::RefreshHealth);
+
+// 종료 시 Source가 유효한지 먼저 확인한 뒤:
+Source->OnHealthChanged.Remove(HealthHandle);
+HealthHandle.Reset();
+~~~
+
+Source와 delegate 시그니처는 프로젝트별 선언이 필요합니다. Dynamic delegate는 바인딩·해제 API가 다르므로 위 코드를 그대로 혼용하지 않습니다. AddUObject의 수명 처리와 일반 AddLambda의 this 캡처도 같지 않습니다.
+
+실험: 열기·닫기 3회 후 한 번 변경 → 1회 콜백. 소스가 먼저 종료되는 경우도 재현합니다. 핸들을 저장했지만 잘못된 소스에서 제거하면 구독이 남을 수 있으므로 소스의 정체성도 보관·검증합니다.
+
+근거: [Delegates](https://dev.epicgames.com/documentation/en-us/unreal-engine/delegates-and-lambda-functions-in-unreal-engine).
+
+[↑ 전체 목차](#목차)
+
+
+<a id="ue-14"></a>
+### 입력에서 이동까지
+
+[예제와 해설로 이해하기](#ue-example-14)
+
+> “Input Action을 만들었는데 왜 입력이 들어오지 않을까요?”
+
+- Action은 행동과 값의 타입을 표현하고 Mapping Context는 키와 행동의 대응을 담습니다. 로컬 플레이어에 Context가 적용되고 입력 함수가 바인딩되는 경로를 확인합니다.
+- Modifier는 입력값을 변환하고 Trigger는 행동의 발동 조건을 판단합니다. `Triggered`가 언제 호출되는지는 Trigger 설정에 달려 있습니다.
+- 로컬 입력 값, 카메라 기준 방향, 월드 이동 방향을 구분합니다. 카메라가 돌아가도 전진 방향이 월드 X로 고정된다면 어느 좌표계를 사용했는지 확인합니다.
+- 입력을 받았다는 사실과 CharacterMovement가 실제 이동을 수행한 결과는 별도로 확인합니다.
+
+추가 질문: 입력 컨텍스트 전환 후 같은 키로 UI와 공격이 동시에 실행된다면 무엇을 보겠습니까?
+
+참고: [Epic — Enhanced Input](https://dev.epicgames.com/documentation/en-us/unreal-engine/enhanced-input-in-unreal-engine).
+
+<a id="ue-example-14"></a>
+#### 14. 입력은 들어오는데 캐릭터가 안 움직인다
+
+입력 장치 → Action 값 → Context 적용 → 바인딩 → 이동 방향 → 이동 수행을 분리합니다.
+
+~~~cpp
+// Axis2D 입력을 읽는 핸들러 일부:
+const FVector2D Axis = Value.Get<FVector2D>();
+const FRotator YawOnly(0.0f, Controller->GetControlRotation().Yaw, 0.0f);
+const FVector Forward = FRotationMatrix(YawOnly).GetUnitAxis(EAxis::X);
+const FVector Right = FRotationMatrix(YawOnly).GetUnitAxis(EAxis::Y);
+AddMovementInput(Forward, Axis.Y);
+AddMovementInput(Right, Axis.X);
+~~~
+
+Controller가 유효하고 해당 Pawn이 입력을 받는 전제입니다. 이 예제의 X=좌우, Y=앞뒤 축 계약에 맞게 Input Modifier를 구성해야 합니다. 축 배치가 다른 Context에 그대로 붙이지 않습니다.
+
+확인 순서: Axis 값 출력 → 카메라 Yaw 출력 → Forward·Right 시각화 → 이동 제한·MovementMode 확인. 입력값에 DeltaTime을 무조건 곱하지 않습니다. 사용한 이동 API가 값을 어떤 방식으로 소비하는지 확인합니다.
+
+반례: 카메라를 위로 올렸을 때 전진 속도가 줄면 pitch까지 포함한 전방을 바닥 이동에 썼는지 조사합니다.
+
+근거: [Enhanced Input](https://dev.epicgames.com/documentation/en-us/unreal-engine/enhanced-input-in-unreal-engine).
+
+[↑ 전체 목차](#목차)
+
+
+<a id="ue-15"></a>
+### Trace·Sweep과 공격 판정
+
+[예제와 해설로 이해하기](#ue-example-15)
+
+> “Overlap 이벤트와 Trace 질의는 어떤 차이가 있나요?”
+
+- Overlap 이벤트는 겹침 관계의 변화를 알리는 경로이고 Trace는 특정 시점에 공간을 질의하는 경로입니다. Line은 선, Sweep은 부피가 있는 형상을 이동시켜 검사합니다.
+- 채널·오브젝트 타입·응답·무시 대상과 단일/다중 결과 조건을 확인합니다. 화면에 선을 그렸다고 충돌 설정이 올바른 것은 아닙니다.
+- 빠른 무기는 현재 위치만 검사하면 프레임 사이 공간을 건너뛸 수 있습니다. 이전·현재 위치를 사용하는 검사를 검토하되 회전 궤적까지 완전히 덮는지는 별도 문제입니다.
+- 한 공격의 여러 샘플이 같은 대상을 맞힐 수 있으므로 공격 단위 중복 처리 정책을 정합니다. 이전 공격의 기록을 언제 초기화하는지도 중요합니다.
+
+추가 질문: 샘플 수를 두 배로 늘렸을 때 정확도와 질의 비용을 어떻게 비교하겠습니까?
+
+참고: [Epic — Traces Overview](https://dev.epicgames.com/documentation/en-us/unreal-engine/traces-in-unreal-engine---overview). 무기 샘플링은 질의를 적용한 설계 예입니다.
+
+<a id="ue-example-15"></a>
+#### 15. 검 끝의 현재 위치만 보면 놓치는 구간
+
+~~~text
+이전 프레임 검 끝 A ── 적 ── 현재 프레임 검 끝 B
+
+B에서만 검사: 적을 이미 지나쳤을 수 있음
+A→B 검사: 두 위치 사이를 검사
+회전하는 검 전체: 끝점 하나만으로는 여전히 빈틈 가능
+~~~
+
+~~~cpp
+// Actor 메서드 안의 질의 예. PreviousTip, CurrentTip은 같은 월드 공간.
+FHitResult Hit;
+FCollisionQueryParams Params;
+Params.AddIgnoredActor(this);
+const bool bHit = GetWorld()->SweepSingleByChannel(
+    Hit, PreviousTip, CurrentTip, FQuat::Identity,
+    ECC_Visibility, FCollisionShape::MakeSphere(5.0f), Params);
+if (bHit && Hit.GetActor())
+{
+    // 공격 단위 중복 검사 후 서버 판정 경로에 전달.
+}
+~~~
+
+Visibility는 설명용 채널이며 실제 전투 채널과 충돌 응답을 설계해야 합니다. Single 결과가 필요한지 Multi가 필요한지, blocking hit와 overlap의 반환 규칙도 해당 API에서 확인합니다. 채널 설정과 샘플링은 서로 다른 정확도 조건입니다.
+
+실습: 정지→느린 이동→빠른 이동 순서로 선과 구를 표시합니다. 같은 적을 여러 프레임 맞힐 때 공격당 피해 횟수를 따로 세세요. 샘플을 늘리기 전에 무엇을 놓쳤는지 시각화합니다.
+
+근거: [Traces](https://dev.epicgames.com/documentation/en-us/unreal-engine/traces-in-unreal-engine---overview).
+
+[↑ 전체 목차](#목차)
+
+
+<a id="ue-16"></a>
+### Montage·Notify·Root Motion
+
+[예제와 해설로 이해하기](#ue-example-16)
+
+> “공격 애니메이션이 끝나지 않고 중단되면 무엇을 정리해야 하나요?”
+
+- Montage는 애니메이션 재생을 섹션 등으로 제어합니다. Slot을 포함한 최종 포즈 경로도 맞아야 재생 결과가 보입니다.
+- Notify는 애니메이션 시점에 이벤트를 연결합니다. 마지막 Notify 하나만을 필수 정리 경로로 삼으면 중단 상황을 놓칠 수 있습니다.
+- 정상 종료·블렌드아웃·중단·사망을 구분해 공격 판정, 이동 제한, 이벤트 구독을 정리합니다. 중복 콜백에서도 결과가 일관되도록 설계합니다.
+- Root Motion은 루트의 이동을 캐릭터 이동에 활용합니다. 메시가 움직이는 것과 충돌 캡슐이 함께 움직이는 것을 구분해 관찰합니다. 추출·적용 설정과 네트워크 정책도 확인합니다.
+
+추가 질문: 애니메이션은 전진하는데 캡슐은 제자리에 있다면 어느 설정부터 확인하겠습니까?
+
+참고: [Epic — Montage](https://dev.epicgames.com/documentation/en-us/unreal-engine/animation-montage-in-unreal-engine), [Root Motion](https://dev.epicgames.com/documentation/en-us/unreal-engine/root-motion-in-unreal-engine).
+
+<a id="ue-example-16"></a>
+#### 16. 애니메이션이 중단되어도 공격 상태는 정리되어야 한다
+
+공격 상태와 애니메이션 상태를 한 bool로 대충 묶으면 취소·연속 공격에서 오래된 콜백이 새 공격을 끝낼 수 있습니다.
+
+~~~text
+의사코드:
+StartAttack:
+  AttackId 증가
+  공격 상태 시작
+  Montage 콜백은 이 AttackId를 기억
+
+FinishAttack(callbackId):
+  callbackId가 현재 AttackId와 다르면 오래된 콜백 → 무시
+  이미 종료했다면 → 무시
+  판정 비활성화 / 이동 제한 해제 / 구독 정리 / 상태 종료
+~~~
+
+정상 완료뿐 아니라 중단·사망도 같은 정리 원칙으로 합류하게 합니다. 결과가 두 번 들어와도 중복 피해나 상태 역전이 없어야 합니다. 종료 이벤트의 구체적 순서와 Montage delegate 시그니처는 실제 엔진 버전에서 확인합니다.
+
+| 실험 | 기대 조건 |
+|---|---|
+| 정상 완료 | 공격 상태 해제 |
+| 다른 행동으로 중단 | 판정·이동 제한 해제 |
+| 공격 중 사망 | 사망 후 피해 판정 없음 |
+| 즉시 다음 공격 | 이전 콜백이 새 공격 종료시키지 않음 |
+
+메시만 이동하고 캡슐은 남는 경우 Root Motion 추출·적용 경로를 따로 관찰합니다. 애니메이션 성공과 게임플레이 정리 성공은 별도입니다.
+
+근거: [Montage](https://dev.epicgames.com/documentation/en-us/unreal-engine/animation-montage-in-unreal-engine), [Root Motion](https://dev.epicgames.com/documentation/en-us/unreal-engine/root-motion-in-unreal-engine).
+
+[↑ 전체 목차](#목차)
+
+
+<a id="ue-17"></a>
+### 에셋 비동기 로딩
+
+[예제와 해설로 이해하기](#ue-example-17)
+
+> “Soft 참조로 바꾸면 끊김이 없어지나요?”
+
+- Soft 참조는 경로를 가지고 필요할 때 로드하도록 설계할 수 있게 합니다. 동기 로드를 호출하면 여전히 기다림이 생길 수 있습니다.
+- 로딩 요청, 완료, 소비, 해제를 구분합니다. 완료 전에 요청자가 사라졌거나 다른 에셋으로 선택이 바뀌었는지 확인합니다.
+- 로드 이후에도 필요한 동안 에셋을 유지할 참조 또는 핸들의 수명을 설계합니다. 경로만 가지고 있다고 로드된 객체가 계속 유지되지는 않습니다.
+- PIE에서는 이미 에셋이 메모리에 있어 문제가 가려질 수 있습니다. 시작 상태를 기록하고 패키지에서도 에셋 포함 및 로딩을 확인합니다.
+
+추가 질문: 무기 A를 요청하고 바로 B로 바꿨는데 A가 늦게 도착하면 어떻게 처리하겠습니까?
+
+참고: [Epic — Asynchronous Asset Loading](https://dev.epicgames.com/documentation/en-us/unreal-engine/asynchronous-asset-loading-in-unreal-engine).
+
+<a id="ue-example-17"></a>
+#### 17. 늦게 도착한 로딩 결과가 최신 선택을 덮는 버그
+
+~~~text
+시각 1: 무기 A 요청 (요청 번호 1)
+시각 2: 무기 B 요청 (요청 번호 2)
+시각 3: B 완료 → 현재 번호 2와 일치 → 표시
+시각 4: A 완료 → 현재 번호 2와 다름 → 폐기
+~~~
+
+로딩 완료만 검사하면 A가 최신 선택을 덮습니다. 대상 수명과 요청의 최신성은 별도의 조건입니다.
+
+~~~text
+의사코드:
+OnLoaded(requestId, weakView, asset):
+  view 유효성 확인
+  requestId == view.currentRequest 확인
+  asset 로딩 성공 확인
+  view가 사용할 기간의 강한 참조/핸들 유지
+  표시 갱신
+~~~
+
+실패 시 대체 이미지를 유지할지 재시도할지 정합니다. 요청 취소만으로 늦은 콜백이 절대 오지 않는다고 가정하지 말고 완료 경로도 방어합니다. 동기 로딩을 Soft 참조로 감쌌다고 비동기가 되지는 않습니다.
+
+실습: A·B 선택 순서와 완료 순서를 의도적으로 달리하고, 완료 전에 UI를 닫습니다. 에디터에서 이미 로드된 에셋인지 기록하고 패키지에서도 확인해야 합니다.
+
+근거: [Asynchronous Loading](https://dev.epicgames.com/documentation/en-us/unreal-engine/asynchronous-asset-loading-in-unreal-engine).
+
+[↑ 전체 목차](#목차)
+
+
+<a id="ue-18"></a>
+### GAS의 활성화·비용·종료
+
+[예제와 해설로 이해하기](#ue-example-18)
+
+> “Ability가 한 번 실행된 뒤 다시 실행되지 않는다면 무엇을 확인하나요?”
+
+- 부여·활성화 가능 조건·실행·종료를 구분합니다. ASC 초기화, 소유자와 실제 행동 대상, 태그 조건을 따라갑니다.
+- 비용·쿨다운을 적용하는 Commit의 성공 여부와 실패 후 종료 경로를 확인합니다. 효과가 적용되었다고 애니메이션까지 성공했다는 뜻은 아닙니다.
+- 비동기 Task 완료뿐 아니라 취소·중단에도 EndAbility로 이어지는지 확인합니다. 실행 중 태그나 등록한 콜백이 남으면 재실행을 막을 수 있습니다.
+- 예측은 지원되는 작업을 로컬에서 먼저 수행하고 서버 결과와 조정하는 체계입니다. 임의의 게임 상태 변경이 전부 자동으로 되돌려지는 것은 아닙니다.
+- ASC 위치는 재스폰 시 남길 상태와 복제 요구를 보고 정합니다. 모든 게임에서 PlayerState가 유일한 답은 아닙니다.
+
+추가 질문: 비용 차감 직후 Montage 재생이 실패하면 환불 여부와 종료 처리를 어떻게 정하겠습니까?
+
+참고: [Epic — Gameplay Ability System](https://dev.epicgames.com/documentation/en-us/unreal-engine/gameplay-ability-system-for-unreal-engine). 실패 후 환불 여부는 게임 규칙에 따른 설계 선택입니다.
+
+<a id="ue-example-18"></a>
+#### 18. GAS 실패 경로를 끝까지 따라가기
+
+Ability의 성공 로그 하나보다 활성화 요청부터 종료까지 이어지는 경로가 중요합니다.
+
+~~~text
+부여 → 활성화 조건 → Commit 성공?
+                    ├─ 아니오 → 실패 종료
+                    └─ 예 → 실행/Task
+                              ├─ 완료 → 정상 종료
+                              ├─ 취소 → 취소 정리와 종료
+                              └─ 실행 실패 → 정책 처리와 종료
+~~~
+
+Commit 이후 애니메이션 시작이 실패했을 때 비용 환불 여부는 게임 규칙입니다. 환불 정책을 명시하고, 수치를 임의로 직접 더해 복제·효과 정책과 충돌하지 않게 해야 합니다. 일반적인 자동 환불을 가정하지 않습니다.
+
+~~~text
+관찰 로그 양식(예상 형식이며 실제 실행 로그가 아님):
+AbilityId / Owner / Avatar / Role
+Activate accepted 또는 rejected + 이유
+Commit success 또는 failed
+Task completed 또는 canceled
+EndAbility + 종료 이유
+~~~
+
+실습은 자원 소모만 성공시킨 다음 부족 조건을 추가합니다. 그 후 Task 취소를 붙이고 마지막에 네트워크를 추가합니다. ASC가 PlayerState에 남고 Pawn이 교체되는 설계라면 새 Avatar로 초기화되는 경로와 클라이언트 복제 도착 시점을 확인합니다.
+
+면접 답변에서 구분할 것: Ability가 부여되어 있음, 실행 가능함, 실행 중임, 종료됨은 서로 다른 상태입니다. ‘한 번 됐다’보다 실패 후 다시 실행되는지까지 증명해야 합니다.
+
+근거: [GAS](https://dev.epicgames.com/documentation/en-us/unreal-engine/gameplay-ability-system-for-unreal-engine).
+
+
+## GAS 세부 참고
+
+- [ASC와 Attribute 연결](https://dev.epicgames.com/documentation/unreal-engine/gameplay-ability-system-component-and-gameplay-attributes-in-unreal-engine)
+- [Ability Task의 비동기 실행과 종료](https://dev.epicgames.com/documentation/unreal-engine/gameplay-ability-tasks-in-unreal-engine)
+
+[↑ 전체 목차](#목차)
+
+
+<a id="game-study"></a>
+## 게임 수학·렌더링·성능
+
+<a id="math"></a>
+### 위치·방향·회전
+
+> “적이 내 앞에 있는지 어떻게 판정하나요?”
+
+- 위치 두 개의 차 `Target - Origin`은 원점에서 목표까지의 방향과 거리를 담습니다. 길이를 1로 만들면 거리 정보를 제거한 단위 방향이 됩니다. 거리가 0에 가까운 경우도 처리합니다.
+- 단위 전방 벡터와 단위 목표 방향의 내적은 두 방향 사이 각도의 코사인입니다. 시야 반각의 코사인과 비교하면 원뿔 범위를 검사할 수 있습니다. 내적에 거리 제한이 포함되지는 않습니다.
+- 외적은 두 벡터에 수직인 방향을 만들며 입력 순서를 바꾸면 부호가 바뀝니다. 좌우 판정은 좌표계와 기준 축을 명시합니다.
+- 위치 변환에는 이동이 필요하지만 방향에는 평행이동을 적용하지 않습니다. 로컬·월드·카메라 공간 중 어느 공간에서 계산하는지 먼저 정합니다.
+- 회전 합성은 순서에 영향을 받습니다. 쿼터니언은 회전 표현과 보간에 유용하지만 곱셈 순서나 최단 경로 같은 조건을 없애 주지는 않습니다.
+
+<details>
+<summary>수치 예제 — 전방 60도 안에 있는가?</summary>
+
+전방이 `(1, 0, 0)`, 같은 위치에서 본 목표 방향이 `(1, 1, 0)`이면 정규화한 목표 방향과의 내적은 약 `0.707`입니다. 전체 시야각이 60도라면 반각 30도의 코사인 약 `0.866`과 비교하므로 범위 밖입니다. 전체 각도와 반각을 혼동하지 않습니다.
+
+</details>
+
+추가 질문: 목표가 바로 위에 있을 때도 수평 시야 검사에서 같은 공식을 그대로 쓰겠습니까?
+
+참고: [Microsoft — Vector dot product](https://learn.microsoft.com/en-us/windows/win32/api/directxmath/nf-directxmath-xmvector3dot), [Quaternion multiplication](https://learn.microsoft.com/en-us/windows/win32/api/directxmath/nf-directxmath-xmquaternionmultiply). 위 예제는 기본 벡터 연산을 적용한 계산입니다.
+
+<a id="rendering"></a>
+### 렌더링과 병목
+
+> “드로우 콜을 줄이면 FPS가 반드시 오르나요?”
+
+- CPU에서 그릴 데이터를 준비하고 GPU가 기하 처리·래스터화·셰이딩 등의 작업을 수행합니다. 실제 엔진은 여러 패스와 병렬 작업을 사용하므로 하나의 직렬 함수 호출처럼 보지 않습니다.
+- 드로우 호출과 상태 변경 비용을 줄여도 GPU의 픽셀 처리나 다른 CPU 작업이 병목이면 전체 프레임 시간 변화가 작을 수 있습니다.
+- 해상도, 오버드로우, 그림자, 재질 복잡도, 지오메트리 수는 서로 다른 비용에 영향을 줍니다. 한 번에 한 조건을 바꾸어 가설을 확인합니다.
+- LOD·인스턴싱 등도 메모리·전환 품질·컬링 단위와 함께 판단합니다. 특정 기능을 켰다는 사실은 최적화 결과가 아닙니다.
+
+추가 질문: 해상도를 낮춰도 프레임 시간이 거의 같다면 다음에 어떤 CPU/GPU 구간을 확인하겠습니까?
+
+참고: [Microsoft — Graphics pipeline](https://learn.microsoft.com/en-us/windows/win32/direct3d11/overviews-direct3d-11-graphics-pipeline), [Epic — Unreal Insights](https://dev.epicgames.com/documentation/en-us/unreal-engine/unreal-insights-in-unreal-engine). 병목 비교는 측정을 위한 가설이며 측정 결과를 단정하지 않습니다.
+
+<a id="profiling"></a>
+### 성능 측정과 패키징
+
+> “에디터에서 잘 되면 배포 가능한 상태인가요?”
+
+- PIE, 독립 실행, 패키지 실행은 별도로 확인합니다. 쿠킹에서 에셋이 빠지거나 시작 맵·설정 차이로 실행 결과가 달라질 수 있습니다.
+- 빌드·쿠킹·스테이징·패키징 단계와 런타임 실패를 구분합니다. 마지막 실패 문장만 보지 말고 최초 원인 로그를 찾습니다.
+- 성능은 장면, 장치, 빌드 설정, 해상도, 개체 수, 실행 시간을 맞춰 비교합니다. 평균 FPS 외에 프레임 시간과 일시적인 지연도 봅니다.
+- Insights의 타이밍 등 적절한 트레이스를 이용해 어느 작업이 시간을 쓰는지 확인합니다. 사용한 채널과 기록 구간을 남깁니다.
+- 변경 하나를 적용하고 같은 조건에서 재측정합니다. 빨라졌더라도 메모리 증가나 동작 오류가 생겼는지 확인합니다.
+
+추가 질문: 에셋을 미리 로드해 끊김을 줄였을 때 시작 시간과 최대 메모리는 어떻게 달라질까요?
+
+참고: [Epic — Unreal Insights](https://dev.epicgames.com/documentation/en-us/unreal-engine/unreal-insights-in-unreal-engine), [Packaging](https://dev.epicgames.com/documentation/en-us/unreal-engine/packaging-your-project).
+
+
+<a id="study-practice"></a>
+## 실습 준비
+
+### 준비
+
+C++은 C++17 이상 콘솔 프로젝트 하나면 됩니다. [실행 예제](#cpp-study)는 각각 독립된 main이므로 여러 예제를 한 소스에 붙이지 않습니다. Visual Studio의 C++ 콘솔 프로젝트에서 시작할 수 있습니다. 특정 IDE를 쓰지 않아도 같은 표준을 지원하는 컴파일러로 실행하면 됩니다.
+
+Unreal은 기존 연습 프로젝트에서 시작합니다. 엔진 버전, 프로젝트 모듈 이름, Source의 Public/Private 구조를 먼저 확인하세요. 이 저장소는 엔진 프로젝트가 아니므로 일괄 클래스 생성 경로를 지정하지 않습니다. 아래 표는 **구현할 역할**이며 클래스 생성 대화상자 안내가 아닙니다. 실제 생성 시에는 해당 프로젝트를 확인하고 부모·이름·Public/Private 경로를 결정해야 합니다.
+
+| 실험 | 필요한 역할 | 처음에는 제외할 것 |
+|---|---|---|
+| 수명 | 배치하거나 스폰할 Actor, 로그 관찰자 | GAS·네트워크 |
+| 재스폰 | Controller, 교체 가능한 Pawn, 상태 보관자 | UI·세이브 |
+| 문 복제 | 복제 Actor, 소유한 요청 경로 | 애니메이션·예측 |
+| GAS | ASC·속성·단순 Ability·Effect | Montage·콤보·예측 |
+
+실습 기록에는 버전·재현 순서·예상·실제·해석을 남깁니다. 아래 수치와 로그는 **기대 조건**이며 수행 결과가 아닙니다.
+
+
+
+<a id="study-questions"></a>
+## C++·Unreal 차시별 질문과 실습
+
+각 차시의 질문 뒤에 실습 단계와 해설이 이어집니다. 원문 Unity 질문 모음집은 비교 학습용 링크입니다.
+
+- 💯: 이 과정의 핵심 질문. 출제 빈도를 조사한 표시는 아닙니다.
+- 😎: 기본을 익힌 뒤 다룰 심화 질문.
+- 🔨: 직접 구현하고 실행할 과제.
+- 📊: 문서·소스·측정으로 검증할 과제.
+- 🗽: 실제 경험이나 설계 판단으로 답할 질문.
+
+<a id="session-01"></a>
+### 1차시 — C++ 수명과 소유권
+
+[작은 단계로 실습하기 · 힌트 · 해설 기준](#practice-01)
+
+원문 연결: [GC 질문](./질문%20모음집.md#garbage-collection). 메모리와 수명이라는 질문을 공유하되 C# GC의 답을 C++ 소멸자에 그대로 적용하지 않습니다.
+
+읽기: [객체 수명](#cpp-01), [포인터·참조](#cpp-02), [RAII](#cpp-03), [스마트 포인터](#cpp-04), [이동](#cpp-05), [Rule of Zero](#cpp-06).
+
+- 💯 자동 저장 기간의 객체와 그 객체가 소유한 동적 메모리의 수명을 구분하세요.
+- 💯 `unique_ptr`, `shared_ptr`, `weak_ptr`를 소유권으로 설명하세요.
+- 💯 `std::move`가 실제로 하는 일과 이동 생성자가 하는 일을 구분하세요.
+- 🔨 생성·복사·이동·소멸 시 서로 다른 로그를 남기는 작은 일반 C++ 타입을 만들고, 스코프 종료와 소유권 이동을 관찰하세요.
+- 📊 “이동 후 객체는 항상 비어 있다”는 주장을 특정 타입의 계약으로 검증하세요.
+- 😎 복사 생략 때문에 예상한 로그가 나오지 않을 수 있는 경우를 조사하세요.
+- 🗽 자원 소유자를 하나로 정할 수 있었던 상황과 공유가 필요했던 상황을 비교하세요.
+
+확인 기준: 각 자원이 누가 소유하고 언제 해제되는지 로그로 설명합니다. 복사 생략과 이동을 구분하고, 해제된 객체를 읽는 실습으로 결과를 추측하지 않습니다.
+
+<a id="practice-01"></a>
+#### 실습 단계와 해설
+
+먼저: [수명](#cpp-example-01) → [RAII](#cpp-example-03) → [스마트 포인터](#cpp-example-04). 이동과 Rule of Zero는 그 다음에 읽습니다.
+
+1. 객체 하나를 안쪽 스코프에서 만들고 종료 순서를 확인합니다.
+2. unique_ptr로 생성해 다른 unique_ptr로 이동합니다. 이전 소유자가 비는지 확인합니다.
+3. weak_ptr 관찰 예제를 실행하고 lock 전후 소유자 수를 적습니다.
+4. 마지막으로 부모·자식 관계를 만들어 역방향을 약한 참조로 둡니다.
+
+예상: 관찰자만 남았을 때 대상은 소멸할 수 있습니다. 실제 자원마다 해제가 한 번이어야 합니다.
+
+막히면: 생성 로그에 객체 ID를 넣습니다. 여러 로그가 나오는 이유가 복사·이동인지 서로 다른 객체인지 먼저 구분합니다.
+
+해설 기준: 소유권 이동과 값 복사는 다릅니다. 복사 생략은 불필요한 중간 객체 생성을 생략할 수 있으므로 모든 반환에 복사 로그가 나와야 한다고 생각하지 않습니다. 규칙과 실제 로그를 각각 설명하면 통과입니다.
+
+[↑ 전체 목차](#목차)
+
+
+<a id="session-02"></a>
+### 2차시 — const·다형성·빌드
+
+[작은 단계로 실습하기 · 힌트 · 해설 기준](#practice-02)
+
+원문 연결: [객체지향과 패턴 질문](./질문%20모음집.md#object-oriented-programming--design-pattern). C#의 문법·객체 배치를 C++의 보장으로 취급하지 않습니다.
+
+읽기: [가상 소멸자](#cpp-07), [const·캐스팅](#cpp-11), [가상 호출](#cpp-12), [템플릿·빌드](#cpp-13).
+
+- 💯 `const T*`와 `T* const`의 차이를 설명하세요.
+- 💯 기반 타입으로 삭제하도록 설계한 클래스의 소멸자는 어떻게 선언하나요?
+- 💯 컴파일 오류와 링크 오류는 어느 단계에서 발생하나요?
+- 🔨 두 소스 파일에서 함수 선언만 있는 경우와 정의까지 있는 경우를 빌드하고 결과를 비교하세요.
+- 📊 가상 함수를 가진 작은 클래스의 `sizeof`를 확인하고, 측정값과 표준 보장을 구분하세요.
+- 😎 템플릿 정의를 cpp로 옮긴 뒤 명시적 인스턴스화로 해결할 수 있는 조건을 조사하세요.
+- 🗽 상속과 합성 중 하나를 선택했던 이유를 설명하세요.
+
+확인 기준: 오류를 내는 최소 변경과 원복 후 성공 로그를 보관합니다. 특정 컴파일러의 크기를 모든 환경의 정답으로 적지 않습니다.
+
+<a id="practice-02"></a>
+#### 실습 단계와 해설
+
+먼저: [const](#cpp-example-11) → [가상 소멸자](#cpp-example-07) → [슬라이싱](#cpp-example-12). [템플릿과 링크](#cpp-example-13)는 별도 시간에 해도 됩니다.
+
+1. const 포인터와 상수 포인터의 허용된 변경을 실행합니다.
+2. 금지된 변경을 한 줄씩 추가해 컴파일 오류를 확인하고 원복합니다.
+3. 일반 함수의 선언만 제공해 링크 오류를 확인합니다.
+4. 정의를 제공해 성공시킵니다. 그 다음 템플릿으로 확장합니다.
+
+예상: 문법·타입 검사는 컴파일 단계, 빠진 정의는 링크 단계에서 구분됩니다.
+
+막히면: 마지막 오류만 보지 말고 최초 오류와 발생 도구를 기록합니다. 컴파일 실패로 obj가 없어서 난 후속 오류를 링크의 독립 원인으로 오해하지 않습니다.
+
+해설 기준: sizeof 값은 기록한 ABI의 결과이고 언어가 고정한 크기가 아닙니다. 상속은 대체 가능한 공통 동작, 합성은 독립 기능 조합에 유리한 경우가 있지만 실제 변경 요구를 기준으로 선택 이유를 설명합니다.
+
+[↑ 전체 목차](#목차)
+
+
+<a id="session-03"></a>
+### 3차시 — 컨테이너와 비용
+
+[작은 단계로 실습하기 · 힌트 · 해설 기준](#practice-03)
+
+원문 연결: [메모리 최적화 질문](./질문%20모음집.md#memory-optimization). 관리형 할당과 C++ 컨테이너의 할당을 구분합니다.
+
+읽기: [size·capacity](#cpp-08), [참조 무효화](#cpp-09), [컨테이너·캐시](#cpp-14).
+
+- 💯 `reserve`와 `resize`의 차이를 설명하세요.
+- 💯 재할당이 저장해 둔 포인터·반복자에 미치는 영향을 설명하세요.
+- 💯 키 조회와 전체 순회에서 컨테이너 선택이 달라지는 이유는 무엇인가요?
+- 🔨 예상 개수만큼 미리 reserve한 경우와 하지 않은 경우의 capacity 변화 횟수를 기록하세요.
+- 📊 같은 키 집합으로 선형 탐색과 해시 조회를 비교하세요. 작은 입력과 큰 입력을 모두 측정하세요.
+- 😎 해시 충돌과 재해시가 평균 복잡도 설명에서 어떻게 다뤄지는지 조사하세요.
+- 🗽 순서·안정적인 ID·주소 안정성 중 어떤 요구가 컨테이너 선택에 영향을 줬나요?
+
+확인 기준: 할당 관찰과 시간 측정은 분리하고, 무효화된 포인터를 역참조하지 않습니다. 입력 크기·빌드 설정·반복 횟수·결과 소비 방법을 기록합니다.
+
+<a id="practice-03"></a>
+#### 실습 단계와 해설
+
+먼저: [size·capacity](#cpp-example-08), [인덱스와 ID](#cpp-example-09), [비교 횟수](#cpp-example-14).
+
+1. push_back 전후 capacity가 바뀐 횟수를 셉니다. 메모리 주소를 역참조할 필요는 없습니다.
+2. 한 번 reserve한 경우와 비교합니다.
+3. 동일한 데이터로 전체 순회·성공 조회·실패 조회를 따로 측정합니다.
+4. 작은 입력과 큰 입력에서 결론이 같은지 확인합니다.
+
+예상: 정확한 성장 배수는 구현에 따라 달라질 수 있습니다. reserve 유무와 연산 종류에 따라 비용이 달라지는 이유를 찾아야 합니다.
+
+막히면: 측정 루프의 출력, Debug 빌드, 데이터 구성 시간, 결과가 사용되지 않는 최적화 가능성부터 점검합니다.
+
+해설 기준: 해시 조회의 평균 O(1)은 최악에도 O(1)이라는 뜻이 아닙니다. 충돌·재해시·메모리 비용을 알고, 순서와 식별 안정성까지 고려한 선택이면 됩니다.
+
+[↑ 전체 목차](#목차)
+
+
+<a id="session-04"></a>
+### 4차시 — 람다와 동시성
+
+[작은 단계로 실습하기 · 힌트 · 해설 기준](#practice-04)
+
+원문 연결: [멀티스레딩·비동기 질문](./질문%20모음집.md#multi-threading--asynchronous-function).
+
+읽기: [람다 수명](#cpp-10), [동시성](#cpp-15).
+
+- 💯 비동기와 병렬 실행은 같은 뜻인가요?
+- 💯 값으로 캡처한 원시 포인터는 대상의 수명을 유지하나요?
+- 💯 수명 문제와 데이터 경쟁은 어떻게 다른가요?
+- 🔨 입력 데이터를 값으로 전달해 작업한 뒤 완료를 기다려 결과를 읽는 작은 예제를 작성하세요.
+- 📊 `atomic` 읽기와 쓰기를 따로 하는 조건부 갱신이 복합 규칙을 보장하는지 실행 순서 두 개를 그려 검증하세요.
+- 😎 두 잠금의 획득 순서가 반대인 경로에서 교착 상태가 가능한 이유를 설명하세요.
+- 🗽 작업이 끝나기 전에 화면이 닫히면 취소와 결과 폐기를 어떻게 처리하겠습니까?
+
+확인 기준: 정상 완료와 결과 불필요 상황을 각각 설명합니다. 경쟁 코드가 여러 번 성공했다는 사실을 안전성 증거로 사용하지 않습니다.
+
+<a id="practice-04"></a>
+#### 실습 단계와 해설
+
+먼저: [람다](#cpp-example-10), [atomic](#cpp-example-15).
+
+1. 같은 스레드에서 값 캡처·참조 캡처 결과를 비교합니다.
+2. 입력을 값으로 복사해 작업을 수행하고 join 후 결과를 읽습니다.
+3. 두 스레드의 atomic 증가 결과를 확인합니다.
+4. 재고 조건부 감소를 두 작업의 실행 순서 표로 그립니다.
+
+예상: 증가 예제는 2000. 조건 검사와 감소를 분리한 재고 규칙은 각 연산이 atomic이어도 잘못될 수 있습니다.
+
+막히면: 결과를 읽는 시점과 데이터가 살아 있는 기간을 종이에 표시합니다. 동기화 없이 비원자 데이터를 공유한 실행 결과로 언어 규칙을 추측하지 않습니다.
+
+해설 기준: ‘작업이 끝남’, ‘대상이 살아 있음’, ‘결과가 최신 요청에 해당함’은 별도 조건입니다. 취소할 수 없는 작업도 오래된 결과를 폐기하는 설계는 가능하지만 사용 자원의 정리는 필요합니다.
+
+[↑ 전체 목차](#목차)
+
+
+<a id="session-05"></a>
+### 5차시 — UObject와 GC
+
+[작은 단계로 실습하기 · 힌트 · 해설 기준](#practice-05)
+
+원문 연결: [GC](./질문%20모음집.md#garbage-collection), [Fake Null](./질문%20모음집.md#fake-null--null-object-pattern), [Reflection](./질문%20모음집.md#linq--reflection).
+
+읽기: [UObject](#ue-01), [포인터 선택](#ue-02), [생성자](#ue-03), [종료](#ue-04), [GC 경계](#ue-10), [리플렉션](#ue-11).
+
+- 💯 일반 C++ 객체와 UObject의 생성·정리 경로를 구분하세요.
+- 💯 `TObjectPtr`가 GC에 추적되려면 어떤 조건이 필요한가요?
+- 💯 CDO와 플레이 중 Actor 인스턴스는 어떻게 다른가요?
+- 🔨 연습 Actor의 BeginPlay·EndPlay를 기록하고, 약한 참조로 관찰하면서 Destroy 전후 유효성을 확인하세요.
+- 📊 “강한 참조가 있으면 Destroy도 막는다”는 주장을 엔진 문서와 관찰로 검증하세요.
+- 😎 일반 UObject의 GC 도달 가능성과 Actor의 명시적 종료를 비교하세요.
+- 🗽 임시 관찰 대상과 계속 유지할 데이터를 어떤 참조로 나누겠습니까?
+
+확인 기준: 플레이 종료와 메모리 회수 시점을 같은 것으로 기록하지 않습니다. 유효하지 않은 대상은 역참조하지 않고, 로그에 월드와 종료 이유를 함께 남깁니다.
+
+<a id="practice-05"></a>
+#### 실습 단계와 해설
+
+먼저: [생성](#ue-example-01), [참조](#ue-example-02), [Actor 종료](#ue-example-04).
+
+1. Actor 한 개에서 BeginPlay 이름만 출력합니다.
+2. EndPlay에서 같은 이름과 종료 이유를 출력합니다.
+3. 별도의 살아 있는 관찰자가 약한 참조로 그 Actor를 관찰합니다.
+4. 명시적 Destroy와 PIE 종료를 각각 실행합니다.
+5. 일반 UObject의 GC 참조 실험은 Actor 실험과 별도로 진행합니다.
+
+예상: BeginPlay 이전 생성 로그를 런타임 Actor 한 개의 실행 횟수라고 단정하면 안 됩니다. EndPlay는 Destroy 외의 이유로도 실행됩니다.
+
+막히면: CDO, 에디터 인스턴스, PIE World가 섞였는지 이름·World·객체 종류를 구분합니다. 약한 참조가 유효하지 않으면 대상을 역참조하지 않습니다.
+
+해설 기준: 명시적 Actor 종료와 GC의 도달 가능성 판단을 구분합니다. 즉시 메모리 회수까지 증명하려면 별도 관찰이 필요하며 EndPlay 로그만으로 완료했다고 적지 않습니다.
+
+[↑ 전체 목차](#목차)
+
+
+<a id="session-06"></a>
+### 6차시 — 프레임워크와 이벤트
+
+[작은 단계로 실습하기 · 힌트 · 해설 기준](#practice-06)
+
+원문 연결: [객체지향·패턴](./질문%20모음집.md#object-oriented-programming--design-pattern).
+
+읽기: [게임 상태](#ue-05), [플레이어](#ue-06), [Component·Subsystem](#ue-12), [Delegate·Timer](#ue-13).
+
+- 💯 GameMode·GameState·GameInstance의 역할과 수명을 설명하세요.
+- 💯 Pawn이 바뀌어도 남아야 하는 플레이어 상태는 어디에 둘 수 있나요?
+- 💯 World 단위 서비스와 LocalPlayer 단위 서비스는 어떻게 다른가요?
+- 🔨 점수와 현재 체력을 서로 다른 수명에 두고 재스폰 전후 값을 기록하세요.
+- 📊 UI 구독을 세 번 시작·종료한 뒤 이벤트 한 번에 콜백이 몇 번 오는지 확인하세요.
+- 😎 Timer에 캡처한 포인터와 UObject 멤버 함수 바인딩의 종료 처리를 비교하세요.
+- 🗽 Tick과 이벤트 중 어떤 기준으로 갱신 방식을 선택하겠습니까?
+
+확인 기준: 재스폰 뒤 유지할 값과 초기화할 값이 의도와 맞고, 구독이 누적되지 않습니다. 맵 전환에서의 유지 여부는 별도로 확인합니다.
+
+<a id="practice-06"></a>
+#### 실습 단계와 해설
+
+먼저: [플레이어 수명](#ue-example-06). 재스폰을 이해한 후 [이벤트 구독](#ue-example-13)을 읽습니다.
+
+1. 기존 Pawn과 새 Pawn의 이름을 출력합니다.
+2. 새 Pawn에 체력 기본값을 적용해 값 하나를 확인합니다.
+3. 같은 플레이어의 점수만 별도 상태에 보관해 유지되는지 봅니다.
+4. UI는 그 후 연결합니다. 열기·닫기를 세 번 하고 상태를 한 번 변경합니다.
+5. UI보다 이벤트 소스가 먼저 사라지는 경우도 확인합니다.
+
+예상: Pawn은 바뀌고 점수는 요구한 범위에서 유지됩니다. 상태 한 번 변경에 현재 UI 갱신은 한 번입니다.
+
+막히면: 새 Pawn을 생성했지만 Possess가 바뀌지 않았는지 확인합니다. 콜백 중복이면 등록 위치와 해제 소스를 확인합니다.
+
+해설 기준: PlayerState에 두었다고 세션 종료 뒤 저장까지 되는 것은 아닙니다. Timer와 Tick은 작업 주기 요구로 선택하며 무조건 어느 쪽이 빠르다고 답하지 않습니다.
+
+[↑ 전체 목차](#목차)
+
+
+<a id="session-07"></a>
+### 7차시 — 입력·수학·충돌
+
+[작은 단계로 실습하기 · 힌트 · 해설 기준](#practice-07)
+
+원문 연결: [그래픽 렌더링 파이프라인](#그래픽-렌더링-파이프라인)의 좌표 변환 개념을 읽습니다. 입력과 충돌은 이 확장에서 추가한 주제입니다.
+
+읽기: [입력](#ue-14), [벡터·좌표](#math), [Trace](#ue-15).
+
+- 💯 Action·Mapping Context·Modifier·Trigger의 역할을 설명하세요.
+- 💯 내적으로 전방 범위를 검사할 때 정규화와 반각이 필요한 이유는 무엇인가요?
+- 💯 Line Trace와 Sweep은 무엇이 다른가요?
+- 🔨 앞·뒤·경계·동일 위치의 목표를 두고 시야 판정과 Trace 결과를 색으로 표시하세요.
+- 📊 카메라를 90도 돌려 입력 방향이 의도한 좌표계로 변환되는지 확인하세요.
+- 😎 빠른 무기의 이전·현재 위치 검사만으로 회전 궤적을 완전히 덮을 수 있나요?
+- 🗽 공격 한 번에서 중복 피해를 막는 기록은 누가 언제 초기화해야 하나요?
+
+확인 기준: 좌표계와 0 길이 처리, 거리·각도 조건, 충돌 채널을 기록합니다. 디버그 선과 실제 Hit 결과가 일치하는지 확인합니다.
+
+<a id="practice-07"></a>
+#### 실습 단계와 해설
+
+먼저: [입력 흐름](#ue-example-14), [수학](#math), [Sweep](#ue-example-15).
+
+1. 입력 Action의 2D 값만 출력합니다.
+2. 카메라 기준 전방·오른쪽을 그려 90도 회전 전후 비교합니다.
+3. 내적 시야 판정만 구현합니다. 앞·뒤·경계·동일 위치를 시험합니다.
+4. 충돌 질의를 별도로 추가하고 Hit Actor 이름을 표시합니다.
+5. 마지막으로 이전·현재 무기 위치를 연결합니다.
+
+예상: 시야 전체 각도가 60도면 반각 30도 기준을 사용합니다. 거리 제한은 각도 판정과 별도입니다.
+
+막히면: 월드와 로컬 공간이 섞였는지 확인합니다. 선이 적을 지나가는데 Hit가 없으면 샘플 수보다 채널·응답·무시 대상·콜리전 활성 상태부터 봅니다.
+
+해설 기준: 회전 궤적과 직선 보간은 다릅니다. 샘플 수 증가는 비용과 정확도에 영향을 주므로 놓친 공간을 먼저 관찰합니다. 중복 피해 기록은 공격 시작·종료 경계에 맞춰 관리합니다.
+
+[↑ 전체 목차](#목차)
+
+
+<a id="session-08"></a>
+### 8차시 — 애니메이션과 종료 경로
+
+[작은 단계로 실습하기 · 힌트 · 해설 기준](#practice-08)
+
+원문 연결: [State 패턴](#state-패턴). 구체적인 Montage·Root Motion 동작은 Unreal 자료를 읽습니다.
+
+읽기: [Montage·Notify·Root Motion](#ue-16), [이벤트 정리](#ue-13).
+
+- 💯 Montage가 재생 중인데 화면에 보이지 않을 때 어떤 포즈 경로를 확인하나요?
+- 💯 Notify와 게임 규칙의 최종 판정을 구분하는 이유는 무엇인가요?
+- 💯 루트 이동과 캡슐 이동이 어긋나면 어떤 문제가 생기나요?
+- 🔨 공격의 정상 종료·중단·사망을 각각 재현하고 이동 제한과 공격 가능 상태를 기록하세요.
+- 📊 마지막 Notify만으로 정리하는 설계가 모든 종료를 처리하는지 확인하세요.
+- 😎 블렌드아웃과 종료 콜백이 모두 정리 코드를 부르면 어떻게 설계하겠습니까?
+- 🗽 공격 중 이동을 애니메이션과 이동 컴포넌트 중 어디에 맡기겠습니까?
+
+확인 기준: 세 종료 경로에서 상태가 남지 않고 다음 공격이 가능합니다. 연속 공격에서도 이전 콜백이 새 공격의 상태를 지우지 않는지 확인합니다.
+
+<a id="practice-08"></a>
+#### 실습 단계와 해설
+
+먼저: [종료 흐름](#ue-example-16).
+
+1. 한 Montage의 재생과 최종 포즈 표시를 확인합니다.
+2. 공격 상태의 시작·종료 로그만 연결합니다.
+3. 정상 종료 후 다른 행동으로 강제 중단합니다.
+4. 공격 중 사망을 추가합니다.
+5. 즉시 다음 공격을 시작해 오래된 콜백이 새 상태를 지우지 않는지 봅니다.
+
+예상: 세 종료 경로에서 공격 판정과 이동 제한이 정리되고, 다음 공격은 정상 시작됩니다.
+
+막히면: 재생 실패는 에셋·AnimInstance·Slot 경로, 상태 잔류는 종료 경로, 새 공격 오종료는 콜백의 공격 식별자를 먼저 봅니다.
+
+해설 기준: 마지막 Notify 하나만 종료 책임을 갖게 하지 않습니다. Root Motion 실험은 메시와 캡슐을 동시에 관찰해야 하며 네트워크 이동까지 자동으로 검증되는 것은 아닙니다.
+
+[↑ 전체 목차](#목차)
+
+
+<a id="session-09"></a>
+### 9차시 — 에셋과 렌더링
+
+[작은 단계로 실습하기 · 힌트 · 해설 기준](#practice-09)
+
+원문 연결: [Addressable](./질문%20모음집.md#addressable), [Rendering](./질문%20모음집.md#rendering). 로드 시점과 자원 관리라는 문제를 연결하고 API는 구분합니다.
+
+읽기: [에셋 로딩](#ue-17), [렌더링](#rendering).
+
+- 💯 하드 참조와 소프트 참조가 로딩에 미치는 영향을 설명하세요.
+- 💯 소프트 참조만으로 비동기 로드가 시작되나요?
+- 💯 드로우 콜 수만으로 렌더링 비용을 판단할 수 있나요?
+- 🔨 에셋 요청 직후 다른 에셋으로 선택을 바꾸고 최종 표시가 최신 선택인지 확인하세요.
+- 📊 같은 장면에서 해상도만 바꾸어 CPU·GPU 시간 변화를 비교하세요.
+- 😎 로딩이 끝난 뒤 객체를 계속 유지하는 참조와 핸들의 수명을 조사하세요.
+- 🗽 미리 로드할 에셋과 필요할 때 로드할 에셋을 어떻게 나누겠습니까?
+
+확인 기준: 이미 로드된 상태인지 기록하고, 요청자 종료 시에도 콜백이 잘못 접근하지 않습니다. 렌더링 측정은 같은 카메라와 개체 수를 사용합니다.
+
+<a id="practice-09"></a>
+#### 실습 단계와 해설
+
+먼저: [오래된 요청](#ue-example-17), [렌더링](#rendering).
+
+1. 에셋 하나의 요청·완료·표시 시점을 기록합니다.
+2. A 요청 직후 B를 요청하고 완료 순서를 바꿔 봅니다.
+3. 로딩 중 표시 대상을 종료합니다.
+4. 에셋 로딩 실험을 끝낸 뒤 같은 장면에서 해상도만 바꾸어 CPU·GPU 시간을 봅니다.
+
+예상: 최신 요청만 표시되고, 없어진 대상에는 접근하지 않습니다. 해상도 변화 효과는 병목에 따라 달라집니다.
+
+막히면: 에디터에 이미 로드된 상태인지 기록합니다. 로딩 핸들을 너무 빨리 놓거나 소프트 참조가 객체 유지까지 해 준다고 가정했는지 봅니다.
+
+해설 기준: 드로우 콜 감소가 언제나 FPS 증가로 이어지지는 않습니다. CPU·GPU 구간과 메모리·시작 시간 비용을 나누어 해석합니다.
+
+[↑ 전체 목차](#목차)
+
+
+<a id="session-10"></a>
+### 10차시 — 네트워크
+
+[작은 단계로 실습하기 · 힌트 · 해설 기준](#practice-10)
+
+원문 연결: [Network](./질문%20모음집.md#network), [멀티플레이어 구조](#멀티플레이어-게임의-구조).
+
+읽기: [복제·RPC](#ue-07), [서버 권위](#ue-08), [플레이어 구조](#ue-06).
+
+- 💯 소유권과 서버 권위는 어떻게 다른가요?
+- 💯 상태 복제와 일회성 RPC를 구분하세요.
+- 💯 클라이언트의 공격 요청에서 서버가 확인해야 할 조건은 무엇인가요?
+- 🔨 서버·소유 클라이언트·관찰 클라이언트에서 문 열림 상태를 확인하고 늦게 접속한 클라이언트도 비교하세요.
+- 📊 과거 Multicast만으로 늦은 접속자의 상태가 복원되는지 확인하세요.
+- 😎 지연과 패킷 손실 조건에서 입력 반응과 서버 확정 결과가 어떻게 다른지 조사하세요.
+- 🗽 공격 반응을 빠르게 보이면서 서버 결과와 어긋났을 때 어떻게 보정하겠습니까?
+
+확인 기준: 로그에 실행 주체를 구분하고, 서버 상태와 각 클라이언트의 상태를 비교합니다. 한 화면의 PIE 성공을 네트워크 성공으로 기록하지 않습니다.
+
+<a id="practice-10"></a>
+#### 실습 단계와 해설
+
+먼저: [상태 복제](#ue-example-07), [RPC 요청 경로](#ue-example-08).
+
+1. 서버에서만 문 열림 상태를 바꿉니다.
+2. Actor 복제와 속성 복제를 연결해 클라이언트 표시를 확인합니다.
+3. 소유한 Controller/Pawn에서 서버로 문 열기 요청을 보냅니다.
+4. 서버가 요청 대상과 거리 등을 검사합니다.
+5. 다른 관찰 클라이언트와 늦은 접속자를 추가합니다.
+6. 기본 동작 뒤에 지연·손실 조건을 추가합니다.
+
+예상: 서버 상태와 관련 클라이언트들의 최종 상태가 맞습니다. 모든 중간 전환이 각각 RPC처럼 보존된다는 조건은 아닙니다.
+
+막히면: RPC 미도착은 소유권과 호출 위치, 속성 미도착은 복제 설정·관련성, 표시 누락은 OnRep 및 서버 표시 경로를 따로 조사합니다.
+
+해설 기준: 소유권은 RPC 라우팅 등에 관여하고 권위는 최종 상태 결정의 문제입니다. Reliable은 늦은 접속자에게 과거 연출을 재생하는 저장 장치가 아닙니다.
+
+[↑ 전체 목차](#목차)
+
+
+<a id="session-11"></a>
+### 11차시 — GAS
+
+[작은 단계로 실습하기 · 힌트 · 해설 기준](#practice-11)
+
+원문 연결: [객체지향·패턴](./질문%20모음집.md#object-oriented-programming--design-pattern), [Network](./질문%20모음집.md#network). GAS 자체는 확장에서 새로 다룹니다.
+
+읽기: [GAS 역할](#ue-09), [활성화·종료](#ue-18).
+
+- 💯 Ability·Effect·AttributeSet·ASC의 책임을 구분하세요.
+- 💯 어빌리티 부여와 활성화, 비용 적용은 같은 단계인가요?
+- 💯 Owner와 Avatar를 구분하고 ASC 위치를 수명으로 설명하세요.
+- 🔨 간단한 자원 소비 행동의 성공·자원 부족·중도 취소를 재현하세요.
+- 📊 종료 후 실행 중 태그·Task·콜백이 남는지 확인하고 재실행하세요.
+- 😎 클라이언트 예측이 적용되는 범위와 서버 거부 시 보정 범위를 조사하세요.
+- 🗽 애니메이션 실패 후 비용 환불 여부를 어떤 게임 규칙으로 정하겠습니까?
+
+확인 기준: 성공과 실패 경로에서 자원이 의도한 횟수만큼 바뀌고 재실행이 가능합니다. 로컬 확인 이후 네트워크 조건은 별도 기록합니다.
+
+<a id="practice-11"></a>
+#### 실습 단계와 해설
+
+먼저: [회복 흐름](#ue-example-09), [실패와 종료](#ue-example-18).
+
+1. ASC·AttributeSet 연결 후 속성의 초기값을 확인합니다.
+2. Effect 하나를 적용해 속성이 변하는지 확인합니다.
+3. Ability를 부여하고 활성화해 같은 효과를 실행합니다.
+4. 비용 부족 조건을 추가합니다.
+5. 정상 종료 뒤 재실행을 확인합니다.
+6. Task·취소를 붙인 후 다시 재실행을 확인합니다.
+7. 마지막으로 네트워크를 검증합니다.
+
+예상: 성공 때만 의도한 비용·효과가 적용되고, 취소와 실패 뒤에 실행 중 상태가 남지 않습니다.
+
+막히면: 부여 여부 → ActorInfo → 태그 조건 → Commit → Effect → 표시 → EndAbility 순으로 최초 실패 지점을 찾습니다.
+
+해설 기준: Owner와 Avatar가 같을 수도 다를 수도 있습니다. 재스폰 요구에 따라 ASC 위치를 결정합니다. 예측은 모든 임의 변경에 대한 자동 롤백 기능이 아닙니다.
+
+[↑ 전체 목차](#목차)
+
+
+<a id="session-12"></a>
+### 12차시 — 최적화·패키징·경험 정리
+
+[작은 단계로 실습하기 · 힌트 · 해설 기준](#practice-12)
+
+원문 연결: [Rendering Profiling](./질문%20모음집.md#rendering-profiling), [Memory Optimization](./질문%20모음집.md#memory-optimization).
+
+읽기: [성능·패키징](#profiling), [렌더링](#rendering).
+
+- 💯 평균 FPS와 프레임 시간의 일시적인 지연을 구분하세요.
+- 💯 PIE 성공과 패키지 실행 성공은 왜 별도 확인인가요?
+- 💯 최적화 전후에 고정해야 할 측정 조건은 무엇인가요?
+- 🔨 지금까지 만든 실습 중 비용이 보이는 하나를 골라 변경 전후 같은 구간을 측정하세요.
+- 📊 패키지에서 시작 맵과 동적 로드 에셋, 핵심 입력을 확인하세요.
+- 😎 속도 개선과 메모리·시작 시간 증가 사이의 교환 관계를 조사하세요.
+- 🗽 문제 → 가설 → 실제 원인 → 수정 → 결과 → 한계 순서로 본인의 사례를 설명하세요.
+
+확인 기준: 변경 전후 수치와 재현 방법이 있고 개선 원인을 설명할 수 있어야 합니다. 개선이 없었다면 그 사실과 다음 가설을 기록합니다. 미실행 단계는 완료로 표시하지 않습니다.
+
+<a id="practice-12"></a>
+#### 실습 단계와 해설
+
+먼저: [성능·패키징](#profiling).
+
+1. 이전 실습 중 비용이 관찰되는 한 작업을 고릅니다.
+2. 입력·카메라·개체 수·빌드·기기·기록 구간을 고정합니다.
+3. 변경 전 트레이스를 저장합니다.
+4. 하나의 가설에 해당하는 변경만 적용합니다.
+5. 같은 조건에서 재측정합니다.
+6. 패키지를 만들고 시작 맵·입력·동적 에셋 로딩을 확인합니다.
+
+예상: 개선 여부를 수치로 판단할 수 있습니다. 개선이 없다면 그 결과도 유효합니다. 패키징 성공은 실행 성공과 다릅니다.
+
+막히면: Debug/Development/Shipping 차이, 트레이스 오버헤드, 백그라운드 부하, 캐시 상태를 기록합니다. 먼저 실행이 정상인지 확인한 뒤 성능을 해석합니다.
+
+해설 기준: 면접 사례는 문제 → 가설 → 원인 증거 → 선택 이유 → 변경 결과 → 한계 순서로 말합니다. 직접 실행하지 않은 실습의 기대값을 본인 성과로 바꾸지 않습니다.
+
+## 설명을 마쳤는지 확인하는 다섯 질문
+
+- 왜 이 방식이 필요한가?
+- 누가 만들고 누가 정리하는가?
+- 입력에서 결과까지 데이터가 어디로 이동하는가?
+- 조건을 하나 바꾸면 무엇이 깨지는가?
+- 어떤 로그·측정으로 내 설명을 확인했는가?
+
+외워서 대답하는 것과 다른 날 다시 구현하는 것은 별도 확인입니다. 처음부터 모든 실습을 연달아 끝내려 하지 말고, 작은 성공 조건을 설명한 다음 다음 단계로 넘어갑니다.
+
+[↑ 전체 목차](#목차)
+
+
+<a id="study-verification"></a>
+## 개정 검증 기록
+
+
+검증일: 2026-09-11. 이 기록은 자료 구조와 실행 예제의 확인 범위를 명시합니다. 학습 효과나 Unreal 프로젝트 실행 성공을 대신하지 않습니다.
+
+### C++ 실행 예제
+
+대상: [cpp-examples.md](#cpp-study)의 독립 프로그램 15개. 개념 요약의 다른 코드 조각이나 학습자 변형 과제까지 실행했다는 뜻은 아닙니다.
+
+- 환경: Windows x64, MSVC 도구 집합 14.51.36231, Windows SDK 10.0.26100.0.
+- 옵션: /std:c++17 /EHsc /W4 /WX /utf-8.
+- 문서의 각 cpp 블록을 별도 소스로 추출해 컴파일했습니다.
+- 종료 코드 0과 표준 출력이 해당 절의 예상 출력과 정확히 같은지 확인했습니다.
+- 결과: **15개 모두 PASS**. 경고를 오류로 처리한 설정에서 통과했습니다.
+- 성능 수치를 측정한 결과는 아닙니다. 컨테이너 예제의 비교 횟수는 타이밍이 아닙니다.
+
+| 예제 | 확인한 결과 |
+|---|---|
+| 1 | 스코프와 원소 소멸 순서 |
+| 2 | 지역 참조에 직접 바인딩한 임시 객체 수명 |
+| 3 | 조기 반환과 정상 경로의 정리 |
+| 4 | 강한 소유자 수와 약한 참조 만료 |
+| 5 | 일반 복사·이동·const 객체의 복사 선택 |
+| 6 | 멤버 타입에 따른 복사·이동 가능성 |
+| 7 | 파생 → 기반 소멸 |
+| 8 | size·capacity·추가 원소 값 |
+| 9 | 삭제 뒤 인덱스와 ID 조회 차이 |
+| 10 | 값 캡처와 참조 캡처 |
+| 11 | const의 접근 제한 대상 |
+| 12 | 슬라이싱과 가상 호출 |
+| 13 | int·double 템플릿 사용 |
+| 14 | 선형 비교 횟수와 키 조회 결과 |
+| 15 | 원자 증가와 join 후 읽기 |
+
+다시 확인하려면 Visual Studio의 x64 Native Tools 터미널에서 한 예제를 main.cpp에 저장하고 다음을 각각 실행합니다.
+
+~~~text
+cl /nologo /std:c++17 /EHsc /W4 /WX /utf-8 main.cpp /Fe:example.exe
+example.exe
+~~~
+
+다른 컴파일러에서는 표준 보장과 구현 의존 결과를 구분하세요. sizeof, vector 성장 배수, 성능 시간은 고정 출력으로 강제하지 않았습니다.
+
+### Unreal
+
+- [구현 흐름](#unreal-study)의 소유·수명·입출력·실패 경로를 읽기용 사례로 검토했습니다.
+- 엔진 API 코드 조각과 의사코드를 구분했습니다.
+- 공식 문서를 참조하고 프로젝트별 선언·헤더·모듈·에셋 연결이 필요함을 표시했습니다.
+- **엔진 빌드, 에디터 배선, PIE, 멀티클라이언트, 패키지 실행은 미검증**입니다.
+- 예상 로그와 확인 기준은 수행 과제이며 실제 측정 결과가 아닙니다.
+
+### 문서 연결
+
+개정 대상 docs 문서의 내부 링크 179개, 명시적 앵커 중복, 코드·접기 블록 닫힘을 점검해 통과했습니다. C++ 15개 주제와 실행 해설, Unreal 18개 주제와 구현 흐름, 12차시와 실습 안내의 연결 45개도 확인했습니다. 코드 안의 람다 문법은 Markdown 링크 검사에서 제외했습니다.
+
+C++ Core Guidelines의 절 주소는 실제 페이지 앵커와 대조해 수정했습니다. 외부 사이트는 이후 구조가 바뀔 수 있습니다.
+
+### 원문과 비교해 해결한 문제
+
+| 이전 초안의 문제 | 이번 변경 |
+|---|---|
+| 요점만 있고 실행 모습 부족 | 독립 C++ 예제와 출력·이유·변형 |
+| Unreal의 추상적인 설명 | 문·무기·재스폰·UI·GAS 사례 |
+| 복합 과제를 한 번에 제시 | 선행 개념과 작은 단계로 분리 |
+| 휴대폰에서 질문만 읽다 막힘 | 접힌 해설·관찰 표·힌트 |
+| 기술적 일반화와 절 링크 오류 | 참조 수명 예외와 공식 앵커 수정 |
+
+한 차시를 직접 공부하고 결과를 설명할 수 있는지까지 확인해야 독학 난이도를 평가할 수 있습니다. 이 기록은 학습 완료를 미리 선언하지 않습니다.
+
+
+<!-- INLINE_STUDY_END -->

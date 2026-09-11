@@ -1,5 +1,7 @@
 # C++ & Unreal Engine 기술면접 대비
 
+> **[전체 내용을 한 번에 읽는 README](../README.md#목차)** — 개념·예제·출력 해설·실습을 같은 페이지에 통합했습니다. 아래 개별 파일은 기존 링크 호환을 위해 유지합니다.
+
 이 포크의 C++·Unreal 확장 학습 자료입니다. [원본](https://github.com/salt26/game-developer-interview)의 읽기 자료와 차시별 질문 모음집 구성을 참고하고 설명·질문·실습 과제는 새로 작성했습니다.
 
 원본 작성 기여자: [안단태](https://github.com/salt26/), [이주연](https://github.com/Yongmalyang/). 원본 질문 모음집 작성자: 안단태. 확장 내용은 원저자의 작성·검토를 뜻하지 않습니다. 원본의 저작자 표시 및 [CC BY-NC 4.0 라이선스](../LICENSE)를 유지합니다.
