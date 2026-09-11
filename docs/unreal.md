@@ -7,6 +7,21 @@
 <a id="ue-01"></a>
 ## 일반 C++ 객체와 UObject
 
+<!-- RECALL_CARD_START -->
+**기억할 기준: 엔진 객체 시스템이 필요한가**
+
+**쉬운 예:** 체력 계산식만 담는 작은 값과 월드에 등장하는 Actor는 다른 역할입니다.
+
+**가리고 떠올리기:** 모든 클래스를 UObject로 만들 필요가 있을까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+엔진의 리플렉션·GC 등이 필요한 객체는 알맞은 엔진 생성 경로를 사용합니다. 일반 C++ 값과 자원 관리 객체는 별도로 설계합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 [예제와 해설로 이해하기](unreal-walkthroughs.md#ue-01)
 
 > “일반 C++ 객체와 UObject는 무엇이 다른가요?”
@@ -21,6 +36,21 @@
 
 <a id="ue-02"></a>
 ## UObject 포인터 선택
+
+<!-- RECALL_CARD_START -->
+**기억할 기준: 유지·관찰·나중에 로드를 구분**
+
+**쉬운 예:** 조준 대상은 사라질 수 있고 무기 에셋은 아직 로드되지 않았을 수 있습니다.
+
+**가리고 떠올리기:** TObjectPtr라는 이름만으로 모든 위치에서 GC 추적될까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+GC가 추적하는 강한 참조, 약한 관찰, 소프트 에셋 참조를 목적에 맞게 고릅니다. 선언 위치와 추적 경로, 사용 시점 유효성을 확인합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 [예제와 해설로 이해하기](unreal-walkthroughs.md#ue-02)
 
@@ -41,6 +71,21 @@
 <a id="ue-03"></a>
 ## 생성자와 BeginPlay
 
+<!-- RECALL_CARD_START -->
+**기억할 기준: 기본 구성과 플레이 중 준비를 분리**
+
+**쉬운 예:** 기본 컴포넌트는 생성자에서 만들고 플레이 중 연결은 적절한 초기화 시점에 처리합니다.
+
+**가리고 떠올리기:** BeginPlay라면 다른 모든 Actor의 준비도 끝났을까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+생성자는 기본값·기본 구성을 맡고 BeginPlay는 플레이 시작 작업을 맡습니다. 다른 객체와 복제 데이터 준비는 별도 조건으로 확인합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 [예제와 해설로 이해하기](unreal-walkthroughs.md#ue-03)
 
 > “생성자와 BeginPlay는 어떤 작업을 나눠 맡아야 하나요?”
@@ -55,6 +100,21 @@
 
 <a id="ue-04"></a>
 ## Destroy와 EndPlay
+
+<!-- RECALL_CARD_START -->
+**기억할 기준: 게임에서 끝남과 메모리 회수는 다른 시점**
+
+**쉬운 예:** 적이 Destroy된 뒤 늦게 도착한 로드 콜백이 그 적을 사용할 수 있습니다.
+
+**가리고 떠올리기:** 포인터가 남아 있다는 이유로 종료된 Actor를 써도 될까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+EndPlay에서 게임플레이 작업과 구독을 정리하고 이후 콜백의 유효성을 확인합니다. Destroy와 실제 GC 회수를 같은 순간으로 보지 않습니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 [예제와 해설로 이해하기](unreal-walkthroughs.md#ue-04)
 
@@ -71,6 +131,21 @@
 <a id="ue-05"></a>
 ## 게임 전체 상태의 위치
 
+<!-- RECALL_CARD_START -->
+**기억할 기준: 상태가 누구에게 얼마나 오래 필요한가**
+
+**쉬운 예:** 매치 규칙과 모든 플레이어가 볼 점수, 맵을 넘어 유지할 로컬 설정은 수명이 다릅니다.
+
+**가리고 떠올리기:** GameInstance에 저장하면 다른 클라이언트에도 자동 복제될까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+서버 규칙은 GameMode, 공유 매치 상태는 GameState, 프로세스 단위 지속 상태는 GameInstance 등을 검토합니다. 지속과 네트워크 공유는 별개입니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 [예제와 해설로 이해하기](unreal-walkthroughs.md#ue-05)
 
 > “GameMode, GameState, GameInstance의 역할은 무엇인가요?”
@@ -85,6 +160,21 @@
 
 <a id="ue-06"></a>
 ## 플레이어와 조종 대상
+
+<!-- RECALL_CARD_START -->
+**기억할 기준: 플레이어의 정체성과 몸을 나누기**
+
+**쉬운 예:** 죽어서 Pawn을 교체해도 플레이어의 점수는 유지되어야 할 수 있습니다.
+
+**가리고 떠올리기:** PlayerController는 모든 클라이언트가 모든 사람의 것을 갖고 있을까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+Controller의 조종, Pawn의 몸, PlayerState의 플레이어 상태를 구분합니다. 재스폰 수명과 각 네트워크 역할에서의 존재 범위를 확인합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 [예제와 해설로 이해하기](unreal-walkthroughs.md#ue-06)
 
@@ -102,6 +192,21 @@
 <a id="ue-07"></a>
 ## 변수 복제와 RPC
 
+<!-- RECALL_CARD_START -->
+**기억할 기준: 상태 전달과 사건 요청을 구분**
+
+**쉬운 예:** 체력은 나중에 접속한 사람도 알아야 하지만 한 번의 입력 요청은 실행 사건입니다.
+
+**가리고 떠올리기:** RPC만으로 현재 체력을 보내면 늦은 접속자는 어떻게 알까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+지속 상태는 복제 속성, 필요한 호출은 RPC로 설계합니다. 소유권·전달 조건·관련성과 상태 복구를 확인합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 [예제와 해설로 이해하기](unreal-walkthroughs.md#ue-07)
 
 > “변수 복제와 RPC는 어떻게 다른가요?”
@@ -117,6 +222,21 @@
 
 <a id="ue-08"></a>
 ## 서버 권위 공격 판정
+
+<!-- RECALL_CARD_START -->
+**기억할 기준: 요청은 클라이언트, 확정은 서버**
+
+**쉬운 예:** 클라이언트가 공격 버튼을 눌렀다고 피해 수치를 그대로 확정하지 않습니다.
+
+**가리고 떠올리기:** 클라이언트가 보낸 명중 대상과 피해를 서버가 바로 믿어도 될까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+서버는 공격 가능 상태·거리·대상 등을 검증해 결과를 확정합니다. 클라이언트 표현 및 예측과 권위 있는 판정을 구분합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 [예제와 해설로 이해하기](unreal-walkthroughs.md#ue-08)
 
@@ -135,6 +255,21 @@
 <a id="ue-09"></a>
 ## GAS 구성 요소
 
+<!-- RECALL_CARD_START -->
+**기억할 기준: 능력·수치·효과의 역할 분리**
+
+**쉬운 예:** 대시 실행, 스태미나 값, 스태미나 감소와 쿨다운은 서로 다른 책임입니다.
+
+**가리고 떠올리기:** GameplayAbility 하나에 모든 영구 수치를 직접 보관하면 어떤 수명 문제가 생길까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+ASC가 능력·효과를 관리하고 Ability는 실행 흐름, AttributeSet은 수치, GameplayEffect는 수치 변화 등을 담당합니다. 태그로 조건과 상태를 표현합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 [예제와 해설로 이해하기](unreal-walkthroughs.md#ue-09)
 
 > “Ability, Effect, AttributeSet, ASC는 어떤 역할인가요?”
@@ -152,6 +287,21 @@
 <a id="ue-10"></a>
 ## C++ 자원 관리와 Unreal GC의 경계
 
+<!-- RECALL_CARD_START -->
+**기억할 기준: RAII와 GC가 책임지는 대상이 다름**
+
+**쉬운 예:** 파일 잠금은 C++ 관리 객체로, UObject 참조는 엔진의 추적 규칙으로 다룹니다.
+
+**가리고 떠올리기:** UObject를 일반 shared_ptr로 감싸면 엔진 GC도 그 소유권을 알까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+일반 자원은 RAII로 관리하고 UObject는 엔진의 생성·참조·GC 규칙을 따릅니다. 두 소유권 체계를 임의로 섞지 않습니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 [예제와 해설로 이해하기](unreal-walkthroughs.md#ue-10)
 
 > “일반 C++ 스마트 포인터를 UObject에 그대로 사용해도 되나요?”
@@ -166,6 +316,21 @@
 
 <a id="ue-11"></a>
 ## 리플렉션·CDO·Blueprint
+
+<!-- RECALL_CARD_START -->
+**기억할 기준: 클래스 기본값과 실행 인스턴스를 구분**
+
+**쉬운 예:** Blueprint 기본 체력은 클래스 기본값이며 각 적의 현재 체력과 다릅니다.
+
+**가리고 떠올리기:** CDO에 플레이 중 한 캐릭터의 상태를 저장하면 무엇이 잘못될까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+리플렉션은 엔진이 타입 정보를 다루는 통로이고 CDO는 클래스 기본값의 기준입니다. 런타임 상태는 적절한 인스턴스에 둡니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 [예제와 해설로 이해하기](unreal-walkthroughs.md#ue-11)
 
@@ -184,6 +349,21 @@
 <a id="ue-12"></a>
 ## Component·Subsystem과 책임
 
+<!-- RECALL_CARD_START -->
+**기억할 기준: 재사용할 기능과 서비스의 수명 선택**
+
+**쉬운 예:** 여러 Actor의 체력 기능은 Component, 월드 범위 서비스는 해당 Subsystem을 검토할 수 있습니다.
+
+**가리고 떠올리기:** 맵 전환 때 끝나야 할 서비스를 GameInstance 범위에 두면 어떤 정리가 필요할까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+책임과 소유자·수명에 따라 Component와 Subsystem을 선택합니다. 큰 관리자 하나에 모든 기능을 모으기보다 범위와 의존성을 드러냅니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 [예제와 해설로 이해하기](unreal-walkthroughs.md#ue-12)
 
 > “ActorComponent와 Subsystem은 어떻게 고르나요?”
@@ -199,6 +379,21 @@
 
 <a id="ue-13"></a>
 ## Delegate·Timer와 종료
+
+<!-- RECALL_CARD_START -->
+**기억할 기준: 등록한 작업에도 종료 경로가 필요**
+
+**쉬운 예:** 피격 알림을 구독한 UI나 공격 타이머는 화면·Actor 종료 뒤에도 연결이 남을 수 있습니다.
+
+**가리고 떠올리기:** 약한 바인딩이 있으면 타이머와 논리 상태 정리를 전부 생략해도 될까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+Delegate·Timer의 대상 수명과 등록 해제를 설계합니다. 메모리 접근 안전성과 게임 규칙상 작업 취소를 따로 확인합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 [예제와 해설로 이해하기](unreal-walkthroughs.md#ue-13)
 
@@ -216,6 +411,21 @@
 <a id="ue-14"></a>
 ## 입력에서 이동까지
 
+<!-- RECALL_CARD_START -->
+**기억할 기준: 입력 숫자를 월드의 움직임으로 바꾸기**
+
+**쉬운 예:** 앞으로 입력한 값은 카메라 기준 방향과 결합해 이동 요청으로 이어질 수 있습니다.
+
+**가리고 떠올리기:** 카메라가 90도 돌아가도 월드 X축을 앞으로 쓰면 어떻게 움직일까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+입력 값의 의미와 좌표계를 확인하고 기준 회전에서 이동 방향을 구합니다. 입력 처리와 실제 이동 컴포넌트의 적용을 연결합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 [예제와 해설로 이해하기](unreal-walkthroughs.md#ue-14)
 
 > “Input Action을 만들었는데 왜 입력이 들어오지 않을까요?”
@@ -231,6 +441,21 @@
 
 <a id="ue-15"></a>
 ## Trace·Sweep과 공격 판정
+
+<!-- RECALL_CARD_START -->
+**기억할 기준: 선 검사와 부피를 가진 검사를 구분**
+
+**쉬운 예:** 빠르게 움직인 검의 현재 위치만 검사하면 프레임 사이의 적을 놓칠 수 있습니다.
+
+**가리고 떠올리기:** Sweep 한 번이 회전하는 긴 검의 모든 궤적을 보장할까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+Trace·Sweep의 형상·시작·끝·채널을 정의합니다. 시간 간격과 회전 궤적, 중복 명중 정책을 별도로 설계하고 시각화합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 [예제와 해설로 이해하기](unreal-walkthroughs.md#ue-15)
 
@@ -248,6 +473,21 @@
 <a id="ue-16"></a>
 ## Montage·Notify·Root Motion
 
+<!-- RECALL_CARD_START -->
+**기억할 기준: 애니메이션 종료와 공격 상태 정리를 연결**
+
+**쉬운 예:** 몽타주가 피격으로 중단되면 정상 종료 때만 하던 공격 잠금 해제가 누락될 수 있습니다.
+
+**가리고 떠올리기:** Notify 하나를 꼭 받는다는 가정으로 종료를 처리해도 될까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+Montage의 재생·중단·블렌드 종료와 Notify의 역할을 나눕니다. 정상·취소·사망 경로에서 상태를 정리하고 Root Motion의 이동 권한도 확인합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 [예제와 해설로 이해하기](unreal-walkthroughs.md#ue-16)
 
 > “공격 애니메이션이 끝나지 않고 중단되면 무엇을 정리해야 하나요?”
@@ -264,6 +504,21 @@
 <a id="ue-17"></a>
 ## 에셋 비동기 로딩
 
+<!-- RECALL_CARD_START -->
+**기억할 기준: 로드 완료 때도 요청이 유효한가**
+
+**쉬운 예:** 아이콘을 요청한 UI가 닫힌 뒤 완료 콜백이 올 수 있습니다.
+
+**가리고 떠올리기:** 에셋 로드가 성공했어도 콜백에서 확인할 것은 무엇일까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+요청 핸들·대상 수명·실패·취소를 관리합니다. 완료 시 원래 요청이 아직 유효한지 확인하고 필요 없는 자원을 정리합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 [예제와 해설로 이해하기](unreal-walkthroughs.md#ue-17)
 
 > “Soft 참조로 바꾸면 끊김이 없어지나요?”
@@ -279,6 +534,21 @@
 
 <a id="ue-18"></a>
 ## GAS의 활성화·비용·종료
+
+<!-- RECALL_CARD_START -->
+**기억할 기준: 시작할 수 있음과 비용 확정·종료를 나누기**
+
+**쉬운 예:** 대시 시 스태미나와 쿨다운을 확인하고 성공·취소 시 남은 태스크와 상태를 정리합니다.
+
+**가리고 떠올리기:** Commit 실패 뒤에도 이동 태스크를 계속 실행하면 어떤 문제가 생길까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+활성화 조건, 비용·쿨다운 확정, 실행, 종료·취소를 연결합니다. 예측과 서버 확정이 어긋나는 경로까지 고려합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 [예제와 해설로 이해하기](unreal-walkthroughs.md#ue-18)
 

@@ -7,7 +7,9 @@
 > C++·Unreal 확장 자료는 이 포크의 `docs/cpp-unreal-study` 브랜치에 있습니다. 휴대폰에서는 [이 브랜치의 README](https://github.com/PSantosP/game-developer-interview/tree/docs/cpp-unreal-study#readme)를 즐겨찾기하세요.
 
 최초 작성일: 2024년 7월  
-최종 편집일: 2026년 1월
+원본 최종 편집일: 2026년 1월
+
+포크 학습 개정일: 2026년 9월 11일
 
 ## 작성 기여자
 
@@ -43,6 +45,8 @@ Pull Request를 날려주시면 검토 후 반영하겠습니다. 😊
   * [신규 입사자로서 느끼는 점](#신규-입사자로서-느끼는-점)
 
 ### 2부: 공부 자료
+
+* [이해하고 말로 떠올리는 복습 — 전체 92개 주제](#recall-guide)
 
 * [시작하기 전에](#시작하기-전에) **⭐ 필독!**
 * [기술면접 대비 예상 질문 (목차)](#기술면접-대비-예상-질문)
@@ -125,6 +129,85 @@ Pull Request를 날려주시면 검토 후 반영하겠습니다. 😊
 * [검증 기록](#study-verification)
 
 ---
+
+<a id="recall-guide"></a>
+## 이해하고 말로 떠올리는 복습
+
+이 포크의 학습 개정에서는 원본의 기술 학습 56개 주제에 **쉬운 설명 → 게임 예시 → 가리고 떠올릴 질문 → 짧은 면접 답변**을 붙였습니다. 개인적인 취업 조언은 암기 대상에서 제외하고 원문을 유지했습니다. C++ 15개·Unreal 18개·공통 기초 3개 주제에도 같은 회상 구성을 적용했습니다. 아래 설명 보충과 오류 정정은 포크에서 수행했습니다.
+
+먼저 설명과 예시를 읽고, 답변을 펼치기 전에 자기 말로 답해 봅니다. 짧은 답변은 그대로 외울 대본보다 핵심이 빠졌는지 확인하는 기준으로 쓰세요. 용어만 떠오르면 예시를 다시 설명하고, 예시가 떠오르면 조건을 하나 바꾸어 답해 봅니다. 링크는 더 깊게 확인할 자료이며 기본 뜻을 알기 위해 먼저 열 필요는 없습니다.
+
+기존 본문의 LSP 치환 방향, 단일 책임 표현, State·Strategy 일반화, 32/64비트 한도·성능, DB 키, 리플렉션 일반화를 함께 정정했습니다. LINQ의 실행 시점, delegate 호출, C# 런타임 배치와 버전 일반화도 정정했습니다. 링크된 외부 글 전체와 모든 예제의 실행까지 재검증했다는 뜻은 아닙니다.
+
+* [C#에서의 얕은 복사 vs. 깊은 복사](#recall-01)
+* [C# Reflection](#recall-02)
+* [네 가지 속성](#recall-03)
+* [5원칙 (SOLID 원칙)](#recall-04)
+* [interface vs. abstract class](#recall-05)
+* [Singleton 패턴](#recall-06)
+* [Null Object 패턴](#recall-07)
+* [Dependency Injection](#recall-08)
+* [Strategy 패턴](#recall-09)
+* [Proxy 패턴](#recall-10)
+* [Facade 패턴](#recall-11)
+* [State 패턴](#recall-12)
+* [Adapter 패턴](#recall-13)
+* [Observer 패턴](#recall-14)
+* [리틀 엔디언 vs. 빅 엔디언](#recall-15)
+* [프로세스 vs. 스레드](#recall-16)
+* [가상 메모리](#recall-17)
+* [Mutex & Semaphore](#recall-18)
+* [32비트 vs. 64비트 운영체제](#recall-19)
+* [Key](#recall-20)
+* [정규형](#recall-21)
+* [OSI 7계층](#recall-22)
+* [멀티플레이어 게임의 구조](#recall-23)
+* [원격 프로시저 호출 (RPC)](#recall-24)
+
+---
+
+* [Unity에서 사용하는 C# 버전](#recall-25)
+* [Unity Lifecycle](#recall-26)
+* [값 타입과 참조 타입](#recall-27)
+* [Stack / Heap Memory](#recall-28)
+* [C#과 Unity의 Garbage Collector](#recall-29)
+* [C# `const`와 `readonly`의 차이](#recall-30)
+* [C# `struct`와 `class` 인스턴스의 차이](#recall-31)
+* [C# Boxing & Unboxing](#recall-32)
+* [Unity Serialization / Deserialization](#recall-33)
+* [C# `string`](#recall-34)
+* [`this`](#recall-35)
+* [`delegate` & `event`](#recall-36)
+* [Lambda, Anonymous Method & Closure](#recall-37)
+* [Coroutine vs. 비동기 프로그래밍 vs. UniTask vs. Awaitable](#recall-38)
+* [C#과 Unity의 `null`](#recall-39)
+* [List & Dictionary](#recall-40)
+* [C# LINQ](#recall-41)
+* [Unity Addressable](#recall-42)
+* [Unity 프로파일러](#recall-43)
+* [Unity 성능 최적화](#recall-44)
+* [Unity 6](#recall-45)
+* [그래픽 렌더링 파이프라인](#recall-46)
+* [드로우 콜 최적화](#recall-47)
+* [배치 렌더링](#recall-48)
+* [스프라이트 아틀라스](#recall-49)
+* [텍스처](#recall-50)
+* [Mip Map & LOD](#recall-51)
+* [C# 다형성](#recall-52)
+* [C# VTable](#recall-53)
+* [Memory Fragmentation](#recall-54)
+* [Deadlock (교착 상태)](#recall-55)
+* [CPU 스케줄러 알고리즘](#recall-56)
+
+
+
+### 복습 순서
+
+한 번에 3~5개 주제를 고릅니다. 쉬운 예를 읽은 뒤 답변을 접은 채 **뜻 → 예시 → 주의할 조건**을 30초 정도 말해 봅니다. 막힌 주제는 `다시 설명 필요`, 말했지만 예시가 막히면 `예시 복습`, 조건을 바꿔도 설명되면 `다음 복습`으로 표시합니다. 다음 공부를 시작할 때 이전 주제부터 다시 말해 보세요. 이는 공부 방법 제안이며 암기 완료나 실습 성공을 뜻하지 않습니다.
+
+C++·Unreal의 회상 질문도 아래 [C++](#cpp-study), [Unreal](#unreal-study), [공통 기초](#game-study)에 본문과 함께 있습니다. 코드·출력 예측과 실습은 기존 상세 해설로 이어집니다.
+
+정정 근거: [delegate null 조건부 호출](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/member-access-operators), [LINQ 실행 시점](https://learn.microsoft.com/en-us/dotnet/csharp/linq/get-started/introduction-to-linq-queries), [const](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/const), [readonly](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/readonly), [Unity 실행 순서](https://docs.unity3d.com/6000.0/Documentation/Manual/execution-order.html). 확장 주제의 상세 근거는 각 본문 참고 링크를 따릅니다.
 
 ## 큰 그림
 
@@ -496,18 +579,50 @@ Pull Request를 날려주시면 검토 후 반영하겠습니다. 😊
 
 ### Unity에서 사용하는 C# 버전
 
+<a id="recall-25"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기**
+
+Unity가 지원하는 문법과 최신 C# 문법은 같지 않습니다. 같은 코드도 에디터 버전·스크립팅 백엔드·API 호환 설정에 따라 사용 가능 여부가 달라집니다. 예를 들어 웹의 최신 문법 예제를 가져왔다면 프로젝트의 지원 문법부터 확인합니다.
+
+**가리고 떠올리기:** 최신 .NET 예제가 Unity에서 컴파일되지 않으면 무엇부터 확인할까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+프로젝트의 Unity 버전에 맞는 C# 지원 범위와 제한을 확인합니다. 언어 문법 지원과 런타임 API 지원도 구분합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 > https://docs.unity3d.com/kr/2023.2/Manual/CSharpCompiler.html  
 > https://docs.unity3d.com/kr/2022.3/Manual/CSharpCompiler.html  
 > https://docs.unity3d.com/kr/2021.3/Manual/CSharpCompiler.html  
 > https://docs.unity3d.com/kr/2020.3/Manual/CSharpCompiler.html
 > https://docs.unity3d.com/6000.2/Documentation/Manual/csharp-compiler.html
 
-* 2020.x까지는 C# 8.0 사용
-* 2021.x부터 6000.x까지는 C# 9.0 사용
+* 위 2020.3 문서 기준 C# 8.0 지원 범위를 확인할 수 있다.
+* 위 2021.3·2022.3·6000.2 문서는 C# 9.0 지원과 제한을 설명한다. 이후의 모든 6000.x 버전에 이를 일반화하지 않는다.
   * 일부 기능 미지원
-* 현재 C#의 최신 버전은 12.0
+* 최신 C# 버전과 Unity 지원 버전은 별개다. 사용하는 Unity 버전의 공식 지원표를 기준으로 확인한다.
 
 ### Unity Lifecycle
+
+<a id="recall-26"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기**
+
+Awake는 해당 인스턴스의 초기화, OnEnable은 활성화 시의 등록, Start는 첫 업데이트 전 준비, Update는 프레임 작업에 대응시켜 생각합니다. 예를 들어 UI 이벤트를 OnEnable에서 구독했다면 OnDisable에서 해제할 수 있습니다. 서로 다른 객체의 실행 순서는 별도 보장 없이 가정하지 않습니다.
+
+**가리고 떠올리기:** OnEnable에서 매번 구독하고 해제하지 않으면 창을 다시 열 때 어떻게 될까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+생성·활성화·프레임 갱신·비활성화·파괴 시점을 나누어 작업을 배치합니다. 다른 객체의 초기화 순서와 비활성 객체의 호출 조건도 확인합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 > https://docs.unity3d.com/kr/current/Manual/ExecutionOrder.html
 
@@ -515,7 +630,7 @@ Pull Request를 날려주시면 검토 후 반영하겠습니다. 😊
 
 * Awake
   * Enable 여부와 상관없이 호출된다.
-  * 항상 가장 먼저 호출된다. 인스턴스 생성 또는 스크립트 로드 시 한 번 불린다.
+  * 해당 인스턴스의 초기화에 한 번 호출된다. 비활성 객체 등의 조건과 다른 인스턴스 사이 순서를 구분한다.
   * Awake끼리는 호출 순서가 무작위이다.
   * <details>
     <summary>참조를 형성할 때 쓰인다. <i>(클릭하면 예제 코드가 보입니다.)</i></summary>
@@ -548,6 +663,22 @@ Pull Request를 날려주시면 검토 후 반영하겠습니다. 😊
 
 ### 값 타입과 참조 타입
 
+<a id="recall-27"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기**
+
+값 타입 변수는 값을, 참조 타입 변수는 객체를 가리키는 참조를 저장합니다. 체력 수치를 대입하면 수치가 복사되고, 캐릭터 클래스 변수를 대입하면 같은 객체를 가리킬 수 있습니다. 값 타입 내부에 참조 필드가 있으면 그 대상은 공유될 수 있습니다.
+
+**가리고 떠올리기:** 구조체 안에 List가 있으면 구조체 복사만으로 목록도 독립적일까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+차이는 대입할 때 값 자체를 복사하는지 객체 참조를 복사하는지입니다. 스택과 힙이라는 저장 위치만으로 구분하지 않습니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 > https://learn.microsoft.com/ko-kr/dotnet/csharp/language-reference/builtin-types/built-in-types
 
 * 값 타입
@@ -559,57 +690,62 @@ Pull Request를 날려주시면 검토 후 반영하겠습니다. 😊
   * C#의 클래스(`class`), 문자열(`string`) 타입이 여기에 속한다.
   * `System.Object` 또는 `System.String`으로부터 상속된다.
   * 주로 힙에 할당되며 GC(garbage collector)가 관리한다.
-    * 이 힙 메모리 주소를 가리키는 주소 값은 스택에 저장된다.
+    * 참조 자체의 저장 위치는 지역 변수·객체 필드 등 보관 위치와 런타임에 따라 다르다.
   * https://learn.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/reference-types
 * 값 타입 / 참조 타입의 구분은 call by value / call by reference에 의해 구분한다.  
   메서드 호출 또는 반환 시 값 전체가 복사되면 값 타입이고, 원본 데이터는 그대로 있고 이를 참조하는 주소만 복사하여 넘겨주면 참조 타입이다.
 
 ### Stack / Heap Memory
 
-> 아래 링크에 있는 가상 메모리 그림을 같이 보면서 공부하시면 좋습니다.  
-> https://stackoverflow.com/questions/32418750/stack-and-heap-locations-in-ram  
-> https://open4tech.com/concept-heap-usage-embedded-systems/
+<a id="recall-28"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기**
 
-* 실제 메모리(RAM)의 주소가 아니라, 한 [프로세스](#프로세스-vs-스레드)에 할당된
-  **[가상 메모리](#가상-메모리)에서의 주소 공간**을 다룬다.
-* **높은 주소 쪽에 Stack이 있다.**
-  * 쌓일수록 아래로(낮은 주소 쪽으로) 내려온다.
-  * 컴파일러는 호출 스택에 pop하고 push하는 머신 코드를 생성할 뿐이고, 이러한 instruction들이 스택을 관리한다.
-  * 실행할 수 없다.
-  * **주로 값 타입을 저장한다.**
-  * 변수의 사용 범위를 벗어나면 금방 pop되어 수명이 짧은 편이다.
-* **Stack보다 아래에 Heap이 있다.**
-  * 쌓일수록 위로(높은 주소 쪽으로) 올라간다.
-  * 프로그래머가 관리하며, 실행할 수 없다.
-  * **주로 동적 할당한 객체(참조 타입)를 저장한다.**
-  * Unity에서의 관리되는 메모리 시스템
-    * https://docs.unity3d.com/kr/current/Manual/performance-managed-memory.html
-* 그 아래에 Static data가 있다. 쓸 수 있고 실행할 수 없다.
-* 그 아래에 Literals가 있다. 이는 읽기 전용이며 실행할 수 없다.
-* 그 아래에 Instructions가 있다. 이는 읽기 전용이며 실행할 수 있다.
+스택은 호출과 지역 작업을 관리하는 데, 관리 힙은 관리 객체를 저장하는 데 쓰입니다. 실제 배치는 런타임과 최적화에 좌우됩니다. 예를 들어 클래스의 int 필드는 값 타입이지만 그 클래스 객체 안에 있습니다.
 
-* <b><i>"C#에서 값 타입의 변수나 필드(int, float, bool, enum, struct 등)는 모두 스택에 저장되나요? 참조 타입의 변수나 필드(class, string 등)는 모두 힙에 저장되나요?"</i></b>
-  * 두 질문의 답 모두 "아니오"이다!
-  * 값 타입이라고 항상 스택에 저장되는 것이 아니고, 참조 타입이라고 항상 힙에 저장되는 것이 아니다.
-    * 값 타입과 참조 타입의 구분은 [관련 내용](#값-타입과-참조-타입)을 참고하자.
-  * 메모리의 저장 위치를 결정하는 데에 있어서 그보다 중요한 것은 변수의 수명이 어느 정도인가이다.
-    * 수명이 짧아서 변수의 scope를 벗어났을 때(예: 메서드 반환 시) 사라져도 되는 변수이면 스택에 저장된다.
-    * Scope를 벗어나도 살아 있어야 하는 변수이면 힙에 저장된다.
-  * 그래서 보통 값 타입의 지역 변수는 스택에 저장된다.
-  * 참조 타입의 지역 변수는, 실제 참조 타입의 데이터가 힙에 저장되고, 지역 변수가 이 힙에 저장된 데이터의 위치(주소) 값을 스택에 들고 있는 형태가 된다.  
-    따라서 scope를 벗어나더라도 [garbage collector](#c과-unity의-garbage-collector)가 돌기 전까지는 실제 데이터가 힙에 계속 남아 있게 된다.
-  * 클래스의 인스턴스의 필드는 해당 필드가 **값 타입**으로 선언되어 있더라도 인스턴스의 원본 데이터가 힙에 저장되므로 함께 **힙에 저장된다.**
-  * [구조체](#c-struct와-class-인스턴스의-차이)의 인스턴스의 필드가 값 타입이라면 이는 보통 스택에 저장된다.
-    * 해당 구조체 인스턴스가 클래스 인스턴스의 필드로 존재하는 상황이 아니라면 말이다.
-  * 문자열은 힙도 스택도 아닌 literals 영역에 실제 데이터(intern)가 할당되고, 이것의 위치(주소)를 변수에 들고 있게 된다.
-    * 문자열이 지역 변수로 선언되었다면 주소 값이 스택에 존재한다.
-    * 문자열이 클래스의 인스턴스의 필드로 선언되었다면 주소 값이 힙에 존재한다.
-  * 배열(array)은 대부분 힙에 저장된다.
-    * 예외가 있는데, `Span<T>`나 `ReadOnlySpan<T>`를 `stackalloc` 키워드와 함께 선언한 경우에는 배열처럼 보이지만 스택에 저장된다.
-    * https://learn.microsoft.com/ko-kr/dotnet/csharp/language-reference/operators/stackalloc
-  * (심화) `ref struct`로 정의한 구조체의 인스턴스는 항상 스택에 저장된다.
+**가리고 떠올리기:** int 필드는 무조건 스택에 있다는 설명이 왜 틀릴까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+타입의 값·참조 의미와 실제 저장 위치는 별개입니다. 호출 수명과 객체 도달 가능성을 나누어 메모리를 설명합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
+* 메모리 그림은 대표적인 모형입니다. 스택·힙의 정확한 주소·증가 방향·실행 권한은 플랫폼과 런타임에 따라 달라집니다.
+* 스택은 호출 프레임과 지역 작업에 쓰이고, 관리 힙의 객체는 GC가 관리합니다. 지역 값이 레지스터에 놓이거나 최적화로 사라질 수도 있습니다.
+* 클래스 객체 안의 값 타입 필드는 객체 안에, 구조체 배열의 값은 배열 안에 놓일 수 있습니다. 참조 변수 자체와 그 변수가 가리키는 객체를 구분합니다.
+* 클로저가 캡처한 변수처럼 원래 호출보다 오래 필요한 상태는 별도 저장 공간으로 옮겨질 수 있습니다. 소스의 스코프만으로 정확한 물리 배치를 결정하지 않습니다.
+* string은 관리 객체입니다. 문자열 리터럴의 인터닝과 실행 중 문자열 생성은 다르며, 모든 문자열이 별도의 literals 영역에 저장된다는 설명은 부정확합니다.
+* `stackalloc`은 스택 저장 공간을 확보하며 `Span<T>`로 이를 다룰 수 있습니다. 일반 관리 배열 생성과 구분합니다. `ref struct`는 힙 탈출을 제한하는 타입 규칙으로 이해하고 최적화 후 배치까지 단정하지 않습니다.
+
+참고: [Unity 관리 메모리](https://docs.unity3d.com/6000.0/Documentation/Manual/performance-managed-memory.html), [Microsoft stackalloc](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/stackalloc).
+
 
 ### C#에서의 얕은 복사 vs. 깊은 복사
+
+<a id="recall-01"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기 — 어디까지 새로 만드는가**
+
+캐릭터 설정을 복사할 때 바깥 객체만 새로 만들면 내부 장비 목록은 같은 것을 가리킬 수 있습니다. 얕은 복사는 필드 값을 복사하므로 참조 필드의 대상까지 복제하지 않습니다. 깊은 복사는 독립적으로 변경할 필요가 있는 내부 대상도 새로 만듭니다.
+
+**게임 예시:** 원본과 복사본이 같은 장비 목록을 참조한다면 한쪽에서 장비를 추가했을 때 다른 쪽에서도 보입니다. 독립된 저장 슬롯이 필요하면 목록과 필요한 원소까지 복사해야 합니다.
+
+**가리고 떠올리기:** 새 List를 만들었지만 원소가 같은 클래스 인스턴스라면 원소의 필드를 수정해도 독립적일까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+얕은 복사는 참조 대상이 공유될 수 있고, 깊은 복사는 필요한 내부 객체까지 복제합니다. 어떤 상태를 공유하고 어떤 상태를 독립시킬지 먼저 정해야 합니다.
+
+</details>
+
+설명 근거: [참고 문서](https://learn.microsoft.com/en-us/dotnet/api/system.object.memberwiseclone?view=net-10.0).
+
+<!-- RECALL_CARD_END -->
+
 
 * 얕은 복사: 같은 힙 메모리 주소를 가리키도록 주소를 복사
 * 깊은 복사: 힙에 복사할 객체가 가진 메모리만큼을 새로 할당하여 복사하고 새 메모리 주소를 반환
@@ -618,6 +754,22 @@ Pull Request를 날려주시면 검토 후 반영하겠습니다. 😊
   * C++에서의 깊은 복사: 멤버의 값 복사 + 포인터가 참조하는 대상까지 복사
 
 ### C#과 Unity의 Garbage Collector
+
+<a id="recall-29"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기**
+
+GC는 관리 객체 중 더 이상 도달할 수 없는 대상을 회수합니다. 객체를 많이 만들고 버리면 회수 작업이 프레임 지연에 영향을 줄 수 있습니다. 예를 들어 매 프레임 새 문자열을 만드는 UI는 할당 지점을 먼저 측정합니다. Unity의 관리 GC와 엔진 네이티브 자원 해제는 구분합니다.
+
+**가리고 떠올리기:** 참조를 null로 바꾸는 순간 메모리가 반드시 반환될까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+GC는 도달 불가능한 관리 객체를 회수하며 시점이 즉시라는 보장은 없습니다. 할당량과 회수 비용을 측정하고 필요한 자원의 명시적 해제도 구분합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 > ⭐ **중요!**
 
@@ -772,14 +924,30 @@ Pull Request를 날려주시면 검토 후 반영하겠습니다. 😊
 
 ### C# `const`와 `readonly`의 차이
 
+<a id="recall-30"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기**
+
+const는 컴파일 시 결정되는 상수, readonly 필드는 선언 또는 해당 생성자에서 정할 수 있는 필드입니다. 예를 들어 모든 빌드에서 같은 상수와 설정으로 생성 시 정하는 값을 구분합니다. readonly인 List 필드라도 목록 내용을 바꾸는 것까지 막지는 않습니다.
+
+**가리고 떠올리기:** readonly List에 Add를 호출할 수 있으면 readonly가 실패한 걸까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+readonly는 필드의 재대입을 제한하며 참조 대상 전체의 불변성을 보장하지 않습니다. const는 컴파일 시 상수이므로 용도와 버전 변경 영향도 다릅니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 * *"`readonly List<int>`로 선언한 컬렉션의 원소를 편집할 수 있을까요?"*
 
 * `const`
   * 컴파일 타임에 변수가 값으로 대체된다.
-  * 메모리의 static data 영역에 저장된다. (스택에 저장되는 것이 아니다!)
+  * 사용 지점에 상수 값이 포함될 수 있으므로 별도 static 필드 저장 공간이 있다고 단정하지 않는다.
   * 선언할 때에만 값을 설정할 수 있다.
   * 값이 바뀌면 다시 빌드해야 한다.
-  * 내장형 타입과만 사용할 수 있다.
+  * 허용되는 상수 표현식과 타입에 제한이 있다. enum과 string, 참조 타입의 null 상수 등도 구분한다.
 * `readonly`
   * 런타임 상수이다.
   * 필드 선언 또는 구조체 선언 시 붙일 수 있다. 지역 변수 선언에는 붙일 수 없다.
@@ -790,13 +958,29 @@ Pull Request를 날려주시면 검토 후 반영하겠습니다. 😊
   * 값 형식에 `readonly`를 붙이면 초기화 이후에는 그 값을 변경할 수 없다.
   * 참조 형식(예: 배열이나 `List<T>`)에 `readonly`를 붙이면 초기화 이후에 해당 참조가 다른 데이터를 가리킬 수 없음을 보장하지만, 데이터의 각 원소(또는 필드)까지도 변경되지 않도록 막는 것은 아님에 주의하자!
     * 그래서 `public readonly List<int> list = new();`를 수행한 후에 `list = new();`를 하는 것은 불가능하지만, `list.Clear();` 또는 `list[0] = 1;` 따위는 문제 없이 작동한다.
-* 일반적으로 `const`보다 `readonly`를 쓰는 것이 좋다.
-  * `const`가 조금 빠르기는 하며, 다음의 경우에는 `const`를 사용해도 된다.
+* 변경 가능성과 컴파일 시 상수 요구에 따라 `const`와 `readonly`를 선택한다.
+  * 다음처럼 컴파일 시 상수가 필요한 문맥을 확인한다.
     * `switch`/`case`문 레이블
     * `enum` 정의
-    * 프로퍼티의 매개변수
+    * 특성(attribute)의 인수
 
 ### C# `struct`와 `class` 인스턴스의 차이
+
+<a id="recall-31"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기**
+
+struct는 값 의미, class는 참조 의미를 갖습니다. 좌표처럼 작은 독립 값에는 구조체를 검토하고, 여러 곳에서 같은 정체성과 상태를 공유할 캐릭터에는 클래스를 검토합니다. 큰 구조체의 반복 복사 비용도 생각해야 합니다.
+
+**가리고 떠올리기:** 체력이 든 struct를 함수에 값으로 넘겨 수정하면 호출자의 체력도 바뀔까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+대입·전달 시 복사 의미와 공유할 정체성으로 선택합니다. 구조체가 항상 빠르거나 항상 스택에 있다는 기준은 쓰지 않습니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 > https://learn.microsoft.com/ko-kr/dotnet/csharp/language-reference/builtin-types/struct
 
@@ -806,7 +990,7 @@ Pull Request를 날려주시면 검토 후 반영하겠습니다. 😊
 
 * `struct`(구조체) 인스턴스
   * 값 타입이다.
-  * **주로 스택에 저장된다.**
+  * **저장 위치는 포함된 객체·배열·지역 변수 등의 문맥에 따라 달라진다.**
     * 예외에 대해서는 [메모리 저장 위치 관련 내용](#stack--heap-memory)을 읽어보자.
   * **필드와 메서드를 가질 수 있다.** *(주의!)*
   * 할당하거나 인수로 넘기거나 반환할 때 복사된다.
@@ -835,6 +1019,22 @@ Pull Request를 날려주시면 검토 후 반영하겠습니다. 😊
   * 원본이 수정되지 않는 것은 위 코드를 짜면서 의도하지 않은 상황일 것이기 때문에 컴파일러가 이를 미리 막아주는 것이다.
 
 ### C# Boxing & Unboxing
+
+<a id="recall-32"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기**
+
+값 타입을 object나 인터페이스 형태로 다루는 과정에서 박싱이 발생할 수 있습니다. 예를 들어 int를 object에 넣으면 값을 담는 객체가 필요합니다. 언박싱은 그 박싱된 값의 타입에 맞게 꺼내는 과정입니다.
+
+**가리고 떠올리기:** 박싱된 int를 바로 long으로 언박싱해도 될까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+박싱은 값 타입을 객체로 표현하며 할당과 복사 비용이 생길 수 있습니다. 언박싱은 호환되는 원래 값 타입으로 수행하고 숫자 변환은 따로 합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 > https://learn.microsoft.com/ko-kr/dotnet/csharp/programming-guide/types/boxing-and-unboxing
 
@@ -890,6 +1090,22 @@ Pull Request를 날려주시면 검토 후 반영하겠습니다. 😊
 
 ### Unity Serialization / Deserialization
 
+<a id="recall-33"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기**
+
+직렬화는 저장하거나 전달할 수 있는 형태로 상태를 표현하고, 역직렬화는 그 상태를 읽는 과정입니다. Inspector에 보이는 설정과 씬·프리팹 저장도 이 규칙과 연결됩니다. 일반 C# 프로퍼티가 있다고 자동 저장되는 것은 아닙니다.
+
+**가리고 떠올리기:** 필드에 값이 있는데 씬을 다시 열면 사라질 때 무엇을 확인할까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+Unity 직렬화 규칙에 맞는 필드와 타입인지 확인합니다. 저장 대상 데이터와 실행 중 임시 상태를 구분하고 엔진 버전의 지원 범위를 봅니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 * 직렬화
   * (동적 할당을 통해 저장된) 객체의 데이터를 일렬로 묶어서 보관하는 것
   * 메모리 상에 흩어져 있는 변수들을 모아 연속된 메모리 공간에 올리는 것을 직렬화라고 한다.
@@ -931,18 +1147,34 @@ Pull Request를 날려주시면 검토 후 반영하겠습니다. 😊
 
 ### C# `string`
 
+<a id="recall-34"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기**
+
+문자열은 내용을 직접 바꾸지 않는 참조 타입입니다. 문자열 변수에 새 내용을 대입하면 변수가 다른 문자열을 가리킵니다. 예를 들어 반복문에서 문자열을 이어 붙이면 중간 문자열이 생길 수 있어 반복 구성에는 StringBuilder를 검토합니다.
+
+**가리고 떠올리기:** 불변인데 string 변수에 다른 문자열을 대입할 수 있는 이유는 무엇일까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+불변은 문자열 객체의 내용에 대한 성질이며 변수의 재대입과 다릅니다. 반복 생성이 많은 곳은 할당을 측정해 구성 방법을 고릅니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 * Immutable이다.
   * 문자열 값을 수정하면 새로운 값을 만들고 참조를 거기로 잇는다.
 * 왜 이렇게 구현되어 있는가?
-  * 멀티스레딩 환경에서 동기화를 모두 신경쓰는 것보다 readonly로 하는 것이 편하기 때문이다.
+  * 불변 데이터는 공유와 재사용을 쉽게 한다. 다만 문자열 변수의 동시 변경까지 자동 동기화한다는 뜻은 아니다.
 * <details>
   <summary><i><b>퀴즈: string 변수를 만들어도 동적 할당이 발생할까요?</b> (클릭하면 펼쳐집니다.)</i></summary>
 
   * [String interning (위키백과)](https://en.wikipedia.org/wiki/String_interning)
-  * string 변수를 값과 함께 선언하면 값에 해당하는 문자열이 literal 영역에 이미 있는지 검색하고 없다면 메모리를 **할당**하여 생성한다.  
-    그리고 그 참조 주소를 스택 영역에 쌓은 뒤 선언한 변수에 저장한다.
-  * C#에서는 string interning을 이용하여, 같은 문자열 값은 한 번만 저장되게 한다.  
-    그러나 프로그램이 오래 돌아가면서 안 쓰는 interned string이 쌓이면 GC가 이를 처리한다.
+  * 리터럴은 인터닝을 통해 같은 문자열 객체를 공유할 수 있다. 실행 중 만든 모든 문자열을 자동으로 같은 값끼리 합치는 것은 아니다.
+  * 기존 문자열 참조를 변수에 대입하는 것과 새로운 문자열을 생성하는 것을 구분한다. 전자는 문자열 내용 전체를 다시 만들 필요가 없다.
+  * 인터닝된 문자열은 장기간 유지될 수 있으므로 잠깐 쓸 문자열을 무작정 Intern하지 않는다.
+  * 참고: [Microsoft String.Intern](https://learn.microsoft.com/en-us/dotnet/api/system.string.intern).
 
   </details>
 
@@ -955,12 +1187,14 @@ Pull Request를 날려주시면 검토 후 반영하겠습니다. 😊
 * 문자열 보간
   * 문자열 앞에 `$`를 붙여주면 사용할 수 있다.
   * 예: `text = $"(x, y) = ({pos.x}, {pos.y})"`
-  * 이 문법은 `string.Format()`으로 치환되어 실행된다.
+  * 구체 변환은 컴파일러·대상 런타임·문맥에 따라 다르다. 항상 `string.Format()`으로 변환된다고 단정하지 않는다.
   * 가독성은 높지만 할당이 발생하며, 특히 [boxing](#c-boxing--unboxing)으로 인해 할당이 추가로 발생할 수 있다.
 
 #### 문자열 할당을 줄이는 방법
 
-* 빈 문자열은 `""` 대신 `string.Empty`를 사용한다.
+> 원본의 아래 Span 예제에는 공백 위치에서 시작하여 공백이 포함되는 경계 오류가 있습니다. 두 Slice의 시작은 공백 다음 위치여야 합니다. 그대로 정답 코드로 외우지 말고 `I like`, `I like this`, 공백 없는 입력으로 결과를 확인하세요. 이 예제는 이번 개정에서 실행 검증하지 않았습니다.
+
+* `""`와 `string.Empty`를 바꾸는 것만으로 할당이 줄어든다고 보지는 않는다.
 * `string.Split()`의 사용을 줄인다.
   * `ReadOnlySpan<char>`를 사용하면 중간 문자열(동적 할당)을 마구 만들어내지 않고도 문자열을 파싱할 수 있다.
 
@@ -988,7 +1222,7 @@ Pull Request를 날려주시면 검토 후 반영하겠습니다. 😊
 
 * `+`로 문자열을 연결하지 않고 `StringBuilder` 또는 문자열 보간을 이용한다.
   * 예: `string s = "a" + 1 + "b" + 2;`의 코드에서는 `"a1b2"`를 만들기 위해 `string.Concat()`이 호출되면서 `1`과 `2`가 `object` 타입으로 캐스팅되는 [boxing](#c-boxing--unboxing)이 발생한다.
-  * `System.Text.StringBuilder`과 유사하지만 할당을 완전히 제거한 서드 파티 라이브러리도 있다. (예: Cysharp의 [`ZString`](https://github.com/Cysharp/ZString))
+  * `System.Text.StringBuilder`과 유사하지만 특정 사용 경로의 중간 할당을 줄이는 서드 파티 라이브러리도 있다. (예: Cysharp의 [`ZString`](https://github.com/Cysharp/ZString))
 
 #### 빈 문자열 확인
 
@@ -998,6 +1232,22 @@ Pull Request를 날려주시면 검토 후 반영하겠습니다. 😊
 * `string.IsNullOrEmpty()`를 쓰면 안전하다.
 
 ### `this`
+
+<a id="recall-35"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기**
+
+this는 현재 인스턴스를 뜻합니다. 생성자에서 같은 이름의 인자와 필드를 구별하거나 현재 객체를 다른 함수에 전달할 때 쓸 수 있습니다. 정적 메서드에는 특정 인스턴스가 없으므로 같은 의미의 this가 없습니다.
+
+**가리고 떠올리기:** static 메서드에서 인스턴스 필드에 바로 접근하지 못하는 이유는 무엇일까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+this는 현재 호출 대상 인스턴스입니다. 정적 멤버는 인스턴스에 속하지 않으므로 인스턴스가 필요하면 명시적으로 받아야 합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 * 클래스의 현재 인스턴스를 가리킨다.
   * 지역 변수와 필드를 구분할 때 필드에 대해 `this.필드`를 사용하여 구분할 수 있다.
@@ -1058,6 +1308,22 @@ Pull Request를 날려주시면 검토 후 반영하겠습니다. 😊
 
 ### `delegate` & `event`
 
+<a id="recall-36"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기**
+
+delegate는 호출할 함수를 값처럼 전달하는 타입이고, event는 외부 코드가 구독·해제하도록 공개 범위를 제한합니다. 예를 들어 체력 변경을 UI가 구독하면 체력 객체가 UI의 구체 함수를 직접 알 필요가 줄어듭니다.
+
+**가리고 떠올리기:** 이벤트를 구독한 UI가 닫힐 때 해제하지 않으면 어떤 문제가 생길까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+delegate는 호출 대상을 표현하고 event는 알림의 구독 경계를 만듭니다. 구독 수명과 호출 스레드, 콜백의 공유 상태 안전성을 별도로 관리합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 * `delegate`는 함수 대리자이다.
   * 함수를 타입처럼 취급하고 함수에 대한 참조를 갖는다.
   * 인자 수, 인자 타입, 반환 타입을 통해 정의된다.
@@ -1097,10 +1363,26 @@ Pull Request를 날려주시면 검토 후 반영하겠습니다. 😊
   * `if`문으로 `null` 체크를 하는 것은 좋지 않다.
     * 멀티스레딩 환경에서 `null` 체크 통과 후 다른 스레드에서 등록 취소를 하면 대리자가 `null`인 경우가 생길 수 있다.
   * `?.`(null conditional operator)를 사용하는 것이 스레드로부터 안전하다.
-    * 이 연산자는 atomic하기 때문에 멀티스레딩 환경에서도 `null` 체크와 호출을 동시에 해준다.
+    * `?.Invoke`는 평가한 delegate가 null이 아니면 호출하여 검사와 재조회 사이의 경쟁을 피한다. 호출 전체나 콜백 내부의 공유 상태를 원자적으로 만드는 것은 아니다.
     * 문제가 있다면, Unity에서는 `?.`이 의도대로 동작하지 않을 수 있다. [자세한 내용은 C#과 Unity의 `null` 참고.](#c과-unity의-null)
 
 ### Lambda, Anonymous Method & Closure
+
+<a id="recall-37"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기**
+
+람다는 이름 없이 함수를 표현하는 문법이고 클로저는 바깥 변수를 사용하도록 환경을 붙잡는 방식입니다. 예를 들어 나중에 실행할 콜백이 지역 변수를 캡처하면 실행 시점에 그 변수의 값이 달라졌을 수 있습니다.
+
+**가리고 떠올리기:** 콜백을 등록한 시점의 값과 실행 시점의 값이 같다고 가정해도 될까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+람다가 캡처하는 변수와 실제 실행 시점을 확인합니다. 클로저의 수명·할당·공유 상태를 고려하고 필요하면 별도의 값을 보관합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 * 람다 식
   * https://learn.microsoft.com/ko-kr/dotnet/csharp/language-reference/operators/lambda-expressions
@@ -1139,6 +1421,22 @@ Pull Request를 날려주시면 검토 후 반영하겠습니다. 😊
   * *면접에서 이런 것까지 묻지는 않을 것입니다.*
 
 ### Coroutine vs. 비동기 프로그래밍 vs. UniTask vs. Awaitable
+
+<a id="recall-38"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기**
+
+코루틴은 처리를 나누어 이어 실행하는 방식이며 자동으로 작업 스레드가 생기지 않습니다. async/await도 기다리는 흐름을 표현하는 문법이지 CPU 작업의 자동 병렬화가 아닙니다. 예를 들어 다운로드 대기와 큰 배열 계산은 해결 방식이 다릅니다.
+
+**가리고 떠올리기:** await를 붙이면 무거운 반복문도 메인 스레드에서 사라질까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+대기와 계산을 구분하고 실제 실행 스레드, 취소, 예외 전달, 객체 종료를 설계합니다. UniTask와 Awaitable의 지원 조건은 각 버전에 맞춰 확인합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 > https://gamedevbeginner.com/async-in-unity/  
 > https://tistory.jeon.sh/59
@@ -1193,6 +1491,22 @@ Pull Request를 날려주시면 검토 후 반영하겠습니다. 😊
     * [Unity 6](#unity-6)로 오면서 기능이 더 추가되었지만 여전히 실전에서 사용하기에는 부족하다는 평가를 받는다.
 
 ### C#과 Unity의 `null`
+
+<a id="recall-39"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기**
+
+UnityEngine.Object에는 관리 객체와 엔진 객체의 연결이 있습니다. 엔진 객체가 파괴되면 관리 래퍼 참조가 남아도 Unity의 동등 비교는 null처럼 판단할 수 있습니다. 예를 들어 Destroy 이후 단순한 관리 참조 존재와 게임 객체 사용 가능성은 다릅니다.
+
+**가리고 떠올리기:** Unity 객체의 == null과 ReferenceEquals 결과가 다를 수 있는 이유는 무엇일까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+Unity 객체의 null 비교는 엔진 객체 상태도 반영합니다. 일반 C# 참조 검사 및 null 조건부 연산자와 같은 검사라고 가정하지 않습니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 > https://stackoverflow.com/questions/62678228/why-does-c-sharp-null-conditional-operator-not-work-with-unity-serializable-vari  
 > https://github.com/JetBrains/resharper-unity/wiki/Possible-unintended-bypass-of-lifetime-check-of-underlying-Unity-engine-object  
@@ -1256,6 +1570,22 @@ Pull Request를 날려주시면 검토 후 반영하겠습니다. 😊
 
 ### List & Dictionary
 
+<a id="recall-40"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기**
+
+List는 순서 있는 원소를 다루고 Dictionary는 키로 값을 찾습니다. 예를 들어 표시 순서가 필요한 퀘스트 목록과 ID로 찾는 퀘스트 정보는 다른 요구입니다. Dictionary 탐색은 일반적으로 평균 상수 시간이지만 해시 충돌 등 조건에 영향을 받습니다.
+
+**가리고 떠올리기:** 순서대로 전부 순회하는 작업에서도 Dictionary가 항상 빠를까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+순회·삽입·키 탐색 요구와 메모리 비용을 보고 선택합니다. 평균 시간 복잡도만으로 실제 성능을 확정하지 않습니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 * `List<>`: 배열(ArrayList)
   * 용량(capacity)을 초과하여 삽입하는 경우 용량을 늘린 새 배열을 할당하고 기존 배열의 값을 복사한다. 따라서 시간 복잡도가 $O(n)$이다. 이를 피하려면 미리 사용할 만큼의 용량을 할당할 필요가 있다.
   * `TrimExcess()`를 쓰거나 `Capacity`를 직접 변경하여 낭비되는 공간을 줄이는 경우에도 새 배열을 할당한다. 따라서 시간 복잡도가 $O(n)$이다.
@@ -1311,6 +1641,22 @@ Pull Request를 날려주시면 검토 후 반영하겠습니다. 😊
   </details>
 
 ### C# LINQ
+
+<a id="recall-41"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기**
+
+LINQ는 필터링·변환·집계 같은 질의를 표현합니다. Where처럼 열거할 때 실행되는 연산과 Count·ToList처럼 결과를 즉시 만드는 연산을 구분합니다. 예를 들어 저장해 둔 질의를 두 번 열거하면 원본 변경이 두 번째 결과에 반영될 수 있습니다.
+
+**가리고 떠올리기:** 질의 변수를 만들었다고 결과가 그 시점에 고정될까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+연산별 실행 시점과 반복 열거 여부를 확인합니다. 가독성의 이점과 할당·버퍼링 비용을 실제 사용 위치에서 측정합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 > https://learn.microsoft.com/ko-kr/dotnet/csharp/linq/
 
 * Language-Integrated Query
@@ -1366,14 +1712,14 @@ Pull Request를 날려주시면 검토 후 반영하겠습니다. 😊
 * 장점
   * 코드를 짧게 하여 가독성을 높인다.
   * 확장 메서드를 만들 수 있다.
-  * [지연 계산(lazy evaluation)](https://learn.microsoft.com/ko-kr/dotnet/standard/linq/deferred-execution-lazy-evaluation)을 수행한다.
-    * 결과 값을 사용하거나 `ToList()`, `ToArray()` 따위를 호출하면 그제서야 연산을 수행한다.
+  * 연산에 따라 [지연 계산(lazy evaluation)](https://learn.microsoft.com/ko-kr/dotnet/standard/linq/deferred-execution-lazy-evaluation)을 수행한다.
+    * `Where`, `Select` 등은 보통 열거할 때 실행한다. `Count`, `ToList`, `ToArray` 등은 호출 시 결과를 구한다.
     * 중간 결과물을 캐싱하려면 `ToList()`, `ToArray()` 따위를 호출해야 한다.
-    * 지연 계산은 임시 할당을 비교적 적게 만드므로 대형 컬렉션을 다룰 때 성능이 좋다.
+    * 지연 실행만으로 저할당·고성능이 보장되지는 않는다. 정렬·그룹화에는 버퍼링이 필요할 수 있고 반복 열거는 계산을 반복할 수 있다.
     * 때로는 즉시 계산이 지연 계산보다 유용할 때도 있고, 지연 계산의 특징 때문에 의도한 대로 작동하지 않을 수 있다.
 * 성능 상 단점
-  * **불필요한 할당을 많이 만든다.**
-  * 예를 들어, 아래와 같은 코드에서는 `w.ToUpper()`, `GroupBy()`, `Select()` 등의 메서드 호출마다, 최종 결과물에서 쓰이지 않는 중간 결과물이 발생한다.
+  * 반복자·클로저·결과 객체·버퍼 등의 할당이 생길 수 있으므로 실제 호출 경로를 측정한다.
+  * 아래 예에서는 문자열 변환, 그룹 저장, 투영 결과와 정렬 버퍼 등의 비용을 구분한다. 모든 메서드 호출을 같은 종류의 불필요한 중간 결과물로 보지는 않는다.
   * `ToArray()`, `ToList()` 등도 메모리 및 시간 성능에 안 좋은 영향을 준다.
   * [클로저](#lambda-anonymous-method--closure)를 만들기도 쉽다.
   * `for` 문(권장) 또는 `foreach` 문으로 변환하여 메모리를 최적화할 수 있다.
@@ -1387,6 +1733,28 @@ var query2 = words.
 
 ### C# Reflection
 
+<a id="recall-02"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기 — 실행 중에 타입 정보를 찾아 쓰기**
+
+보통은 코드에서 타입과 함수를 알고 직접 호출합니다. 리플렉션은 실행 중 얻은 타입 정보로 필드·메서드를 찾고 값을 읽거나 호출하는 기능입니다. 여기서 어셈블리는 컴파일된 코드와 타입 정보가 들어 있는 단위라고 이해하면 됩니다.
+
+**게임 예시:** 설정 파일의 이름으로 처리 대상을 찾거나, 에디터 도구가 타입의 속성을 읽어 입력 화면을 만드는 경우에 활용할 수 있습니다. 같은 멤버를 반복해서 찾는다면 검색 결과를 재사용할 수 있는지 검토합니다.
+
+**가리고 떠올리기:** 이미 타입과 메서드를 아는 매 프레임 처리에서도 이름 검색을 다시 해야 할까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+리플렉션은 런타임에 타입과 멤버를 조사하고 접근하는 기능입니다. 유연성이 필요한 도구에는 유용하지만 반복 호출 비용과 빌드 환경의 제약을 검토해야 합니다.
+
+</details>
+
+설명 근거: [참고 문서](https://learn.microsoft.com/en-us/dotnet/fundamentals/reflection/overview).
+
+<!-- RECALL_CARD_END -->
+
+
 > https://learn.microsoft.com/ko-kr/dotnet/fundamentals/reflection/reflection
 
 * 로드된 어셈블리 내에 정의된 타입에 대한 정보를 런타임에 가져올 수 있다.
@@ -1394,11 +1762,27 @@ var query2 = words.
 * 리플렉션은 어셈블리, 모듈 및 타입을 캡슐화하는 개체를 제공한다.
   * 동적으로 타입 인스턴스를 만들거나, 타입을 기존 개체에 바인딩하거나, 기존 개체에서 타입을 가져올 수 있다.
   * 해당 타입의 메서드를 호출하거나 필드 및 프로퍼티에 접근할 수 있다.
-* 탐색하는 시간이 굉장히 느리기 때문에 **가급적 사용을 피해야 한다.**
-* 메서드 이름을 인자로 넣어 해당 메서드를 호출하는 함수는 내부적으로 Reflection을 사용하므로 피해야 한다.
+* 반복적인 멤버 검색과 동적 호출 비용을 검토합니다. 도구·초기화 등 유연성이 필요한 곳에서는 유용하며, 자주 실행되는 경로에서는 직접 호출·캐싱·코드 생성 같은 대안과 비교합니다.
+* 문자열 기반 호출은 이름 변경의 검출과 호출 비용을 검토합니다. 모든 문자열 기반 API가 동일한 내부 리플렉션 구현을 쓴다고 단정하지 않습니다.
   * 예: `StartCoroutine("FadeOut");` 대신 `StartCoroutine(FadeOut());`을 사용해야 한다.
 
 ### Unity Addressable
+
+<a id="recall-42"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기**
+
+주소나 키로 에셋을 요청하고 로드 작업과 참조를 관리하는 시스템입니다. 예를 들어 무기 화면에서 아이콘을 요청했다면 완료 전 창이 닫히는 경우와 사용 후 핸들을 해제하는 경로가 필요합니다.
+
+**가리고 떠올리기:** 비동기 요청 성공만 확인하면 에셋 수명 관리도 끝난 걸까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+요청·완료·실패·사용 종료를 연결해 관리합니다. 에셋 의존성과 핸들의 수명을 확인하며 비동기라는 이유만으로 메모리 비용이 사라지지는 않습니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 > https://docs.unity3d.com/Packages/com.unity.addressables@2.3/manual/index.html  
 > https://unity.com/kr/blog/technology/tales-from-the-optimization-trenches-saving-memory-with-addressables  
@@ -1436,6 +1820,22 @@ var query2 = words.
 
 ### Unity 프로파일러
 
+<a id="recall-43"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기**
+
+느린 프레임의 시간을 어떤 작업이 차지했는지 찾는 도구입니다. 예를 들어 전투 중 끊김이 생기면 CPU 작업, GC 할당, GPU 시간을 나누어 봅니다. 에디터 측정에는 에디터 자체 비용이 섞일 수 있습니다.
+
+**가리고 떠올리기:** CPU 시간이 줄었는데 FPS가 그대로면 무엇을 더 확인할까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+목표 기기의 대표 상황에서 병목을 찾고 변경 전후 같은 조건으로 비교합니다. CPU와 GPU의 제한을 구분합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 > https://docs.unity3d.com/kr/2021.3/Manual/Profiler.html  
 > https://docs.unity3d.com/kr/2021.3/Manual/OptimizingGraphicsPerformance.html  
 > https://learn.unity.com/tutorial/diagnosing-performance-problems-2019-3?language=en&courseId=5c87de35edbc2a091bdae346#648abf6eedbc2a6ad72aff24
@@ -1467,6 +1867,22 @@ var query2 = words.
 
 ### Unity 성능 최적화
 
+<a id="recall-44"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기**
+
+목표 프레임을 못 맞추는 원인을 먼저 측정하고 가장 큰 비용을 줄입니다. 예를 들어 매 프레임 모든 적을 검색한다면 검색 횟수나 후보 수를 줄이는 구조를 검토합니다. 캐싱과 풀링도 메모리·초기화·정리 비용이 있습니다.
+
+**가리고 떠올리기:** 풀링을 넣었지만 빨라지지 않으면 무엇을 잘못 가정했을까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+병목을 측정한 뒤 알고리즘·호출 빈도·할당을 개선합니다. 같은 조건에서 시간을 다시 측정하고 메모리와 동작 정확성도 확인합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 > ⭐ **중요!**  
 
 * *"과거에 진행했던 프로젝트에서 최적화를 해본 경험을 말씀해 주세요."*
@@ -1491,6 +1907,22 @@ var query2 = words.
 
 ### Unity 6
 
+<a id="recall-45"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기**
+
+버전 이름 자체보다 사용하는 프로젝트에 어떤 기능과 제약이 달라지는지 설명하는 것이 좋습니다. 예를 들어 렌더링 기능을 도입한다면 지원 플랫폼과 파이프라인, 패키지 호환성을 확인합니다.
+
+**가리고 떠올리기:** 새 기능을 이름만 아는 것과 도입을 설명할 수 있는 것은 어떻게 다를까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+정확한 에디터 버전과 공식 변경 내용을 기준으로 기능의 목적·적용 조건·검증 결과를 말합니다. 직접 사용하지 않은 기능은 경험처럼 말하지 않습니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 > https://unity.com/blog/unity-6-features-announcement
 > https://unity.com/kr/blog/engine-platform/unity-6-preview-release
 
@@ -1500,6 +1932,22 @@ var query2 = words.
 ## Unity 그래픽스
 
 ### 그래픽 렌더링 파이프라인
+
+<a id="recall-46"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기**
+
+게임의 위치·모델·재질 정보를 화면 픽셀로 바꾸는 과정입니다. 정점 처리, 화면에 걸치는 조각 생성, 픽셀 계산 등을 거칩니다. 예를 들어 투명 이펙트가 화면을 여러 겹 덮으면 오브젝트 수가 적어도 픽셀 비용이 커질 수 있습니다.
+
+**가리고 떠올리기:** 오브젝트 수가 적은데 GPU가 느리면 어떤 화면 조건을 볼까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+기하 처리와 픽셀 처리, 메모리 대역폭 등 비용을 구분합니다. 파이프라인의 단계 이름을 외우는 데서 끝내지 않고 병목과 연결합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 > https://docs.unity3d.com/kr/2021.3/Manual/render-pipelines-overview.html
 
@@ -1522,6 +1970,22 @@ var query2 = words.
 
 ### 드로우 콜 최적화
 
+<a id="recall-47"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기**
+
+드로우 콜은 CPU가 GPU에 그리기를 요청하는 작업과 연결됩니다. 예를 들어 작은 물체가 많으면 제출 비용이 커질 수 있습니다. 하지만 드로우 콜을 줄여도 픽셀 셰이더가 병목이면 프레임이 그대로일 수 있습니다.
+
+**가리고 떠올리기:** 드로우 콜 수가 절반이면 GPU 시간도 반드시 절반일까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+제출 비용이 병목인지 확인하고 배칭·인스턴싱 등을 검토합니다. 드로우 콜 수와 실제 CPU·GPU 시간을 함께 봅니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 > https://docs.unity3d.com/kr/2021.3/Manual/optimizing-draw-calls.html  
 > ⭐ **중요!**
 
@@ -1543,6 +2007,22 @@ var query2 = words.
   * SRP 배처(batcher): 스크립터블 렌더 파이프라인 사용 시 활용 가능
 
 ### 배치 렌더링
+
+<a id="recall-48"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기**
+
+여러 그리기 작업의 공통 조건을 활용해 처리 비용을 줄이는 접근입니다. 같은 메시·재질의 풀을 인스턴싱하는 경우처럼 방식마다 조건이 다릅니다. 재질 차이, 메모리, 컬링 단위 때문에 무조건 합치는 것이 유리하지는 않습니다.
+
+**가리고 떠올리기:** 멀리 떨어진 물체를 크게 합치면 컬링에는 어떤 영향이 있을까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+사용 파이프라인의 배칭 방식과 조건을 확인합니다. 제출 비용 감소와 메모리·컬링 손해를 함께 측정합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 * 여러 개체를 한 번의 그래픽스 API 호출(드로우 콜)로 결합하여 한번에 렌더링하는 기법
 * 장점
@@ -1570,6 +2050,22 @@ var query2 = words.
 
 ### 스프라이트 아틀라스
 
+<a id="recall-49"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기**
+
+여러 작은 이미지를 한 텍스처에 배치해 텍스처 전환을 줄일 기회를 만듭니다. 예를 들어 함께 나타나는 UI 아이콘을 묶을 수 있습니다. 한 아이콘 때문에 큰 아틀라스를 로드할 수도 있어 함께 쓰이는 수명도 고려합니다.
+
+**가리고 떠올리기:** 모든 이미지를 하나로 합치면 로딩 메모리도 항상 줄어들까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+함께 사용하는 이미지와 수명을 기준으로 묶습니다. 아틀라스만으로 모든 배칭 조건이 충족된다고 보지는 않습니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 > https://docs.unity3d.com/kr/2021.3/Manual/class-SpriteAtlas.html  
 > ⭐ **중요!**
 
@@ -1586,6 +2082,22 @@ var query2 = words.
   * 아틀라스의 크기를 2의 제곱수 크기(POT: power of two)로 맞춘다.
 
 ### 텍스처
+
+<a id="recall-50"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기**
+
+이미지 데이터의 해상도·포맷·밉·압축 방식이 메모리와 품질을 좌우합니다. 예를 들어 PNG 파일 크기가 작아도 GPU에서 쓰는 데이터 크기는 다를 수 있습니다. 압축 포맷과 플랫폼 지원도 확인합니다.
+
+**가리고 떠올리기:** 디스크 파일이 1MB면 GPU 메모리도 1MB일까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+파일 크기와 런타임 텍스처 메모리를 구분합니다. 해상도·포맷·밉·플랫폼을 기준으로 품질과 비용을 조절합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 > https://docs.unity3d.com/kr/2021.3/Manual/Textures.html
 
@@ -1644,6 +2156,22 @@ var query2 = words.
 
 ### Mip Map & LOD
 
+<a id="recall-51"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기**
+
+Mip Map은 축소된 텍스처 단계, LOD는 거리에 따른 모델 등의 상세 수준 선택입니다. 예를 들어 먼 건물은 작은 텍스처 단계와 단순한 메시로 그릴 수 있습니다. 밉 체인은 추가 메모리를 쓰며 단계 전환 품질도 확인합니다.
+
+**가리고 떠올리기:** 밉을 켜면 원본 텍스처 메모리 자체가 줄어드는 걸까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+화면에 필요한 세부 수준에 맞춰 샘플링과 기하 비용을 조절합니다. 추가 메모리와 전환 흔적을 함께 고려합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 > https://docs.unity3d.com/kr/2021.3/Manual/texture-mipmaps-introduction.html
 
 * 밉맵 (Mip map)
@@ -1665,31 +2193,65 @@ var query2 = words.
 
 ### 네 가지 속성
 
-* 추상화
-  * 하나의 객체가 하나의 역할을 맡도록
-  * 역할과 구현의 분리
-  * 인터페이스 / 추상 클래스
-* 상속
-  * 클래스 간 위계질서 만들기
-  * 코드의 공통된 부분을 재사용 가능하게
-* 캡슐화
-  * public, protected, private
-  * Property (getter, setter)
-* 다형성
-  * 상위 클래스 타입으로 하위 클래스 조작 가능
-  * 함수 오버로딩, 함수 오버라이딩
-  * 코드의 반복 줄임
+<a id="recall-03"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기 — 필요한 역할을 드러내고 내부 변경을 제한하기**
+
+추상화는 필요한 기능을 골라 표현하는 것, 캡슐화는 내부 상태를 정해진 경로로만 다루게 하는 것입니다. 상속은 기존 타입의 계약과 구현을 확장하는 관계이고, 다형성은 같은 계약으로 서로 다른 구현을 사용하는 성질입니다.
+
+**게임 예시:** 무기 사용자는 Attack만 알아도 됩니다. 무기 내부의 탄약은 함부로 수정하지 못하게 하고, 검과 총은 각자 다른 공격을 구현합니다. 공통 역할을 만들었다고 반드시 상속만 사용해야 하는 것은 아닙니다.
+
+**가리고 떠올리기:** 체력 필드를 private로만 바꾸고 아무 값이나 받는 setter를 열면 규칙이 충분히 보호될까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+객체지향의 네 속성은 추상화·캡슐화·상속·다형성입니다. 필요한 역할을 표현하고 내부 규칙을 보호하며, 같은 계약 아래 구현을 교체할 수 있게 합니다.
+
+</details>
+
+설명 근거: [참고 문서](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/object-oriented/).
+
+<!-- RECALL_CARD_END -->
+
+
+* 추상화: 필요한 특성과 역할을 골라 표현합니다.
+* 캡슐화: 내부 상태와 구현을 감추고 정해진 경로로 규칙을 지키게 합니다.
+* 상속: 상위 타입과 관계를 맺고 계약과 구현을 확장합니다.
+* 다형성: 같은 계약을 통해 서로 다른 구현을 사용할 수 있게 합니다.
 
 ### 5원칙 (SOLID 원칙)
 
+<a id="recall-04"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기 — 변경 때문에 같이 깨지는 범위를 줄이기**
+
+SOLID는 클래스 수를 늘리는 규칙이 아니라 변경의 영향을 줄이는 설계 기준입니다. 단일 책임은 같은 이유로 바뀌는 일을 모으고, 개방·폐쇄는 예상한 변화를 확장 지점으로 받으며, 리스코프 치환은 하위 타입이 상위 타입의 계약을 지키게 합니다.
+
+**게임 예시:** 상점이 결제 수단마다 내부 코드를 고치지 않도록 결제 역할을 정의할 수 있습니다. 저장 기능만 필요한 코드에 결제 기능까지 강요하지 않는 것은 인터페이스 분리, 구체 결제 SDK보다 역할에 의존하는 것은 의존성 역전의 예입니다.
+
+**가리고 떠올리기:** 상위 타입에서는 가능하던 정상 입력을 하위 타입이 거부하면 같은 자리에 안전하게 넣을 수 있을까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+SOLID는 변경 이유·확장 지점·타입 계약·인터페이스 범위·의존 방향을 점검하는 기준입니다. 적용할 때는 실제로 바뀔 요구와 추가 복잡도를 함께 봅니다.
+
+</details>
+
+설명 근거: [참고 문서](https://www.cs.cmu.edu/afs/cs/project/venari/www/subtype-tr.html).
+
+<!-- RECALL_CARD_END -->
+
+
 1. 단일 책임 원칙 (Single Responsibility Principle)
-   * 하나의 객체는 하나의 역할(책임)만을 가져야 한다.
+   * 같은 이유로 변경되는 책임을 모으고 서로 다른 변경 이유를 분리한다.
    * 추상화와 관련
 2. 개방-폐쇄 원칙 (Open-closed Principle)
    * 수정에 닫혀 있고 확장에 열려 있어야 한다.
    * 캡슐화, 상속, 다형성과 관련
 3. 리스코프 치환 원칙 (Liskov Substitution Principle)
-   * 자식 클래스는 부모 클래스로 대체할 수 있어야 한다.
+   * 부모 타입을 기대하는 자리에 자식 타입을 넣어도 부모 타입의 계약이 유지되어야 한다.
    * 상속, 다형성과 관련
 4. 인터페이스 분리 원칙 (Interface Segregation Principle)
    * 필요하지 않은 기능을 의존하도록 강요하지 않아야 한다.
@@ -1697,12 +2259,34 @@ var query2 = words.
    * 추상화와 관련
 5. 의존성 역전 원칙 (Dependency Inversion Principle)
    * 추상적인 것에 구체적인 것이 의존해야 한다. 구체적인 것에 추상적인 것이 의존하면 안 된다.
-   * 부모 클래스에 자식 클래스가 의존해야 한다. 반대가 되면 안 된다.
+   * 고수준 정책과 저수준 구현이 모두 적절한 추상화에 의존하도록 설계한다. 반대가 되면 안 된다.
    * 추상화, 상속과 관련
    * [종속성 주입](#dependency-injection)을 적용하면 이 원칙을 지키는 데에 도움이 된다.
 * 소프트웨어의 유지보수성, 재사용성, 확장성을 높이기 위해 이 원칙들을 지키면 좋다.
 
 ### interface vs. abstract class
+
+<a id="recall-05"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기 — 역할의 약속과 공통 기반 구현**
+
+인터페이스는 사용자가 기대할 역할을 표현하고, 추상 클래스는 관련 타입이 공유할 기반 상태와 구현을 제공할 때 검토합니다. C#은 클래스 상속은 하나만 허용하지만 인터페이스는 여러 개 구현할 수 있습니다. 구체 문법 지원은 사용 C# 버전에 맞춥니다.
+
+**게임 예시:** 상호작용 가능한 문과 NPC에 IInteractable이라는 역할을 줄 수 있습니다. 반면 같은 이동 규칙과 상태를 공유하는 적 계열에는 공통 기반 클래스를 검토할 수 있습니다.
+
+**가리고 떠올리기:** 문과 NPC가 상호작용 가능하다는 이유만으로 같은 기반 클래스를 상속해야 할까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+인터페이스는 역할 중심의 계약에, 추상 클래스는 관련 타입의 공통 상태와 구현에 적합합니다. 이름보다 공유할 내용과 교체 요구로 선택합니다.
+
+</details>
+
+설명 근거: [참고 문서](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/object-oriented/).
+
+<!-- RECALL_CARD_END -->
+
 
 > https://medium.com/@nwonahr/interfaces-vs-abstract-classes-in-c-whats-the-difference-and-when-to-use-them-9af5ab21b1f9
 
@@ -1719,6 +2303,22 @@ var query2 = words.
   * '가상 메서드'와 헷갈리지 않도록 하자.
 
 ### C# 다형성
+
+<a id="recall-52"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기**
+
+같은 타입의 계약으로 호출해도 실제 객체의 구현에 따라 다른 행동을 하게 하는 성질입니다. 예를 들어 Enemy의 공격을 호출할 때 근접 적과 원거리 적이 다르게 공격합니다. override와 new로 이름을 숨기는 것은 호출 규칙이 다릅니다.
+
+**가리고 떠올리기:** 부모 타입 변수로 호출할 때 new로 숨긴 메서드도 override처럼 선택될까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+가상 메서드의 override는 실제 객체 타입에 따른 호출을 제공합니다. 메서드 숨김 및 오버로드와 구분하고 타입 계약을 지킵니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 * 자식 클래스가 부모 클래스의 메서드를 `override`하거나 `new` 키워드로 숨길 수 있다.
 * `A`가 `virtual` 메서드를 가진 부모 클래스이고 `B`가 `A`를 상속하는 자식 클래스이며 둘이 같은 이름의 메서드를 구현하고 있을 때, 다음의 경우에 동작이 다르다.
@@ -1787,20 +2387,32 @@ public class Main
   
 ### C# VTable
 
+<a id="recall-53"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기**
+
+가상 호출을 구현하는 대표 방법은 타입별 메서드 정보를 통해 실행할 구현을 찾는 것입니다. 예를 들어 부모 타입으로 참조한 적도 실제 파생 타입의 override를 호출합니다. 실제 메모리 배치는 Mono·CoreCLR·IL2CPP 등 구현에 따라 다릅니다.
+
+**가리고 떠올리기:** C++의 vptr 그림을 모든 C# 객체의 정확한 배치라고 외워도 될까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+가상 디스패치의 목적과 언어의 호출 규칙을 먼저 설명합니다. 구체 테이블과 슬롯 배치는 사용하는 런타임 구현의 문제로 구분합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 > https://ko.wikipedia.org/wiki/%EA%B0%80%EC%83%81_%EB%A9%94%EC%86%8C%EB%93%9C_%ED%85%8C%EC%9D%B4%EB%B8%94  
 > https://www.csharpstudy.com/DevNote/Article/28
 
 * *"`virtual` 메서드가 있는 부모 클래스와 이를 상속한 클래스가 있고 자식 클래스에서 부모 클래스의 메서드를 `override`했을 때, 이 두 메서드의 주소가 메모리에서 어떤 자료구조로 관리되나요?"*
 
-* Virtual table(VTable)은 가상 메서드(`virtual` 또는 `abstract`)를 갖는 클래스를 상속하여 해당 메서드를 `override`할 때 생긴다.
-  * 메서드 포인터를 저장하는 배열이다.
-  * Heap 상 객체의 Type Handle이 가리키는 곳의 Method Table 메타데이터 안에 들어있다.
-* 클래스의 객체가 생성될 때, 컴파일러가 이 VTable에 대한 포인터(vpointer)를 객체의 숨은 멤버로 추가한다.
-* C#의 모든 클래스는 `System.Object`의 자식이고 4개의 가상 메서드(`ToString()`, `Equals()`, `GetHashCode()`, `Finalize()`)를 자신의 VTable 안에 가진다.
-  * 여기에 추가로, 자신의 부모 클래스가 가진 가상 메서드를 자신의 VTable 안에 가진다.
-  * 가장 부모의 것부터 자식 클래스 자신의 메서드까지 계층 순서대로 메서드 포인터 슬롯을 갖게 된다.
-* 메서드 `override` 시 자식 클래스의 VTable에는 해당 메서드가 부모의 것 대신의 자신의 것으로 들어간다. 부모의 메서드는 자식의 VTable에 남아있지 않다.
-* 메서드를 `new`로 숨길 시 자식 클래스의 VTable에는 해당 메서드가 부모의 것과 자신의 것 모두 들어있다.
+* 가상 호출은 실제 객체 타입에 맞는 재정의 구현을 선택한다. 타입별 메서드 테이블은 이를 구현하는 대표적인 방법이다.
+* C# 언어의 호출 규칙과 Mono·CoreCLR·IL2CPP 등의 구체 객체 배치는 구분한다. 모든 런타임이 동일한 vpointer와 슬롯 구성을 사용한다고 단정하지 않는다.
+* `override`는 상속받은 가상 동작을 재정의한다. `new`를 통한 멤버 숨김은 별개의 기능이며, 그 자체가 새로운 가상 슬롯을 의미하지 않는다.
+* 구현을 설명해야 한다면 먼저 대상 런타임과 버전을 정하고 해당 소스·문서로 확인한다.
+
 
 ## 디자인 패턴
 
@@ -1813,6 +2425,28 @@ public class Main
 
 ### Singleton 패턴
 
+<a id="recall-06"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기 — 하나만 존재하는 것과 전역 접근은 별개**
+
+Singleton은 한 인스턴스를 제공하고 그 인스턴스에 접근할 경로를 두는 패턴입니다. 어디서나 접근하기 쉽지만 어떤 코드가 어떤 상태를 바꾸는지 숨겨질 수 있고 초기화·종료·테스트 교체가 어려워질 수 있습니다.
+
+**게임 예시:** 게임 설정 서비스가 하나만 필요하더라도 모든 코드가 전역 Instance를 찾아야 하는 것은 아닙니다. 필요한 객체에 설정 서비스를 전달하면 의존성이 드러납니다.
+
+**가리고 떠올리기:** 멀티스레드에서 인스턴스 생성만 안전하면 그 안의 모든 데이터 접근도 안전할까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+Singleton은 단일 인스턴스를 제공하는 패턴입니다. 전역 공유 상태와 수명·테스트 문제가 생길 수 있어 하나만 필요한 요구와 전역 접근 요구를 따로 판단합니다.
+
+</details>
+
+설명 근거: [참고 문서](https://gameprogrammingpatterns.com/singleton.html).
+
+<!-- RECALL_CARD_END -->
+
+
 > https://github.com/Romanticism-GameDeveloper/GameDeveloper-Client-Interview/blob/main/DesignPattern/SingletonPattern.md
 
 * *"멀티스레드 환경에서 싱글톤을 써본 적이 있나요? 어떤 점을 고려해야 하나요?"*
@@ -1821,6 +2455,26 @@ public class Main
 
 ### Null Object 패턴
 
+<a id="recall-07"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기 — 없음을 아무 일도 하지 않는 구현으로 표현하기**
+
+호출 대상이 없는 것이 정상적인 상황이라면 null 대신 같은 역할을 구현하는 무동작 객체를 줄 수 있습니다. 사용자는 동일한 함수를 호출하고, 무동작 구현은 필요한 일을 하지 않고 끝납니다.
+
+**게임 예시:** 소리를 내지 않는 모드에서 NullAudio의 Play가 아무 일도 하지 않게 만들 수 있습니다. 하지만 반드시 있어야 하는 결제 서비스의 초기화 실패를 무동작으로 숨기면 오류를 놓칩니다.
+
+**가리고 떠올리기:** 필수 데이터 로드 실패도 무조건 빈 객체로 바꾸면 어떤 문제를 늦게 발견하게 될까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+Null Object는 대상 없음이 정상인 상황을 무동작 구현으로 표현합니다. null 분기를 줄일 수 있지만 실제 오류까지 숨기지 않도록 적용 범위를 정합니다.
+
+</details>
+
+<!-- RECALL_CARD_END -->
+
+
 > https://github.com/Romanticism-GameDeveloper/GameDeveloper-Client-Interview/blob/main/DesignPattern/NullObjectPattern.md
 
 * 함수의 반환값으로 `null` 대신 `null`과 같은 역할을 하는 dummy 오브젝트를 생성하여 반환한다.
@@ -1828,6 +2482,28 @@ public class Main
 * `null` 체크를 안 해도 된다.
 
 ### Dependency Injection
+
+<a id="recall-08"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기 — 사용할 대상을 밖에서 전달하기**
+
+의존성은 어떤 객체가 일을 하기 위해 필요한 다른 객체입니다. DI는 사용하는 쪽이 구체 대상을 직접 만들지 않고 외부에서 전달받는 방식입니다. 프레임워크나 자동 컨테이너 없이도 가능합니다.
+
+**게임 예시:** 상점이 내부에서 결제 SDK를 new하는 대신 결제 역할을 전달받으면 테스트에서는 가짜 결제 구현을 넣을 수 있습니다. 누가 만들고 언제 정리할지는 조립하는 쪽에서 정해야 합니다.
+
+**가리고 떠올리기:** DI 컨테이너를 설치해야만 생성자 인자로 객체를 전달할 수 있나요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+DI는 필요한 의존성을 외부에서 전달해 구체 구현의 생성과 사용을 분리하는 방식입니다. 구현 교체와 테스트에 유리하지만 의존성의 수명도 함께 설계해야 합니다.
+
+</details>
+
+설명 근거: [참고 문서](https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection/overview).
+
+<!-- RECALL_CARD_END -->
+
 
 > https://learn.microsoft.com/ko-kr/dotnet/core/extensions/dependency-injection  
 > https://medium.com/@avinash.dhumal/understanding-dependency-injection-a-practical-guide-with-c-examples-aee44eacee32  
@@ -1848,6 +2524,26 @@ public class Main
 
 ### Strategy 패턴
 
+<a id="recall-09"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기 — 같은 목적을 수행하는 방법을 교체하기**
+
+같은 일을 수행하는 알고리즘을 역할 뒤로 분리해 바꿀 수 있게 하는 패턴입니다. 중요한 것은 여러 구현이 있다는 사실보다 같은 목적의 처리 방법을 교체하는 요구입니다.
+
+**게임 예시:** 자동 조준에서 가장 가까운 적 선택과 체력이 낮은 적 선택을 TargetSelection 역할로 교체할 수 있습니다. 선택 방법을 외부에서 전달하면 Strategy와 DI를 함께 사용하는 예가 됩니다.
+
+**가리고 떠올리기:** 타깃 선택 기준이 추가될 때 공격 함수까지 수정해야 한다면 어느 부분을 분리할 수 있을까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+Strategy는 같은 목적의 알고리즘을 교체 가능하게 분리합니다. DI는 그 구현을 외부에서 전달하는 방법이므로 둘은 해결하는 질문이 다릅니다.
+
+</details>
+
+<!-- RECALL_CARD_END -->
+
+
 > https://github.com/Romanticism-GameDeveloper/GameDeveloper-Client-Interview/blob/main/DesignPattern/StrategyPattern.md
 
 * *"Strategy 패턴과 Dependency Injection 패턴의 차이점이 무엇인가요?"*
@@ -1857,11 +2553,51 @@ public class Main
 
 ### Proxy 패턴
 
+<a id="recall-10"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기 — 같은 역할 앞에서 접근을 중개하기**
+
+실제 대상을 대신하는 객체를 사이에 두어 접근을 통제하거나 지연 생성·원격 호출 같은 처리를 맡깁니다. 호출자는 대상의 역할을 유지한 채 중개자를 사용합니다.
+
+**게임 예시:** 큰 이미지가 실제로 필요할 때만 로드하도록 이미지 Proxy가 접근을 중개할 수 있습니다. 중개 과정에서 로딩 실패나 지연을 어떻게 표현할지도 정해야 합니다.
+
+**가리고 떠올리기:** 함수 이름을 맞춰 다른 API로 변환하는 Adapter와 목적이 어떻게 다른가요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+Proxy는 실제 대상 앞에서 같은 역할의 접근을 중개합니다. 접근 통제나 지연 로딩에 쓰며 중개 비용과 실패 처리도 고려합니다.
+
+</details>
+
+<!-- RECALL_CARD_END -->
+
+
 > https://github.com/Romanticism-GameDeveloper/GameDeveloper-Client-Interview/blob/main/DesignPattern/ProxyPattern.md
 
 * 포장을 통해 접근하고, 그 내부는 다를 수 있는 패턴.
 
 ### Facade 패턴
+
+<a id="recall-11"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기 — 여러 하위 작업을 쉬운 입구로 묶기**
+
+호출자가 복잡한 하위 시스템의 연결 순서를 전부 알지 않아도 되도록 간단한 진입점을 제공합니다. 하위 기능을 없애는 것이 아니라 자주 사용하는 흐름을 모으는 것입니다.
+
+**게임 예시:** 매치 시작에 필요한 맵 준비·플레이어 배치·UI 갱신을 StartMatch라는 입구로 묶을 수 있습니다. 어느 단계가 실패했는지까지 감춰 버리면 디버깅은 어려워집니다.
+
+**가리고 떠올리기:** 모든 게임 로직을 하나의 Manager에 넣는 것과 무엇이 달라야 할까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+Facade는 여러 하위 시스템을 사용하는 단순한 인터페이스를 제공합니다. 호출 코드를 줄이되 내부 책임과 실패 원인은 추적 가능하게 유지합니다.
+
+</details>
+
+<!-- RECALL_CARD_END -->
+
 
 > https://github.com/Romanticism-GameDeveloper/GameDeveloper-Client-Interview/blob/main/DesignPattern/FacadePattern.md
 
@@ -1870,20 +2606,81 @@ public class Main
 
 ### State 패턴
 
+<a id="recall-12"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기 — 현재 상태에 따라 행동과 전환을 나누기**
+
+같은 입력도 현재 상태에 따라 다르게 처리해야 할 때 상태별 행동을 분리합니다. 상태 진입·종료와 전환 규칙까지 함께 설계하는 것이 핵심입니다.
+
+**게임 예시:** 대기 상태의 공격 입력은 공격을 시작하지만, 기절 상태의 공격 입력은 거부할 수 있습니다. 공격 상태를 벗어날 때는 판정과 이동 제한도 정리해야 합니다.
+
+**가리고 떠올리기:** 상태 객체만 나누고 전환 시 정리를 하지 않으면 어떤 이전 상태가 남을까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+State는 객체의 현재 상태에 따라 행동을 분리하고 전환을 관리하는 패턴입니다. Strategy가 방법 교체에 초점을 둔다면 State는 상태별 행동과 전환에 초점을 둡니다.
+
+</details>
+
+<!-- RECALL_CARD_END -->
+
+
 > https://github.com/Romanticism-GameDeveloper/GameDeveloper-Client-Interview/blob/main/DesignPattern/StatePattern.md
 
 * FSM(finite state machine)을 만들 때 주로 사용
 * 여러 상태를 인터페이스로 묶어서 각 상태 별로 해당 상태에서 할 수 있는 일(함수)을 정의해주는 패턴
-* 모든 state 패턴은 strategy 패턴이지만 역은 성립하지 않는다.
-  * State 패턴에서는 상태 파생 클래스들이 일할 때 context에 대한 참조를 갖는다. 그러나 strategy 패턴에서는 이러는 경우가 없다.
+* State와 Strategy는 구조가 비슷할 수 있지만 목적이 다릅니다. Context 참조 유무만으로 두 패턴을 분류하지 않습니다.
 
 ### Adapter 패턴
+
+<a id="recall-13"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기 — 서로 다른 인터페이스를 맞춰 연결하기**
+
+이미 있는 기능을 쓰고 싶지만 호출 형태가 기대와 다를 때 중간에서 변환합니다. 기능 자체를 새로 구현하는 것보다 인터페이스와 데이터 형식을 맞추는 데 초점이 있습니다.
+
+**게임 예시:** 게임은 PlaySound(id)를 기대하는데 외부 SDK는 StartClip(path, volume)을 제공한다면 Adapter에서 ID를 경로로 변환하고 호출할 수 있습니다.
+
+**가리고 떠올리기:** 외부 SDK가 바뀔 때 게임의 모든 호출자를 고쳐야 한다면 변환 책임을 어디로 모을 수 있을까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+Adapter는 호환되지 않는 인터페이스를 사용자가 기대하는 형태로 변환합니다. 기존 구현을 재사용하면서 외부 API 차이가 퍼지는 것을 줄입니다.
+
+</details>
+
+<!-- RECALL_CARD_END -->
+
 
 > https://github.com/Romanticism-GameDeveloper/GameDeveloper-Client-Interview/blob/main/DesignPattern/AdapterPattern.md
 
 * 호환되지 않는 클래스의 인터페이스를 클라이언트(호출자)와 호환되도록 중간에 인터페이스를 두어 함수 시그니처 등을 변환해주는 패턴
 
 ### Observer 패턴
+
+<a id="recall-14"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기 — 변경을 구독자에게 알리기**
+
+상태를 가진 쪽은 변경 사실을 알리고, 구독한 쪽은 필요한 반응을 수행합니다. 소스가 모든 화면과 효과의 구체 구현을 직접 호출하지 않게 할 수 있습니다.
+
+**게임 예시:** 체력이 바뀌면 체력바와 경고 효과가 각각 알림을 받아 갱신합니다. 화면을 열 때마다 등록하면서 닫을 때 해제하지 않으면 중복 알림이 생길 수 있습니다.
+
+**가리고 떠올리기:** 구독 직후 다음 변경 이벤트가 오기 전까지 UI에는 어떤 값을 표시해야 할까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+Observer는 한 소스의 변경을 구독자에게 전달하는 패턴입니다. 결합을 줄일 수 있지만 구독 수명·호출 순서·재진입을 설계해야 합니다.
+
+</details>
+
+설명 근거: [참고 문서](https://dev.epicgames.com/documentation/en-us/unreal-engine/multicast-delegates-in-unreal-engine).
+
+<!-- RECALL_CARD_END -->
+
 
 > https://github.com/Romanticism-GameDeveloper/GameDeveloper-Client-Interview/blob/main/DesignPattern/ObserverPattern.md
 
@@ -1905,6 +2702,26 @@ public class Main
 
 ### 리틀 엔디언 vs. 빅 엔디언
 
+<a id="recall-15"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기 — 여러 바이트 숫자의 저장 순서**
+
+하나의 수를 여러 바이트로 저장할 때 낮은 주소에 어느 바이트를 둘지의 차이입니다. 비트 자체를 뒤집는다는 뜻이 아닙니다.
+
+**게임 예시:** 0x12345678을 낮은 주소부터 보면 little endian은 78 56 34 12, big endian은 12 34 56 78입니다. 파일이나 패킷의 바이트를 읽을 때 형식이 정한 순서로 해석해야 합니다.
+
+**가리고 떠올리기:** 같은 바이트열을 다른 엔디언으로 읽으면 숫자 값도 항상 같을까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+엔디언은 여러 바이트 값의 바이트 배치 순서입니다. 서로 다른 환경에서 데이터를 교환할 때 저장 형식의 순서에 맞춰 변환해야 합니다.
+
+</details>
+
+<!-- RECALL_CARD_END -->
+
+
 * 빅 엔디언
   * 16진수 int `1A2B3C4D`를 주소가 낮은 위치부터 높은 위치 순서대로 `1A`, `2B`, `3C`, `4D` 순으로 메모리에 저장한다.
   * 사람이 읽기 쉽다.
@@ -1918,6 +2735,28 @@ public class Main
 
 ### 프로세스 vs. 스레드
 
+<a id="recall-16"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기 — 자원의 단위와 실행의 단위**
+
+프로세스는 실행 중인 프로그램의 주소 공간과 자원을 갖습니다. 스레드는 그 안에서 실행을 진행하는 단위입니다. 같은 프로세스의 스레드는 주소 공간을 공유하지만 각각의 실행 문맥과 스택을 가집니다.
+
+**게임 예시:** 게임의 메인 스레드와 로딩 작업은 같은 데이터에 접근할 수 있어 전달이 편한 대신 동시 접근 규칙이 필요합니다. 별도 프로세스는 데이터를 주고받기 위한 IPC 같은 통신을 고려합니다.
+
+**가리고 떠올리기:** 스레드를 늘리면 작업 의존성과 공유 데이터 경쟁이 있어도 무조건 빨라질까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+프로세스는 자원과 주소 공간을 갖는 실행 환경이고, 스레드는 그 안의 실행 단위입니다. 스레드끼리 메모리를 공유하므로 동기화와 수명 관리가 필요합니다.
+
+</details>
+
+설명 근거: [참고 문서](https://learn.microsoft.com/en-us/windows/win32/procthread/about-processes-and-threads).
+
+<!-- RECALL_CARD_END -->
+
+
 * 프로세스: OS의 작업 단위
   * 스택, 힙, 코드, 데이터를 모두 복사해 가진다.
   * 다른 프로세스와 독립적으로 돌아간다. (공유 메모리를 사용하지 않는다면)
@@ -1930,6 +2769,22 @@ public class Main
   * 멀티프로세스든 멀티스레드든 동기화 이슈는 중요하다.
 
 ### Memory Fragmentation
+
+<a id="recall-54"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기**
+
+남은 공간이 조각나 원하는 크기를 배치하기 어렵거나 할당 단위 안에 낭비가 생기는 문제입니다. 예를 들어 빈 칸의 합은 충분해도 큰 연속 블록은 없을 수 있습니다. 관리 힙과 네이티브 할당자의 대응은 다를 수 있습니다.
+
+**가리고 떠올리기:** 총 여유 공간이 충분한데 큰 할당이 실패할 수 있는 이유는 무엇일까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+외부 단편화와 내부 단편화를 구분하고 실제 할당자의 정책을 확인합니다. 풀이나 크기별 할당도 요구와 비용에 맞춰 검토합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 > ⭐ **중요!**
 
@@ -1962,6 +2817,28 @@ public class Main
 
 ### 가상 메모리
 
+<a id="recall-17"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기 — 프로그램 주소와 실제 RAM 위치를 나누기**
+
+프로그램은 가상 주소를 사용하고 운영체제와 하드웨어가 이를 실제 메모리에 대응시킵니다. 프로세스마다 주소 공간을 분리하고 보호할 수 있으며, 가상 주소 전체가 항상 RAM에 올라 있다는 뜻은 아닙니다.
+
+**게임 예시:** 두 프로세스에서 같은 숫자의 주소를 출력해도 같은 물리 메모리를 뜻하지 않을 수 있습니다. 필요한 페이지가 현재 준비되지 않았다면 추가 처리가 발생할 수 있어 접근 비용도 같지 않습니다.
+
+**가리고 떠올리기:** 페이지 파일이 없으면 가상 주소 체계 자체도 없어질까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+가상 메모리는 프로그램의 주소 공간을 물리 메모리와 분리하는 체계입니다. 주소 변환·보호·페이지 관리가 핵심이며 단순히 디스크를 RAM처럼 쓰는 기능만을 뜻하지 않습니다.
+
+</details>
+
+설명 근거: [참고 문서](https://learn.microsoft.com/en-us/windows-hardware/drivers/gettingstarted/virtual-address-spaces).
+
+<!-- RECALL_CARD_END -->
+
+
 * 메모리 가상화를 하는 이유
   * 사용자에게는 메모리가 무한한 것처럼 보여준다.
   * 실제로는 보조 기억 장치(디스크 등)를 활용하여 부족한 메모리 공간을 관리한다.
@@ -1975,6 +2852,26 @@ public class Main
   * 자주 쓰이는 페이지의 물리 주소를 기억한다.
 
 ### Mutex & Semaphore
+
+<a id="recall-18"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기 — 독점권과 허용 개수**
+
+Mutex는 한 번에 한 실행 주체가 보호된 작업을 수행하도록 쓰는 잠금입니다. Semaphore는 허용 개수를 세어 그 수만큼 진입하게 하는 동기화 수단입니다. 구체적인 소유권·재귀 규칙은 사용 API를 확인합니다.
+
+**게임 예시:** 인벤토리 구조를 한 번에 한 작업만 수정하게 할 때는 상호 배제가 필요합니다. 다운로드 작업을 최대 3개로 제한하려면 허용 개수 3인 세마포어를 생각할 수 있습니다.
+
+**가리고 떠올리기:** 같은 데이터를 수정하는 일부 경로에서만 잠금을 사용하면 전체가 보호될까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+Mutex는 상호 배제, Semaphore는 동시 진입 가능한 개수 제어가 핵심입니다. 보호할 데이터와 필요한 동시성 조건에 따라 선택합니다.
+
+</details>
+
+<!-- RECALL_CARD_END -->
+
 
 * Mutex
   * 하나의 스레드가 mutex(lock) 객체를 갖는다.
@@ -1993,6 +2890,22 @@ public class Main
 
 ### Deadlock (교착 상태)
 
+<a id="recall-55"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기**
+
+작업들이 서로 가진 자원을 기다려 아무도 진행하지 못하는 상황입니다. A가 잠금 1을 잡고 2를, B가 2를 잡고 1을 기다리는 예가 대표적입니다. 같은 잠금 획득 순서를 지키면 이런 순환을 줄일 수 있습니다.
+
+**가리고 떠올리기:** 두 스레드가 잠금을 잡는 순서를 반대로 하면 어떤 대기가 만들어질까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+상호 배제·점유 대기·비선점·순환 대기 조건을 보고 한 조건을 끊는 방법을 찾습니다. 무작정 재시도하기보다 자원 획득 순서와 범위를 설계합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 > ⭐ **중요!**
 
 * A를 잡은 스레드가 B를 갖고 싶어하고, B를 잡은 스레드가 A를 갖고 싶어하는데, A와 B 모두 상호 배제가 필요한 자원이고, 서로가 자신이 가진 것을 놓을 생각이 없다면 데드락이 발생한다. 이때 누구라도 A와 B를 모두 잡는 경우는 평생 생기지 않는다.
@@ -2009,6 +2922,22 @@ public class Main
 * 데드락이 발생하면 해당 프로세스들을 차례로 강제 종료하여 해결해야 한다.
 
 ### CPU 스케줄러 알고리즘
+
+<a id="recall-56"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기**
+
+실행 가능한 작업 중 CPU를 줄 대상을 고르는 정책입니다. 먼저 온 순서, 짧은 작업 우선, 시간 조각을 나누는 방식마다 응답성과 공정성이 다릅니다. 예를 들어 짧은 UI 처리가 긴 작업 뒤에 계속 밀리면 응답이 늦습니다.
+
+**가리고 떠올리기:** 평균 처리 시간을 줄이는 정책이 모든 작업의 공정성도 보장할까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+처리량·응답 시간·대기 시간·공정성의 목표를 구분해 정책을 설명합니다. 실제 운영체제는 우선순위와 여러 보정 정책을 함께 사용합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 * FCFS: First Come First Serve
   * 먼저 온 것부터 먼저 처리
@@ -2037,28 +2966,88 @@ public class Main
 
 ### 32비트 vs. 64비트 운영체제
 
-* *"32비트 운영체제와 64비트 운영체제의 차이가 무엇인가요?"*
+<a id="recall-19"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기 — 주소 표현 범위와 실제 제한**
 
-* 둘의 차이는 사용할 수 있는 RAM의 크기이다.
-  * 32비트는 최대 4GB(= $2^{32}$ bytes)의 메모리만 인식한다.  
-    Windows에서는 `x86`으로 불린다.
-  * 64비트는 최대 16EB(= $2^{64}$ bytes)의 메모리를 인식한다.
-    Windows에서는 `x64`로 불린다.
-* 64비트 운영체제에서 64비트 프로그램을 돌리는 것이 32비트 프로그램을 돌리는 것보다 당연히 빠르다.
-* 갤럭시 S24 등의 최신 모바일 기기에서는 32비트 `.apk`를 실행할 수 없다.
+주소 비트 수는 표현할 수 있는 주소 범위에 영향을 줍니다. 32비트 주소의 이론적 범위는 4GiB지만 프로세스에 제공되는 범위와 시스템이 지원하는 물리 메모리 한도는 운영체제·구성에 따라 다릅니다.
+
+**게임 예시:** 64비트 프로그램은 더 넓은 주소 공간을 활용할 수 있지만 포인터 크기 증가로 자료 구조가 커질 수도 있습니다. 같은 코드가 항상 더 빨라진다는 결론은 측정 없이 내릴 수 없습니다.
+
+**가리고 떠올리기:** 64비트 주소를 사용한다는 이유만으로 실제 RAM을 2의 64승 바이트까지 지원한다고 할 수 있을까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+32비트와 64비트는 주소 공간과 ABI 등에 차이가 있습니다. 이론적 주소 범위, OS 지원 한도, 실제 메모리 사용과 성능을 구분해 설명해야 합니다.
+
+</details>
+
+설명 근거: [참고 문서](https://learn.microsoft.com/en-us/windows/win32/memory/memory-limits-for-windows-releases).
+
+<!-- RECALL_CARD_END -->
+
+
+* 32비트 주소 공간의 이론적 크기는 4GiB입니다. 프로세스의 사용자 주소 공간 한도와 OS의 물리 메모리 지원 한도는 별도로 봅니다.
+* 64비트 환경의 실제 가상·물리 주소 폭과 지원 한도는 CPU·OS·구성에 따라 달라집니다. 실제로 2^64 바이트를 모두 쓸 수 있다는 뜻은 아닙니다.
+* 실행 성능은 명령 집합·코드·데이터 크기·메모리 접근 등에 따라 달라집니다. 64비트가 항상 더 빠르다고 단정하지 않습니다.
+* 앱 호환성은 운영체제와 기기의 지원 ABI를 확인합니다. 특정 최신 기기 전체를 하나의 규칙으로 일반화하지 않습니다.
 
 ## 데이터베이스
 
 ### Key
 
-* Key: attributes의 집합.
-* Candidate key: 유일성과 최소성을 만족하는, primary key가 될 수 있는 모든 key의 집합.
-* Primary key: candidate key 중 하나로, 모든 레코드를 구분할 수 있으며 NULL일 수 없다.
-* Alternate key (Unique key): candidate key 중 primary key가 아닌 것들
-* Superkey: 유일성은 만족하지만 최소성을 만족하지 못하는 attributes의 집합
-* Foreign key: 다른 릴레이션(표)의 레코드를 참조하기 위해 그 레코드의 primary key를 내 릴레이션에 두는 것
+<a id="recall-20"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기 — 행을 식별하는 값과 관계를 연결하는 값**
+
+키는 행을 구별하거나 다른 테이블과 관계를 맺는 데 사용하는 속성 집합입니다. 유일하게 식별하면 슈퍼키이고, 거기서 불필요한 속성을 뺄 수 없는 최소 구성이 후보키입니다. 후보키 중 하나를 기본키로 선택합니다.
+
+**게임 예시:** 유저 ID가 유일하다면 유저 ID는 후보키가 될 수 있습니다. 유저 ID와 닉네임을 함께 묶어도 유일하지만 닉네임이 불필요하므로 최소가 아닙니다. 주문의 유저 ID는 유저 테이블을 참조하는 외래키가 될 수 있습니다.
+
+**가리고 떠올리기:** 외래키는 반드시 다른 테이블의 기본키만 참조할 수 있나요, 아니면 지원되는 UNIQUE 키도 가능한가요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+기본키는 선택한 행 식별자이고 외래키는 참조 관계를 표현합니다. 후보키는 유일성과 최소성을 만족하며 슈퍼키는 최소일 필요가 없습니다.
+
+</details>
+
+설명 근거: [참고 문서](https://www.postgresql.org/docs/current/ddl-constraints.html).
+
+<!-- RECALL_CARD_END -->
+
+
+* Superkey: 행을 유일하게 식별하는 속성 집합입니다. 최소일 필요는 없으며 후보키도 슈퍼키입니다.
+* Candidate key: 유일성과 최소성을 만족하는 후보키입니다.
+* Primary key: 후보키 중 선택한 기본키입니다. 유일성과 NOT NULL 제약을 갖습니다.
+* Alternate key: 기본키로 선택되지 않은 후보키입니다. DBMS의 UNIQUE 제약과 용어를 구분합니다.
+* Foreign key: 다른 행의 참조 키와 관계를 맺는 외래키입니다. PostgreSQL 등에서는 기본키 외에 적절한 UNIQUE 키도 참조할 수 있습니다. NULL 허용 여부와 참조 동작은 제약 설정에 따릅니다.
 
 ### 정규형
+
+<a id="recall-21"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기 — 중복 저장으로 값이 어긋나는 문제 줄이기**
+
+정규화는 데이터의 종속 관계에 맞춰 테이블을 정리해 삽입·수정·삭제 때 생기는 불일치를 줄이는 과정입니다. 테이블을 무조건 작게 나누는 것이 목적은 아닙니다.
+
+**게임 예시:** 인벤토리의 모든 행에 아이템 ID와 이름을 반복 저장하면 이름 변경 때 일부 행만 수정될 수 있습니다. 아이템 정의와 소유 목록을 나누면 이름을 정의 쪽에서 관리할 수 있습니다.
+
+**가리고 떠올리기:** 아이템 이름을 열 군데 저장하면 이름 변경 시 어떤 작업과 오류 가능성이 생길까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+정규화는 종속 관계와 중복을 정리해 변경 이상을 줄입니다. 조회 성능을 위해 중복을 허용한다면 갱신 일관성을 어떻게 유지할지도 설계해야 합니다.
+
+</details>
+
+설명 근거: [참고 문서](https://learn.microsoft.com/en-us/troubleshoot/microsoft-365-apps/access/database-normalization-description).
+
+<!-- RECALL_CARD_END -->
+
 
 > https://github.com/Romanticism-GameDeveloper/GameDeveloper-Client-Interview/blob/main/DB/%EC%A0%95%EA%B7%9C%ED%98%95.md  
 
@@ -2068,11 +3057,55 @@ public class Main
 
 ### OSI 7계층
 
+<a id="recall-22"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기 — 통신 문제를 역할별로 나누어 보기**
+
+OSI는 통신을 물리·데이터 링크·네트워크·전송·세션·표현·응용의 7개 역할로 나눈 참조 모델입니다. 모든 실제 프로그램이 정확히 일곱 모듈로 구현된다는 뜻은 아닙니다.
+
+**게임 예시:** 랜 연결 문제, IP 경로 문제, 전송 연결 문제, 로그인 응답 오류는 같은 “접속 실패”라도 조사할 범위가 다릅니다. 어떤 역할까지 정상인지 알면 원인을 좁힐 수 있습니다.
+
+**가리고 떠올리기:** 서버의 로그인 거절 응답까지 받았다면 물리 케이블 문제부터 조사하는 것이 적절할까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+OSI는 통신 역할을 7계층으로 구분한 참조 모델입니다. 각 계층의 책임을 이해하면 장애가 어느 단계에서 발생했는지 나눠 조사할 수 있습니다.
+
+</details>
+
+설명 근거: [참고 문서](https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/).
+
+<!-- RECALL_CARD_END -->
+
+
 > https://www.cloudflare.com/ko-kr/learning/ddos/glossary/open-systems-interconnection-model-osi/
 
 * *직군에 상관없이 물어볼 수 있는, 네트워크에 대한 기초 내용입니다.*
 
 ### 멀티플레이어 게임의 구조
+
+<a id="recall-23"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기 — 누가 최종 상태를 결정하는가**
+
+Dedicated Server는 전용 서버가 게임을 처리하고, 플레이어 호스트 방식은 참가자 하나가 서버 역할도 맡습니다. 분산 권한 방식은 객체나 작업의 권한을 나누어 맡기는 구성을 검토합니다. 각 방식의 세부 보장은 네트워크 프레임워크에 따라 다릅니다.
+
+**게임 예시:** 경쟁 게임에서는 권위와 공정성이 중요하고, 소규모 협동 게임에서는 서버 운영 비용과 쉬운 방 생성도 중요할 수 있습니다. 호스트가 떠났을 때 세션을 종료할지 이전할지도 정책입니다.
+
+**가리고 떠올리기:** 호스트가 자기 화면에서 빠르게 반응하는 것과 다른 참가자도 같은 지연을 겪는 것은 같은가요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+멀티플레이 구조는 권위 위치·운영 비용·지연·신뢰 조건으로 선택합니다. 전용 서버와 플레이어 호스트는 서버의 위치와 부담이 다릅니다.
+
+</details>
+
+설명 근거: [참고 문서](https://dev.epicgames.com/documentation/en-us/unreal-engine/networking-overview-for-unreal-engine).
+
+<!-- RECALL_CARD_END -->
+
 
 > https://docs-multiplayer.unity3d.com/netcode/current/terms-concepts/network-topologies/  
 > https://www.photonengine.com/ko-kr/fusion
@@ -2086,6 +3119,28 @@ public class Main
   * 분산 권한(distributed authority)
 
 ### 원격 프로시저 호출 (RPC)
+
+<a id="recall-24"></a>
+<!-- RECALL_CARD_START -->
+**먼저 이해하기 — 다른 실행 환경에 작업을 요청하기**
+
+RPC는 다른 프로세스나 기기에 있는 기능을 호출하는 방식입니다. 함수처럼 보이더라도 통신 지연·실패·상대 종료가 있으므로 로컬 호출과 같은 실패 모델로 다루면 안 됩니다.
+
+**게임 예시:** 아이템 구매 요청 뒤 응답이 끊겼다면 요청이 아예 전달되지 않았을 수도 있고, 처리는 됐지만 응답만 잃었을 수도 있습니다. 업무 요청 ID와 처리 결과 조회·중복 방지 정책을 설계할 수 있으며 모든 엔진 RPC가 자동 제공하는 기능은 아닙니다.
+
+**가리고 떠올리기:** 타임아웃이 발생했다는 사실만으로 서버가 그 요청을 처리하지 않았다고 확정할 수 있을까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+RPC는 원격 기능 호출을 표현합니다. 통신 실패와 처리 여부의 불확실성을 고려해야 하고, 재시도 시 중복 적용을 막을 정책이 필요할 수 있습니다.
+
+</details>
+
+설명 근거: [참고 문서](https://aws.amazon.com/compare/the-difference-between-rpc-and-rest/).
+
+<!-- RECALL_CARD_END -->
+
 
 * *"플레이어가 재화를 획득하는 로직을 서버에 두지 않고 클라이언트에 두면 어떤 장점과 단점이 있나요?"*
 * *"클라이언트가 요청을 보내지 않고도 서버에서 일방적으로 메시지를 클라이언트에게 보내는 경우가 있다면, 클라이언트에서 이 메시지를 받기 위해 어떻게 구현해야 할까요?"*
@@ -2116,6 +3171,21 @@ C++ 기본 독립 프로그램 15개와 추가 자원 이동·템플릿 분리 �
 
 <a id="cpp-01"></a>
 ### 객체의 수명과 저장 공간
+
+<!-- RECALL_CARD_START -->
+**기억할 기준: 공간은 자리, 수명은 사용 가능한 기간**
+
+**쉬운 예:** 지역 vector가 사라질 때 원소 저장 공간도 관리 객체의 규칙에 따라 정리됩니다.
+
+**가리고 떠올리기:** 지역 객체 주소 반환과 vector 값 반환은 왜 다를까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+공간 확보와 객체의 초기화·파괴를 구분합니다. 반환값은 별도 결과 객체가 될 수 있지만 지역 객체 주소는 수명 종료 후 사용할 수 없습니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 [예제와 해설로 이해하기](#cpp-example-01)
 
@@ -2190,6 +3260,21 @@ reserve는 자리를 확보할 뿐 Item을 만들지 않습니다. emplace_back�
 <a id="cpp-02"></a>
 ### 포인터와 참조
 
+<!-- RECALL_CARD_START -->
+**기억할 기준: 참조는 별명, 소유권은 별도 계약**
+
+**쉬운 예:** 타깃 포인터가 있다고 그 타깃을 내가 삭제해야 하는 것은 아닙니다.
+
+**가리고 떠올리기:** 포인터가 null이 아니면 대상도 살아 있을까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+포인터·참조의 형태만으로 수명과 소유권을 보장하지 않습니다. 필수 여부·수정 여부·비용과 API 계약으로 인자를 선택합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 [예제와 해설로 이해하기](#cpp-example-02)
 
 > “포인터와 참조는 어떻게 다르고, 함수 인자는 어떻게 고르나요?”
@@ -2257,6 +3342,21 @@ finished
 
 <a id="cpp-03"></a>
 ### RAII
+
+<!-- RECALL_CARD_START -->
+**기억할 기준: 정리를 객체의 소멸에 연결**
+
+**쉬운 예:** 잠금 관리 객체가 스코프를 벗어나면 잠금이 풀립니다.
+
+**가리고 떠올리기:** 함수 중간에 return해도 자원이 정리되게 하려면 어떻게 할까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+RAII는 자원의 획득·해제를 객체 수명에 묶습니다. 정상적인 스코프 종료와 스택 해제 경로에서 정리 책임을 일관되게 만듭니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 [예제와 해설로 이해하기](#cpp-example-03)
 
@@ -2326,6 +3426,21 @@ release
 
 <a id="cpp-04"></a>
 ### 스마트 포인터와 소유권
+
+<!-- RECALL_CARD_START -->
+**기억할 기준: 누가 마지막까지 살려 둘 것인가**
+
+**쉬운 예:** 부모가 자식을 소유하고 자식은 부모를 관찰만 하는 관계를 생각합니다.
+
+**가리고 떠올리기:** 서로 shared_ptr를 가지면 왜 마지막 소유자가 사라지지 않을까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+단독 소유는 unique_ptr, 공유 소유는 shared_ptr, 비소유 관찰은 weak_ptr를 검토합니다. 순환 참조와 대상 자체의 동시성은 별도로 해결합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 [예제와 해설로 이해하기](#cpp-example-04)
 
@@ -2400,6 +3515,21 @@ observer는 강한 소유자 수를 늘리지 않습니다. lock이 성공해 se
 
 <a id="cpp-05"></a>
 ### 복사와 이동
+
+<!-- RECALL_CARD_START -->
+**기억할 기준: move는 이동을 허용하는 표현**
+
+**쉬운 예:** 가방을 복제하는 복사와 내부 자원을 넘겨받는 이동을 구분합니다.
+
+**가리고 떠올리기:** std::move를 썼는데 복사 생성자가 불릴 수 있을까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+std::move 자체는 자원을 옮기지 않고 이동 연산이 선택될 기회를 줍니다. 타입의 오버로드와 const 여부에 따라 복사가 선택될 수도 있습니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 [예제와 해설로 이해하기](#cpp-example-05)
 
@@ -2525,6 +3655,21 @@ copied는 원소를 따로 소유하므로 값을 바꾸어도 moved의 원소�
 <a id="cpp-06"></a>
 ### Rule of Zero와 Rule of Five
 
+<!-- RECALL_CARD_START -->
+**기억할 기준: 직접 자원을 관리할수록 특별 멤버가 연결됨**
+
+**쉬운 예:** vector와 unique_ptr로 멤버를 구성하면 직접 해제 코드를 줄일 수 있습니다.
+
+**가리고 떠올리기:** 소멸자만 추가했는데 복사·이동 정책도 봐야 하는 이유는 무엇일까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+우선 Rule of Zero를 지향합니다. 직접 자원을 관리한다면 복사·이동·소멸의 관계를 함께 정의하거나 금지합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 [예제와 해설로 이해하기](#cpp-example-06)
 
 > “자원을 소유하는 클래스에서 복사와 소멸을 함께 생각해야 하는 이유는 무엇인가요?”
@@ -2590,6 +3735,21 @@ vector 멤버 복사는 원소를 복사해 a와 b의 값이 독립적입니다.
 
 <a id="cpp-07"></a>
 ### 가상 소멸자
+
+<!-- RECALL_CARD_START -->
+**기억할 기준: 부모 포인터로 삭제할 때의 계약**
+
+**쉬운 예:** 기반 포인터가 실제 파생 객체를 소유하는 상황을 생각합니다.
+
+**가리고 떠올리기:** 기반 소멸자가 비가상일 때 delete가 안전할까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+기반 포인터를 통한 다형적 삭제를 허용하면 가상 소멸자가 필요합니다. 허용하지 않는 설계라면 그런 삭제 경로 자체를 막습니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 [예제와 해설로 이해하기](#cpp-example-07)
 
@@ -2665,6 +3825,21 @@ unique_ptr의 대상 타입은 Rule이지만 가상 소멸자를 통해 파생 �
 <a id="cpp-08"></a>
 ### vector의 크기와 용량
 
+<!-- RECALL_CARD_START -->
+**기억할 기준: size는 원소 수, capacity는 확보한 여유**
+
+**쉬운 예:** reserve(100)는 좌석을 확보하는 것이며 원소 100개를 생성하지 않습니다.
+
+**가리고 떠올리기:** reserve 후 아직 size가 0인데 v[0]에 써도 될까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+reserve는 용량, resize는 원소 수를 바꿉니다. 접근 가능한 원소 범위는 size로 판단합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 [예제와 해설로 이해하기](#cpp-example-08)
 
 > “reserve와 resize는 어떻게 다른가요?”
@@ -2727,6 +3902,21 @@ reserve 직후 원소 수는 0입니다. 기본 allocator의 int 원소는 resiz
 
 <a id="cpp-09"></a>
 ### vector와 참조 무효화
+
+<!-- RECALL_CARD_START -->
+**기억할 기준: 재할당하면 예전 원소 주소가 남지 않음**
+
+**쉬운 예:** vector 원소의 주소를 저장한 뒤 push_back으로 공간이 옮겨질 수 있습니다.
+
+**가리고 떠올리기:** reserve를 했으면 모든 erase와 삽입에도 참조가 안전할까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+재할당은 기존 원소의 참조·포인터·반복자를 무효화합니다. 재할당 없는 수정도 연산별 무효화 규칙을 확인합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 [예제와 해설로 이해하기](#cpp-example-09)
 
@@ -2791,6 +3981,21 @@ found 0
 <a id="cpp-10"></a>
 ### 람다와 수명
 
+<!-- RECALL_CARD_START -->
+**기억할 기준: 콜백 실행 시점까지 무엇이 살아 있는가**
+
+**쉬운 예:** 함수 종료 후 실행할 람다가 지역 변수를 참조 캡처하면 문제가 됩니다.
+
+**가리고 떠올리기:** this 캡처가 현재 객체의 수명을 늘려 주나요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+캡처 방식과 콜백 실행 시점에 필요한 대상 수명을 확인합니다. 값 캡처라도 내부 포인터 대상까지 소유하는 것은 아닙니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 [예제와 해설로 이해하기](#cpp-example-10)
 
 > “참조 캡처를 비동기 작업에 사용할 때 무엇을 주의해야 하나요?”
@@ -2848,6 +4053,21 @@ snapshot은 등록 당시 int 값을 저장했습니다. live는 살아 있는 s
 
 <a id="cpp-11"></a>
 ### const와 캐스팅
+
+<!-- RECALL_CARD_START -->
+**기억할 기준: 읽기 제한과 실제 타입 검증을 구분**
+
+**쉬운 예:** const_cast로 실제 const 객체를 수정하려는 것은 안전한 우회가 아닙니다.
+
+**가리고 떠올리기:** 캐스팅이 컴파일된다는 이유만으로 변환 결과 사용도 안전할까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+const 계약을 유지하고 변환의 전제 조건을 확인합니다. static_cast·dynamic_cast 등의 목적을 구분하며 const 제거로 잘못된 수정 경로를 만들지 않습니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 [예제와 해설로 이해하기](#cpp-example-11)
 
@@ -2913,6 +4133,21 @@ readOnly를 통한 쓰기는 막았지만 원래 a는 상수 객체가 아닙니
 <a id="cpp-12"></a>
 ### 가상 호출과 객체 배치
 
+<!-- RECALL_CARD_START -->
+**기억할 기준: 값으로 잘라 복사하면 파생 부분을 잃을 수 있음**
+
+**쉬운 예:** 파생 객체를 기반 타입 값 컨테이너에 넣으면 슬라이싱이 생길 수 있습니다.
+
+**가리고 떠올리기:** virtual을 붙이면 값 복사로 사라진 파생 상태도 돌아올까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+가상 호출은 객체의 실제 타입과 유효한 수명을 전제로 합니다. 다형적 객체를 기반 값으로 복사하는 슬라이싱과 배치 비용을 구분합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 [예제와 해설로 이해하기](#cpp-example-12)
 
 > “virtual 호출은 일반 함수 호출과 무엇이 다른가요?”
@@ -2976,6 +4211,21 @@ ByValue는 새 Enemy 객체를 만들며 Boss의 기반 부분만 복사합니�
 
 <a id="cpp-13"></a>
 ### 템플릿과 컴파일·링크
+
+<!-- RECALL_CARD_START -->
+**기억할 기준: 컴파일은 번역, 링크는 정의 연결**
+
+**쉬운 예:** 선언만 보고 컴파일돼도 필요한 함수 정의가 없으면 링크에 실패할 수 있습니다.
+
+**가리고 떠올리기:** 템플릿 정의를 cpp로 숨기면 어떤 인스턴스가 생성되지 않을까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+필요한 템플릿 정의를 인스턴스화 지점에 제공하거나 명시적 인스턴스화를 설계합니다. 문법 오류와 정의 누락을 구분합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 [예제와 해설로 이해하기](#cpp-example-13)
 
@@ -3085,6 +4335,21 @@ B에서 main의 호출을 Add(1.5, 2.5)로 바꾸면 double용 정의가 제공�
 <a id="cpp-14"></a>
 ### 컨테이너 선택과 캐시
 
+<!-- RECALL_CARD_START -->
+**기억할 기준: 복잡도와 실제 접근 패턴을 같이 보기**
+
+**쉬운 예:** 적을 매 프레임 순회한다면 연속 저장의 캐시 이점이 중요할 수 있습니다.
+
+**가리고 떠올리기:** 평균 O(1) 탐색 컨테이너가 작은 배열의 순회보다 항상 빠를까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+데이터 크기·순회·삽입·삭제·주소 안정성과 메모리 배치를 함께 고려합니다. 후보를 같은 작업으로 측정해 선택합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 [예제와 해설로 이해하기](#cpp-example-14)
 
 > “해시 테이블은 항상 배열보다 빠른가요?”
@@ -3151,6 +4416,21 @@ int main() {
 
 <a id="cpp-15"></a>
 ### 동시성과 데이터 경쟁
+
+<!-- RECALL_CARD_START -->
+**기억할 기준: 같은 데이터에 겹치는 접근의 규칙**
+
+**쉬운 예:** 두 스레드가 같은 점수를 동기화 없이 증가시키면 데이터 경쟁이 생깁니다.
+
+**가리고 떠올리기:** 카운터를 atomic으로 만들면 주변 여러 필드의 불변식도 보호될까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+충돌하는 접근의 동기화와 소유권을 설계합니다. atomic은 여러 변수의 복합 작업 전체를 자동으로 보호하지 않으며 잠금 범위와 실행 순서도 봅니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 [예제와 해설로 이해하기](#cpp-example-15)
 
@@ -3220,6 +4500,21 @@ int main() {
 <a id="ue-01"></a>
 ### 일반 C++ 객체와 UObject
 
+<!-- RECALL_CARD_START -->
+**기억할 기준: 엔진 객체 시스템이 필요한가**
+
+**쉬운 예:** 체력 계산식만 담는 작은 값과 월드에 등장하는 Actor는 다른 역할입니다.
+
+**가리고 떠올리기:** 모든 클래스를 UObject로 만들 필요가 있을까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+엔진의 리플렉션·GC 등이 필요한 객체는 알맞은 엔진 생성 경로를 사용합니다. 일반 C++ 값과 자원 관리 객체는 별도로 설계합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 [예제와 해설로 이해하기](#ue-example-01)
 
 > “일반 C++ 객체와 UObject는 무엇이 다른가요?”
@@ -3275,6 +4570,21 @@ Settings = NewObject<UWeaponSettings>(this);
 
 <a id="ue-02"></a>
 ### UObject 포인터 선택
+
+<!-- RECALL_CARD_START -->
+**기억할 기준: 유지·관찰·나중에 로드를 구분**
+
+**쉬운 예:** 조준 대상은 사라질 수 있고 무기 에셋은 아직 로드되지 않았을 수 있습니다.
+
+**가리고 떠올리기:** TObjectPtr라는 이름만으로 모든 위치에서 GC 추적될까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+GC가 추적하는 강한 참조, 약한 관찰, 소프트 에셋 참조를 목적에 맞게 고릅니다. 선언 위치와 추적 경로, 사용 시점 유효성을 확인합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 [예제와 해설로 이해하기](#ue-example-02)
 
@@ -3339,6 +4649,21 @@ if (AActor* Target = AimTarget.Get())
 <a id="ue-03"></a>
 ### 생성자와 BeginPlay
 
+<!-- RECALL_CARD_START -->
+**기억할 기준: 기본 구성과 플레이 중 준비를 분리**
+
+**쉬운 예:** 기본 컴포넌트는 생성자에서 만들고 플레이 중 연결은 적절한 초기화 시점에 처리합니다.
+
+**가리고 떠올리기:** BeginPlay라면 다른 모든 Actor의 준비도 끝났을까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+생성자는 기본값·기본 구성을 맡고 BeginPlay는 플레이 시작 작업을 맡습니다. 다른 객체와 복제 데이터 준비는 별도 조건으로 확인합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 [예제와 해설로 이해하기](#ue-example-03)
 
 > “생성자와 BeginPlay는 어떤 작업을 나눠 맡아야 하나요?”
@@ -3389,6 +4714,21 @@ UE_LOG(LogTemp, Log, TEXT("Door ready: %s"), *GetName());
 
 <a id="ue-04"></a>
 ### Destroy와 EndPlay
+
+<!-- RECALL_CARD_START -->
+**기억할 기준: 게임에서 끝남과 메모리 회수는 다른 시점**
+
+**쉬운 예:** 적이 Destroy된 뒤 늦게 도착한 로드 콜백이 그 적을 사용할 수 있습니다.
+
+**가리고 떠올리기:** 포인터가 남아 있다는 이유로 종료된 Actor를 써도 될까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+EndPlay에서 게임플레이 작업과 구독을 정리하고 이후 콜백의 유효성을 확인합니다. Destroy와 실제 GC 회수를 같은 순간으로 보지 않습니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 [예제와 해설로 이해하기](#ue-example-04)
 
@@ -3447,6 +4787,21 @@ AttackTimer는 이 Actor가 관리하는 타이머 핸들이라는 전제입니�
 <a id="ue-05"></a>
 ### 게임 전체 상태의 위치
 
+<!-- RECALL_CARD_START -->
+**기억할 기준: 상태가 누구에게 얼마나 오래 필요한가**
+
+**쉬운 예:** 매치 규칙과 모든 플레이어가 볼 점수, 맵을 넘어 유지할 로컬 설정은 수명이 다릅니다.
+
+**가리고 떠올리기:** GameInstance에 저장하면 다른 클라이언트에도 자동 복제될까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+서버 규칙은 GameMode, 공유 매치 상태는 GameState, 프로세스 단위 지속 상태는 GameInstance 등을 검토합니다. 지속과 네트워크 공유는 별개입니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 [예제와 해설로 이해하기](#ue-example-05)
 
 > “GameMode, GameState, GameInstance의 역할은 무엇인가요?”
@@ -3499,6 +4854,21 @@ AttackTimer는 이 Actor가 관리하는 타이머 핸들이라는 전제입니�
 
 <a id="ue-06"></a>
 ### 플레이어와 조종 대상
+
+<!-- RECALL_CARD_START -->
+**기억할 기준: 플레이어의 정체성과 몸을 나누기**
+
+**쉬운 예:** 죽어서 Pawn을 교체해도 플레이어의 점수는 유지되어야 할 수 있습니다.
+
+**가리고 떠올리기:** PlayerController는 모든 클라이언트가 모든 사람의 것을 갖고 있을까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+Controller의 조종, Pawn의 몸, PlayerState의 플레이어 상태를 구분합니다. 재스폰 수명과 각 네트워크 역할에서의 존재 범위를 확인합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 [예제와 해설로 이해하기](#ue-example-06)
 
@@ -3553,6 +4923,21 @@ PlayerState: 같은 플레이어의 점수 등
 
 <a id="ue-07"></a>
 ### 변수 복제와 RPC
+
+<!-- RECALL_CARD_START -->
+**기억할 기준: 상태 전달과 사건 요청을 구분**
+
+**쉬운 예:** 체력은 나중에 접속한 사람도 알아야 하지만 한 번의 입력 요청은 실행 사건입니다.
+
+**가리고 떠올리기:** RPC만으로 현재 체력을 보내면 늦은 접속자는 어떻게 알까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+지속 상태는 복제 속성, 필요한 호출은 RPC로 설계합니다. 소유권·전달 조건·관련성과 상태 복구를 확인합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 [예제와 해설로 이해하기](#ue-example-07)
 
@@ -3615,6 +5000,21 @@ Actor의 복제 활성화 등 전체 설정이 필요합니다. OnRep는 클라�
 <a id="ue-08"></a>
 ### 서버 권위 공격 판정
 
+<!-- RECALL_CARD_START -->
+**기억할 기준: 요청은 클라이언트, 확정은 서버**
+
+**쉬운 예:** 클라이언트가 공격 버튼을 눌렀다고 피해 수치를 그대로 확정하지 않습니다.
+
+**가리고 떠올리기:** 클라이언트가 보낸 명중 대상과 피해를 서버가 바로 믿어도 될까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+서버는 공격 가능 상태·거리·대상 등을 검증해 결과를 확정합니다. 클라이언트 표현 및 예측과 권위 있는 판정을 구분합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 [예제와 해설로 이해하기](#ue-example-08)
 
 > “클라이언트에서 공격했을 때 서버는 무엇을 검증해야 하나요?”
@@ -3666,6 +5066,21 @@ Actor의 복제 활성화 등 전체 설정이 필요합니다. OnRep는 클라�
 
 <a id="ue-09"></a>
 ### GAS 구성 요소
+
+<!-- RECALL_CARD_START -->
+**기억할 기준: 능력·수치·효과의 역할 분리**
+
+**쉬운 예:** 대시 실행, 스태미나 값, 스태미나 감소와 쿨다운은 서로 다른 책임입니다.
+
+**가리고 떠올리기:** GameplayAbility 하나에 모든 영구 수치를 직접 보관하면 어떤 수명 문제가 생길까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+ASC가 능력·효과를 관리하고 Ability는 실행 흐름, AttributeSet은 수치, GameplayEffect는 수치 변화 등을 담당합니다. 태그로 조건과 상태를 표현합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 [예제와 해설로 이해하기](#ue-example-09)
 
@@ -3720,6 +5135,21 @@ Ability는 실행 흐름, Effect는 적용할 효과, AttributeSet은 속성 정
 <a id="ue-10"></a>
 ### C++ 자원 관리와 Unreal GC의 경계
 
+<!-- RECALL_CARD_START -->
+**기억할 기준: RAII와 GC가 책임지는 대상이 다름**
+
+**쉬운 예:** 파일 잠금은 C++ 관리 객체로, UObject 참조는 엔진의 추적 규칙으로 다룹니다.
+
+**가리고 떠올리기:** UObject를 일반 shared_ptr로 감싸면 엔진 GC도 그 소유권을 알까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+일반 자원은 RAII로 관리하고 UObject는 엔진의 생성·참조·GC 규칙을 따릅니다. 두 소유권 체계를 임의로 섞지 않습니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 [예제와 해설로 이해하기](#ue-example-10)
 
 > “일반 C++ 스마트 포인터를 UObject에 그대로 사용해도 되나요?”
@@ -3770,6 +5200,21 @@ Ability는 실행 흐름, Effect는 적용할 효과, AttributeSet은 속성 정
 
 <a id="ue-11"></a>
 ### 리플렉션·CDO·Blueprint
+
+<!-- RECALL_CARD_START -->
+**기억할 기준: 클래스 기본값과 실행 인스턴스를 구분**
+
+**쉬운 예:** Blueprint 기본 체력은 클래스 기본값이며 각 적의 현재 체력과 다릅니다.
+
+**가리고 떠올리기:** CDO에 플레이 중 한 캐릭터의 상태를 저장하면 무엇이 잘못될까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+리플렉션은 엔진이 타입 정보를 다루는 통로이고 CDO는 클래스 기본값의 기준입니다. 런타임 상태는 적절한 인스턴스에 둡니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 [예제와 해설로 이해하기](#ue-example-11)
 
@@ -3825,6 +5270,21 @@ UPROPERTY 하나만 붙이면 편집·Blueprint 쓰기·복제가 모두 된다�
 <a id="ue-12"></a>
 ### Component·Subsystem과 책임
 
+<!-- RECALL_CARD_START -->
+**기억할 기준: 재사용할 기능과 서비스의 수명 선택**
+
+**쉬운 예:** 여러 Actor의 체력 기능은 Component, 월드 범위 서비스는 해당 Subsystem을 검토할 수 있습니다.
+
+**가리고 떠올리기:** 맵 전환 때 끝나야 할 서비스를 GameInstance 범위에 두면 어떤 정리가 필요할까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+책임과 소유자·수명에 따라 Component와 Subsystem을 선택합니다. 큰 관리자 하나에 모든 기능을 모으기보다 범위와 의존성을 드러냅니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 [예제와 해설로 이해하기](#ue-example-12)
 
 > “ActorComponent와 Subsystem은 어떻게 고르나요?”
@@ -3871,6 +5331,21 @@ LocalPlayer → LocalPlayerSubsystem: 로컬 사용자별 기능
 
 <a id="ue-13"></a>
 ### Delegate·Timer와 종료
+
+<!-- RECALL_CARD_START -->
+**기억할 기준: 등록한 작업에도 종료 경로가 필요**
+
+**쉬운 예:** 피격 알림을 구독한 UI나 공격 타이머는 화면·Actor 종료 뒤에도 연결이 남을 수 있습니다.
+
+**가리고 떠올리기:** 약한 바인딩이 있으면 타이머와 논리 상태 정리를 전부 생략해도 될까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+Delegate·Timer의 대상 수명과 등록 해제를 설계합니다. 메모리 접근 안전성과 게임 규칙상 작업 취소를 따로 확인합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 [예제와 해설로 이해하기](#ue-example-13)
 
@@ -3930,6 +5405,21 @@ Source와 delegate 시그니처는 프로젝트별 선언이 필요합니다. Dy
 <a id="ue-14"></a>
 ### 입력에서 이동까지
 
+<!-- RECALL_CARD_START -->
+**기억할 기준: 입력 숫자를 월드의 움직임으로 바꾸기**
+
+**쉬운 예:** 앞으로 입력한 값은 카메라 기준 방향과 결합해 이동 요청으로 이어질 수 있습니다.
+
+**가리고 떠올리기:** 카메라가 90도 돌아가도 월드 X축을 앞으로 쓰면 어떻게 움직일까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+입력 값의 의미와 좌표계를 확인하고 기준 회전에서 이동 방향을 구합니다. 입력 처리와 실제 이동 컴포넌트의 적용을 연결합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 [예제와 해설로 이해하기](#ue-example-14)
 
 > “Input Action을 만들었는데 왜 입력이 들어오지 않을까요?”
@@ -3981,6 +5471,21 @@ Controller가 유효하고 해당 Pawn이 입력을 받는 전제입니다. 이 
 
 <a id="ue-15"></a>
 ### Trace·Sweep과 공격 판정
+
+<!-- RECALL_CARD_START -->
+**기억할 기준: 선 검사와 부피를 가진 검사를 구분**
+
+**쉬운 예:** 빠르게 움직인 검의 현재 위치만 검사하면 프레임 사이의 적을 놓칠 수 있습니다.
+
+**가리고 떠올리기:** Sweep 한 번이 회전하는 긴 검의 모든 궤적을 보장할까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+Trace·Sweep의 형상·시작·끝·채널을 정의합니다. 시간 간격과 회전 궤적, 중복 명중 정책을 별도로 설계하고 시각화합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 [예제와 해설로 이해하기](#ue-example-15)
 
@@ -4042,6 +5547,21 @@ Visibility는 설명용 채널이며 실제 전투 채널과 충돌 응답을 �
 <a id="ue-16"></a>
 ### Montage·Notify·Root Motion
 
+<!-- RECALL_CARD_START -->
+**기억할 기준: 애니메이션 종료와 공격 상태 정리를 연결**
+
+**쉬운 예:** 몽타주가 피격으로 중단되면 정상 종료 때만 하던 공격 잠금 해제가 누락될 수 있습니다.
+
+**가리고 떠올리기:** Notify 하나를 꼭 받는다는 가정으로 종료를 처리해도 될까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+Montage의 재생·중단·블렌드 종료와 Notify의 역할을 나눕니다. 정상·취소·사망 경로에서 상태를 정리하고 Root Motion의 이동 권한도 확인합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 [예제와 해설로 이해하기](#ue-example-16)
 
 > “공격 애니메이션이 끝나지 않고 중단되면 무엇을 정리해야 하나요?”
@@ -4102,6 +5622,21 @@ FinishAttack(callbackId):
 <a id="ue-17"></a>
 ### 에셋 비동기 로딩
 
+<!-- RECALL_CARD_START -->
+**기억할 기준: 로드 완료 때도 요청이 유효한가**
+
+**쉬운 예:** 아이콘을 요청한 UI가 닫힌 뒤 완료 콜백이 올 수 있습니다.
+
+**가리고 떠올리기:** 에셋 로드가 성공했어도 콜백에서 확인할 것은 무엇일까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+요청 핸들·대상 수명·실패·취소를 관리합니다. 완료 시 원래 요청이 아직 유효한지 확인하고 필요 없는 자원을 정리합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 [예제와 해설로 이해하기](#ue-example-17)
 
 > “Soft 참조로 바꾸면 끊김이 없어지나요?”
@@ -4158,6 +5693,21 @@ OnLoaded(requestId, weakView, asset):
 
 <a id="ue-18"></a>
 ### GAS의 활성화·비용·종료
+
+<!-- RECALL_CARD_START -->
+**기억할 기준: 시작할 수 있음과 비용 확정·종료를 나누기**
+
+**쉬운 예:** 대시 시 스태미나와 쿨다운을 확인하고 성공·취소 시 남은 태스크와 상태를 정리합니다.
+
+**가리고 떠올리기:** Commit 실패 뒤에도 이동 태스크를 계속 실행하면 어떤 문제가 생길까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+활성화 조건, 비용·쿨다운 확정, 실행, 종료·취소를 연결합니다. 예측과 서버 확정이 어긋나는 경로까지 고려합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 [예제와 해설로 이해하기](#ue-example-18)
 
@@ -4229,6 +5779,21 @@ EndAbility + 종료 이유
 <a id="math"></a>
 ### 위치·방향·회전
 
+<!-- RECALL_CARD_START -->
+**기억할 기준: 점과 방향, 좌표계를 구분**
+
+**쉬운 예:** 두 위치를 빼면 한 대상에서 다른 대상으로 향하는 방향 벡터를 구할 수 있습니다.
+
+**가리고 떠올리기:** 길이가 0인 벡터를 정규화해야 하는 상황이면 무엇을 먼저 볼까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+계산할 값이 위치인지 방향인지, 로컬인지 월드인지 확인합니다. 정규화·내적·회전 변환의 입력 조건을 지킵니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 **거리와 각도를 따로 계산하는 이유**
 
 적이 앞에 있어도 너무 멀면 공격하면 안 됩니다. 먼저 Target-Origin의 길이로 거리 조건을 보고, 0에 가까우면 방향을 정의하기 어려우므로 겹친 대상의 정책을 정합니다. 방향이 필요하면 정규화한 뒤 전방 단위 벡터와 내적합니다. 같은 방향은 1, 수직은 0, 반대는 -1이므로 각도 조건을 수치로 바꿀 수 있습니다.
@@ -4259,6 +5824,21 @@ EndAbility + 종료 이유
 <a id="rendering"></a>
 ### 렌더링과 병목
 
+<!-- RECALL_CARD_START -->
+**기억할 기준: CPU 제출과 GPU 그리기 비용을 분리**
+
+**쉬운 예:** 투명 이펙트가 화면을 덮는 장면은 오브젝트 수보다 픽셀 비용이 클 수 있습니다.
+
+**가리고 떠올리기:** 드로우 콜만 줄였는데 시간이 같다면 어떤 병목이 남았을까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+프레임의 CPU·GPU 시간을 나누고 제한하는 단계를 찾습니다. 변경한 지표와 실제 프레임 시간의 관계를 확인합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
+
 **가장 오래 걸리는 작업부터 좁히기**
 
 CPU가 그릴 작업을 준비하고 GPU가 처리하는 과정에는 겹치는 구간과 대기가 있습니다. 드로우 콜 수가 줄어도 이미 GPU의 무거운 픽셀 작업을 기다리고 있었다면 전체 프레임 시간이 크게 줄지 않을 수 있습니다.
@@ -4280,6 +5860,21 @@ CPU가 그릴 작업을 준비하고 GPU가 처리하는 과정에는 겹치는 
 
 <a id="profiling"></a>
 ### 성능 측정과 패키징
+
+<!-- RECALL_CARD_START -->
+**기억할 기준: 같은 조건에서 재현하고 비교**
+
+**쉬운 예:** 에디터에서 되는 기능도 패키지에서 에셋 누락으로 실패할 수 있습니다.
+
+**가리고 떠올리기:** PIE 성공만으로 목표 기기와 패키지 실행도 증명될까요?
+
+<details>
+<summary>면접에서 짧게 말하기</summary>
+
+대표 장면·기기·빌드 설정을 고정해 측정합니다. 에디터 실행, 패키징, 실제 기기 동작과 성능은 각각 확인합니다.
+
+</details>
+<!-- RECALL_CARD_END -->
 
 **완성 파일 생성과 정상 실행을 구분하기**
 
