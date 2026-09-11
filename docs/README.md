@@ -1,5 +1,7 @@
 # C++ & Unreal Engine 기술면접 대비
 
+> 주제별 면접 발표는 [Unreal 전용 질문집 — 10차시·160문항](../Unreal%20%ED%81%B4%EB%9D%BC%EC%9D%B4%EC%96%B8%ED%8A%B8%20%EA%B0%9C%EB%B0%9C%EC%9E%90%20%EA%B8%B0%EC%88%A0%EB%A9%B4%EC%A0%91%20%EB%8C%80%EB%B9%84%20%EC%A7%88%EB%AC%B8%20%EB%AA%A8%EC%9D%8C%EC%A7%91.md#toc)에서 준비하세요. 이 문서는 기존 기초 학습 경로입니다.
+
 > **[전체 내용을 한 번에 읽는 README](../README.md#목차)** — 개념·예제·출력 해설·실습을 같은 페이지에 통합했습니다. 아래 개별 파일은 기존 링크 호환을 위해 유지합니다.
 
 이 포크의 C++·Unreal 확장 학습 자료입니다. [원본](https://github.com/salt26/game-developer-interview)의 읽기 자료와 차시별 질문 모음집 구성을 참고하고 설명·질문·실습 과제는 새로 작성했습니다.
