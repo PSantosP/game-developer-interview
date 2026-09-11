@@ -133,6 +133,8 @@ Pull Request를 날려주시면 검토 후 반영하겠습니다. 😊
 <a id="recall-guide"></a>
 ## 이해하고 말로 떠올리는 복습
 
+> **문헌 검토 — 2026-09-11:** [개념 검토 범위·정정 근거](./docs/concept-review.md). 이번 검토는 공식 문서와 본문 대조이며 코드·엔진 실행은 수행하지 않았습니다.
+
 이 포크의 학습 개정에서는 원본의 기술 학습 56개 주제에 **쉬운 설명 → 게임 예시 → 가리고 떠올릴 질문 → 짧은 면접 답변**을 붙였습니다. 개인적인 취업 조언은 암기 대상에서 제외하고 원문을 유지했습니다. C++ 15개·Unreal 18개·공통 기초 3개 주제에도 같은 회상 구성을 적용했습니다. 아래 설명 보충과 오류 정정은 포크에서 수행했습니다.
 
 먼저 설명과 예시를 읽고, 답변을 펼치기 전에 자기 말로 답해 봅니다. 짧은 답변은 그대로 외울 대본보다 핵심이 빠졌는지 확인하는 기준으로 쓰세요. 용어만 떠오르면 예시를 다시 설명하고, 예시가 떠오르면 조건을 하나 바꾸어 답해 봅니다. 링크는 더 깊게 확인할 자료이며 기본 뜻을 알기 위해 먼저 열 필요는 없습니다.
@@ -608,6 +610,8 @@ Unity가 지원하는 문법과 최신 C# 문법은 같지 않습니다. 같은 
 
 ### Unity Lifecycle
 
+문헌 대조: [Unity 실행 순서](https://docs.unity3d.com/6000.0/Documentation/Manual/execution-order.html).
+
 <a id="recall-26"></a>
 <!-- RECALL_CARD_START -->
 **먼저 이해하기**
@@ -626,12 +630,12 @@ Awake는 해당 인스턴스의 초기화, OnEnable은 활성화 시의 등록, 
 
 > https://docs.unity3d.com/kr/current/Manual/ExecutionOrder.html
 
-* Awake -> OnEnable -> Start -> **FixedUpdate -> Update -> LateUpdate** -> OnApplicationPause
+* 대표 초기화는 Awake → OnEnable → Start로 읽되 활성 조건을 구분합니다. FixedUpdate는 렌더 프레임당 0회 또는 여러 회일 수 있습니다. OnApplicationPause는 매 프레임 끝의 필수 단계가 아닙니다.
 
 * Awake
-  * Enable 여부와 상관없이 호출된다.
+  * 활성 GameObject에서는 MonoBehaviour.enabled가 false여도 호출될 수 있습니다. 비활성 GameObject의 Awake는 활성화 때까지 지연될 수 있습니다.
   * 해당 인스턴스의 초기화에 한 번 호출된다. 비활성 객체 등의 조건과 다른 인스턴스 사이 순서를 구분한다.
-  * Awake끼리는 호출 순서가 무작위이다.
+  * 다른 인스턴스 사이의 Awake 순서를 기본적으로 보장받지 못합니다. 명시적 실행 순서 설정도 지원 범위를 따릅니다.
   * <details>
     <summary>참조를 형성할 때 쓰인다. <i>(클릭하면 예제 코드가 보입니다.)</i></summary>
 
@@ -653,13 +657,13 @@ Awake는 해당 인스턴스의 초기화, OnEnable은 활성화 시의 등록, 
   * 해당 스크립트 컴포넌트가 Enable되어야 불린다.
   * 한 번 불린다.
 
-* FixedUpdate는 Update보다 일찍 불리며, 프레임 드랍이 생기더라도 물리 엔진의 고정된 주기에 따라 호출하지 못한 만큼 추가로 함수를 호출하여, 호출 횟수가 경과한 시간에 비례함을 보장한다.
+* FixedUpdate는 고정 시간 간격의 갱신입니다. 최대 시간 보정 등의 설정이 있으므로 현실 경과 시간만큼 무제한 따라잡는다고 보장하지 않습니다.
   * FixedUpdate에서는 주로 물리 연산 처리를 한다.
   * Update에서는 주로 사용자 입력 처리를 한다.
 
-* Update와 LateUpdate는 호출 횟수가 같고 프레임마다 한 번씩 호출되며, 프레임 드랍의 영향을 받아 호출을 건너뛰는 경우가 있다.  
+* 활성 조건을 만족하면 Update와 LateUpdate는 프레임 갱신에서 호출됩니다. 느린 프레임은 보통 간격이 길어진 것이며 정해진 수의 Update를 몰래 건너뛴다는 뜻은 아닙니다.
   * LateUpdate는 Update보다 나중에 불린다.
-  * 프레임 드랍: 한 프레임의 실행 시간 안에 연산을 다 수행하지 못한 경우 해당 프레임에 렌더링을 하지 못하는 현상이다. 화면 버벅임을 유발한다.
+  * 프레임 지연은 목표 예산을 넘겨 다음 화면 갱신이 늦어지는 현상입니다. 표시·동기화 정책에 따라 체감이 다릅니다.
 
 ### 값 타입과 참조 타입
 
@@ -679,21 +683,12 @@ Awake는 해당 인스턴스의 초기화, OnEnable은 활성화 시의 등록, 
 </details>
 <!-- RECALL_CARD_END -->
 
-> https://learn.microsoft.com/ko-kr/dotnet/csharp/language-reference/builtin-types/built-in-types
+* 값 타입 변수는 값을 저장하고 참조 타입 변수는 객체 참조를 저장합니다. 대입 때 무엇을 복사하는지가 핵심입니다.
+* 참조 타입 인자도 기본적으로 **값으로 전달**합니다. 참조 값의 복사본을 받으므로 객체 내부 변경은 보일 수 있지만 매개변수를 재대입해도 호출자의 변수가 바뀌지는 않습니다.
+* ref·out·in은 별도 전달 규칙입니다. 값/참조 타입을 call by value/reference와 같은 구분으로 외우지 않습니다.
+* 구조체 안의 참조 필드는 복사 후에도 대상을 공유할 수 있습니다. 저장 위치는 타입 구분만으로 정해지지 않습니다.
 
-* 값 타입
-  * C#의 primitives(`int`, `float` 등), 구조체(`struct`), 열거(`enum`) 타입이 여기에 속한다.
-  * `System.ValueType`으로부터 상속된다.
-  * 주로 스레드 스택에 할당된다.
-  * https://learn.microsoft.com/ko-kr/dotnet/csharp/language-reference/builtin-types/value-types
-* 참조 타입
-  * C#의 클래스(`class`), 문자열(`string`) 타입이 여기에 속한다.
-  * `System.Object` 또는 `System.String`으로부터 상속된다.
-  * 주로 힙에 할당되며 GC(garbage collector)가 관리한다.
-    * 참조 자체의 저장 위치는 지역 변수·객체 필드 등 보관 위치와 런타임에 따라 다르다.
-  * https://learn.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/reference-types
-* 값 타입 / 참조 타입의 구분은 call by value / call by reference에 의해 구분한다.  
-  메서드 호출 또는 반환 시 값 전체가 복사되면 값 타입이고, 원본 데이터는 그대로 있고 이를 참조하는 주소만 복사하여 넘겨주면 참조 타입이다.
+근거: [Microsoft — 매개변수 전달](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/method-parameters).
 
 ### Stack / Heap Memory
 
@@ -746,12 +741,12 @@ Awake는 해당 인스턴스의 초기화, OnEnable은 활성화 시의 등록, 
 
 <!-- RECALL_CARD_END -->
 
+* 클래스 변수의 대입은 같은 객체를 가리키는 참조를 복사합니다. 새 바깥 객체를 만드는 얕은 복제와 구분합니다.
+* MemberwiseClone은 새 객체를 만들고 필드 값을 복사합니다. 참조 필드의 대상은 공유하는 얕은 복제입니다.
+* 깊은 복제는 독립시킬 내부 객체까지 복제합니다. 공유 자원과 순환 참조의 처리는 복제 정책에 따릅니다.
+* C++의 기본 멤버 복사도 포인터 대상을 자동 복제하지 않습니다. 두 언어에서 얕은 복사의 뜻이 반대라고 보지 않습니다.
 
-* 얕은 복사: 같은 힙 메모리 주소를 가리키도록 주소를 복사
-* 깊은 복사: 힙에 복사할 객체가 가진 메모리만큼을 새로 할당하여 복사하고 새 메모리 주소를 반환
-* C++과는 조금 다르다.
-  * C++에서의 얕은 복사: 멤버의 값만 복사
-  * C++에서의 깊은 복사: 멤버의 값 복사 + 포인터가 참조하는 대상까지 복사
+근거: [Microsoft — MemberwiseClone](https://learn.microsoft.com/en-us/dotnet/api/system.object.memberwiseclone?view=net-10.0).
 
 ### C#과 Unity의 Garbage Collector
 
@@ -779,76 +774,41 @@ GC는 도달 불가능한 관리 객체를 회수하며 시점이 즉시라는 �
 
 #### GC를 쓸 때의 장점
 
-* 사용자가 메모리를 관리할 필요가 없다. 편하다.
-* 메모리 누수가 일어나지 않는다.
-* 관리되는 힙에 효율적으로 저장한다. 메모리 압축을 한다. [메모리 단편화](#memory-fragmentation)를 줄인다.
-* 한 객체가 다른 객체가 가진 메모리에 접근하는 일을 막아 메모리 안전성을 높인다.
+
+* 도달 불가능한 관리 객체의 회수를 자동화하여 수동 해제 실수를 줄입니다.
+* static 컬렉션이나 이벤트 구독이 불필요한 객체를 붙잡으면 회수되지 않을 수 있습니다. GC가 메모리 누수 전체를 없애지는 않습니다.
+* 파일·소켓·엔진 네이티브 자원 정리는 관리 메모리 회수와 별개입니다.
+* 힙 압축 여부와 중단 방식은 GC 구현에 따라 다릅니다.
 
 #### .NET의 GC
 
-> https://learn.microsoft.com/ko-kr/dotnet/standard/garbage-collection/fundamentals
 
-* **세대 구분이 있다.**
-  * 0세대, 1세대, 2세대
-  * 새로 생긴 객체들은 0세대에 넣는다.
-  * 0세대에서 가장 자주 GC가 돌아간다.
-  * GC로부터 한 번 살아남은 객체들은 세대가 1씩 오른다.
-  * 0세대에서 돌려서 메모리를 확보할 수 없는 경우 1세대도 돌린다. 마찬가지로 1세대에서도 메모리를 확보할 수 없는 경우 2세대까지 돌린다. 즉, 2세대에서 GC가 돌아갔다면 1세대와 0세대에서도 GC가 돌아간 것이다.
-  * 3세대도 있다. 대형 개체를 저장하는 힙이다. 여기서는 주소 이동이 거의 일어나지 않는다. 복사하면 오래 걸리기 때문이다. 이 3세대는 논리적으로는 2세대로 취급한다.
-* 관리되는 힙 영역이 있다.
-* Mark and Sweep 알고리즘으로 GC를 돌린다.
-  * `static` 변수, 스레드 스택의 지역 변수, CPU 레지스터 등을 root로 잡는다.
-  * 여기서부터 참조 가능한 모든 변수들을 탐색하면서 mark한다.
-  * mark 페이즈가 끝나면 관리되는 힙 영역에 할당된 모든 참조 타입 변수를 탐색하면서 mark되지 않은 것들을 sweep한다.
-  * sweep할 때 힙 압축을 수행한다. 만약 garbage가 있으면 그 위(그보다 높은 주소)에 저장된, mark된 메모리를 garbage가 있던 공간에 옮길 준비를 한다. 변경될 주소 포인터를 계산하고, 메모리를 복사하여 옮기는 작업을 수행한다.
-  * 두 객체가 서로를 상호 참조하고 있어도, root로부터 시작하는 외부 개체와 연결되어 있지 않다면 Mark and Sweep 알고리즘에서 mark되지 않으므로 상호 참조가 문제가 되지 않는다.
-* GC가 돌아가는 중에는 모든 다른 스레드가 suspended 상태가 된다. (Stop-the-World)
+* 일반적인 .NET GC는 0·1·2세대와 큰 객체 힙(LOH) 등을 구분합니다. LOH는 2세대 수집과 함께 다루며 보편적인 별도 3세대로 외우지 않습니다.
+* 루트에서 도달 가능한 객체를 추적합니다. 외부에서 도달할 수 없는 순환 참조도 회수 대상이 될 수 있습니다.
+* 생존 객체 이동·압축 여부는 힙과 수집 모드에 따라 다릅니다.
+* 관리 스레드를 중단하는 구간이 있지만 background GC 등도 있으므로 수집 전체 동안 모든 스레드가 멈춘다고 단정하지 않습니다.
+
+근거: [Microsoft — GC 기초](https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/fundamentals).
 
 #### Unity의 GC
 
-* [Boehm–Demers–Weiser garbage collector 알고리즘](https://www.hboehm.info/gc/gcdescr.html)을 사용한다.
-  * Mark and Sweep의 변형이다.
-  * C/C++에서도 활용할 수 있는 GC이다.
-  * BDW의 주요 특징들:
-    * BDW는 보수적이다. 이는 사용 중일 가능성이 조금이라도 있는 객체는 치우지 않는다는 뜻이다. C/C++와 같은 포인터를 활용하는 언어에서는 정확한 메모리 추적이 어렵기 때문이다.
-    * BDW는 점진적(Incremental) GC 방식을 취한다. 게임이 중간에 멈추는 일이 없도록 하기 위해 택한 방식이다.
-    * BDW는 메모리 단편화를 줄이기 위해 메모리 풀(pool) 기법을 사용한다. 쉽게 말해 메모리를 미리 일정 크기의 블록으로 할당해두고, 블록 단위로 배정한다는 것이다.
-* Mark and Sweep VS. BDW
-  * 확실하게 참조된 데이터들만 남기고 전부 수거 VS. 포인터가 될 가능성이 있다면 전부 남겨둠, 보수적임
-  * Stop-the-world VS. 점진적임
-* **.NET의 GC와 무엇이 다른가?**
-  * 세대 구분이 없다.
-  * 메모리 압축이 없다.
-  * 별도의 GC 스레드 없이, 메모리 할당 스레드에서 돌아간다.
-  * *아무튼 별로 안 좋다.*
-* 왜 다른가?
-  * 싱글 스레드 환경에서 사용하기 위해
-* 유의할 점
-  * 메모리 최적화가 없기 때문에 19버전 이상에서 사용하는 [점진적 GC](https://docs.unity3d.com/kr/current/Manual/performance-incremental-garbage-collection.html)를 사용하거나 오브젝트 풀링 등의 최적화 기법을 사용할 필요가 있다.
-* **Unity의 `GC.Collect()` 함수**
-  * Unity에서는 일반적으로 GC가 자동으로 돌아가지만, 필요에 의해 `GC.Collect()`를 직접 호출하여 메모리 관리를 할 수 있다. 
-  * 다만, `GC.Collect()`는 참조가 되어있지 않은 개체들, 즉 이미 garbage가 된 개체들만 치운다.
-  * 따라서 처리하고 싶은 garbage가 있다면, 그저 참조(연결성)를 잘 끊어주기만 해도 된다. `GC.Collect()`의 명시적 호출 없이 알아서 Unity가 잘 수거해간다. 
+
+* Unity 6.0 문서는 Boehm–Demers–Weiser 기반 GC를 설명합니다. .NET의 세대별 압축 GC와 같은 구현이 아닙니다.
+* 이 문서 기준 비세대·비압축 특성을 구분합니다. 점진적 모드는 작업을 여러 프레임에 나누어 긴 중단을 줄이며 총비용이나 끊김을 없애지는 않습니다.
+* 비점진적 모드도 있고 플랫폼별 지원과 설정이 다릅니다. 보수적 추적과 점진적 실행은 서로 다른 분류입니다.
+* GC.Collect는 도달 가능한 객체를 강제로 없애는 함수가 아닙니다. 상시 호출을 기본 최적화로 삼지 않습니다.
+* 관리 힙 회수와 Destroy·에셋 핸들 해제는 별도 책임입니다.
+
+근거: [Unity — GC 개요](https://docs.unity3d.com/6000.0/Documentation/Manual/performance-garbage-collector.html), [수집 모드](https://docs.unity3d.com/6000.0/Documentation/Manual/performance-incremental-garbage-collection.html).
 
 #### 동적 할당을 줄여야 하는 이유
 
-> https://docs.unity3d.com/kr/current/Manual/performance-managed-memory.html
 
-* 공간적 이유
-  * 동적 할당은 메모리(힙) 공간을 잡아먹는다.
-    * 계속 쌓이면 out of memory 오류가 발생하여 크래시가 발생할 수 있다.
-    * 특히 모바일 앱에서 메모리 최적화를 하지 않으면 10분만 켜 두어도 메모리를 1GB 이상 차지하다가 결국 운영체제에 의해 강제종료되는 경우가 생긴다.
-  * 잦은 할당과 해제는 [메모리 단편화](#memory-fragmentation)를 일으킨다.
-    * 힙에 빈 공간이 있음에도 이들이 분산되어 있어 새 할당을 한번에 넣을 공간이 없다면 힙을 2배씩 확장해야 한다.
-* 시간적 이유
-  * GC가 돌아가는 동안 많은 연산을 한다.
-    * `GC.Collect()`를 직접 호출하지 않는 한 언제 GC가 돌아갈지 모른다. Unity도 모르고 프로그래머도 모른다.
-    * 다른 중요한 연산을 수행해야 할 때 마침 GC가 돌아가고 있으면 CPU 병목이 생겨 느려질 수 있다.
-    * GC가 돌아가는 중에는 다른 모든 스레드가 일시 중단된다.
-  * 힙을 압축하는 연산은 시간이 오래 걸린다.
-    * 메모리 복사 및 붙여넣기를 하기 때문이다.
-  * 동적 할당한 내용물을 메모리에 로드할 때에도 시간이 걸린다.
-  
+* 반복되는 임시 객체는 할당·수집 비용에 영향을 줍니다. 누적 할당량·현재 사용량·힙 예약량은 다른 지표입니다.
+* 빈 공간 배치 때문에 힙을 확장할 수 있지만 모든 힙이 항상 2배씩 커지는 것은 아닙니다.
+* new 표현식만으로 관리 힙 할당을 판정하지 않습니다. 값 타입 구성과 객체 생성을 구분합니다.
+* 특정 시간 뒤 반드시 몇 GB를 쓴다는 주장은 측정 없이 일반화하지 않습니다.
+
 #### Unity에서 할당을 줄이는 습관
 
 > 면접에서 물어볼 가능성이 높은 내용이면서, 실무에서도 프로그래머의 실력을 판가름하는 기본 소양입니다.    
@@ -856,7 +816,7 @@ GC는 도달 불가능한 관리 객체를 회수하며 시점이 즉시라는 �
 
 * 임시 할당
   * 매 프레임마다 새로 힙에 할당하는 동적 메모리가 있다면 이를 줄여야 한다.
-  * `new`는 메모리 최적화 시 최우선 제거 대상이다.
+  * 관리 힙의 반복 할당을 먼저 측정합니다. 모든 new 표현식을 없애는 것이 목표는 아닙니다.
   * `Update()`에서 `new`를 한 번 사용하여 100 바이트씩 임시 할당을 해도 60 FPS 기준 초당 6KB의 할당이 이루어진다. 3분이면 1MB의 할당이 이루어진다.
 * 반복되는 문자열 연결
   * [`+`로 문자열을 연결할 때의 문제점은 설명 참고](#문자열-할당을-줄이는-방법)
@@ -878,7 +838,7 @@ GC는 도달 불가능한 관리 객체를 회수하며 시점이 즉시라는 �
 * 클로저 및 익명 메서드
   * [자세한 내용은 설명 참고](#lambda-anonymous-method--closure)
 * 박싱
-  * C#에서는 세대 기반 GC 덕분에 큰 문제가 없지만 Unity에서는 문제가 될 수 있다.
+  * 세대 기반 GC에서도 빈번한 박싱은 비용입니다. 런타임·빈도·할당량에 따라 판단합니다.
   * [자세한 예제는 boxing & unboxing 설명 참고](#c-boxing--unboxing)
 * 배열 기반 Unity API
   * 반복문에서는 배열을 반환하는 프로퍼티에 자주 접근하지 않는 것이 좋다.
@@ -949,11 +909,11 @@ readonly는 필드의 재대입을 제한하며 참조 대상 전체의 불변�
   * 값이 바뀌면 다시 빌드해야 한다.
   * 허용되는 상수 표현식과 타입에 제한이 있다. enum과 string, 참조 타입의 null 상수 등도 구분한다.
 * `readonly`
-  * 런타임 상수이다.
-  * 필드 선언 또는 구조체 선언 시 붙일 수 있다. 지역 변수 선언에는 붙일 수 없다.
+  * 필드의 재대입을 제한합니다. 컴파일 시 상수 표현식과는 다릅니다.
+  * readonly 필드·구조체·멤버는 각각 규칙이 있습니다. 일반 지역 변수에 필드용 readonly를 붙이지는 않습니다.
   * 메모리의 저장 위치는 `readonly`가 없을 때와 동일하다. [관련 내용](#stack--heap-memory)을 참고하자. (항상 힙에 저장되는 것이 아니다!)
   * 선언할 때나 생성자에서만 값을 설정할 수 있다.
-  * 코드에 대한 참조를 유지하므로 값이 바뀌더라도 전체를 다시 빌드하지 않아도 된다.
+  * public const 값은 소비 어셈블리에 포함될 수 있어 소비자 재빌드가 필요할 수 있습니다. readonly 필드는 런타임에 읽지만 선언 코드를 바꾼 어셈블리의 재빌드는 필요합니다.
   * 어떤 타입과도 사용할 수 있다. (사용자 정의 클래스 포함)
   * 값 형식에 `readonly`를 붙이면 초기화 이후에는 그 값을 변경할 수 없다.
   * 참조 형식(예: 배열이나 `List<T>`)에 `readonly`를 붙이면 초기화 이후에 해당 참조가 다른 데이터를 가리킬 수 없음을 보장하지만, 데이터의 각 원소(또는 필드)까지도 변경되지 않도록 막는 것은 아님에 주의하자!
@@ -1042,7 +1002,7 @@ struct는 값 의미, class는 참조 의미를 갖습니다. 좌표처럼 작�
 
 * Boxing: 값 타입을 참조 타입으로 변환
   * Boxing은 동적 할당을 만드므로 비싸다.
-* Unboxing: 참조 타입을 값 타입으로 변환
+* Unboxing: 박싱된 값에서 호환되는 값 타입을 꺼내는 변환
   * Unboxing은 동적 할당을 발생시키지 않는다.
 * **대표적인 boxing의 예** (피해야 한다.)
   * `object.Equals(object other)` 사용
@@ -1106,44 +1066,14 @@ Unity 직렬화 규칙에 맞는 필드와 타입인지 확인합니다. 저장 
 </details>
 <!-- RECALL_CARD_END -->
 
-* 직렬화
-  * (동적 할당을 통해 저장된) 객체의 데이터를 일렬로 묶어서 보관하는 것
-  * 메모리 상에 흩어져 있는 변수들을 모아 연속된 메모리 공간에 올리는 것을 직렬화라고 한다.
-  * 직렬화를 하면 데이터를 연속되게 배치하기 때문에 용량을 계산하거나 통째로 복사하기 유리하다.  
-    또한 디스크에 저장하거나 네트워크를 통해 전송하기도 쉽다.
-* 역직렬화
-  * *역직렬화의 정의는 직접 생각해 보시기 바랍니다.*
-* Unity에서 어떤 클래스를 직렬화하려면 어떻게 해야 하는가?
-  * 추상 클래스나 일반 클래스가 아니어야 하고
-  * 클래스 앞에 `[Serializable]` 데코레이터를 붙이고
-  * 해당 클래스의 모든 필드가 직렬화 가능해야 하는데
-  * `int`, `bool`, `string` 등의 primitive 타입은 모두 직렬화 가능하고
-  * 열거형(`enum`)으로 정의된 타입도 직렬화 가능하고
-  * `Vector3`, `Color` 등의 일부 Unity 내장 타입도 직렬화 가능하고
-  * 구조체는 구조체 앞에 `[Serializable]` 데코레이터를 붙이면 직렬화 가능하다.
-  * 추가로 `UnityEngine.Object`에서 파생된 오브젝트를 가리키는 참조도 직렬화 가능하다.
-  * 다만 `static`, `const`, `readonly`는 직렬화되지 않으며
-  * `private` 필드도 `[SerializeField]`가 붙어있지 않다면 직렬화되지 않는다.
-* JSON (JavaScript Object Notation)
-  * 데이터를 직렬화한 대표적인 형식이다.
-  * 장점
-    * 가독성이 높다.
-    * 다른 언어와 쉽게 호환된다.
-    * 동적 타입을 사용하는 언어(JavaScript 등)에서 유리하다.
-  * 단점
-    * 용량이 크다.  
-      이는 동적 할당을 많이 만들고 GC가 일하게 한다는 뜻이다.
-      * CSV(comma-separated values)와 비교해 볼 때, JSON에는 중복된 내용이 많이 들어간다.
-    * 직렬화 및 역직렬화 시간이 오래 걸린다.  
-      문자열 파싱 및 결합이 필요하기 때문이다.
-      * 단, JavaScript에서는 JSON이 고도로 최적화되어 있어 느리지 않다.
-    * Random access가 어렵다.  
-      특정한 key에 해당하는 값 하나를 가져오려면 전체를 파헤쳐야 한다.
-    * 정보의 의미를 알기 쉬워 조작하기도 쉽다.
-  * Unity에서는 [`Newtonsoft.JSON`](https://www.newtonsoft.com/json)과 [`UnityEngine.JsonUtility`](https://docs.unity3d.com/kr/2021.2/Manual/JSONSerialization.html)를 사용할 수 있다.
-    * *면접에서 이것까지 묻지는 않겠지만, 나중에 둘의 차이를 알아두면 좋습니다.*
-* `BinaryFormatter`는 [보안 취약점(code injection)이 발견되었으므로](https://discussions.unity.com/t/should-i-avoid-using-binaryformatter-altogether/245535/3) 사용하지 않아야 한다.
-* *효과적인 직렬화를 위한 각종 서드 파티 라이브러리들이 있으니 찾아보면 좋습니다.*
+* 직렬화는 상태를 저장·전송 가능한 표현으로 바꾸고 역직렬화는 이를 읽어 상태를 복원합니다. 런타임 객체를 물리적으로 인접 배치하는 것과 다릅니다.
+* Unity 6.0 기본 직렬화는 지원 타입의 public 필드 또는 SerializeField 필드 등을 다룹니다. 일반 프로퍼티와 static·const·readonly 필드가 모두 자동 저장되지는 않습니다.
+* 사용자 정의 일반 클래스·구조체도 Serializable 및 필드 규칙에 따라 지원합니다. 모든 필드가 직렬화 가능해야만 클래스 전체가 허용된다는 뜻은 아닙니다.
+* UnityEngine.Object 참조, 일반 클래스 인라인 직렬화, SerializeReference는 관계 보존·다형성 규칙이 다릅니다. 추상 타입 지원도 이 문맥을 구분합니다.
+* JSON의 크기·파싱 비용은 데이터와 라이브러리에 따라 달라집니다. 원문 문자열 탐색과 파싱된 객체의 키 조회는 별개입니다. JsonUtility의 지원 규칙도 확인합니다.
+* 외부 입력에는 검증이 필요합니다. BinaryFormatter는 안전하지 않은 역직렬화 문제 때문에 사용하지 않습니다.
+
+근거: [Unity — 직렬화 규칙](https://docs.unity3d.com/6000.0/Documentation/Manual/script-serialization-rules.html), [Microsoft — BinaryFormatter](https://learn.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide).
 
 ### C# `string`
 
@@ -1220,18 +1150,20 @@ Unity 직렬화 규칙에 맞는 필드와 타입인지 확인합니다. 저장 
 * `string.AsSpan().Slice()`를 이용하면 `string.Substring()`보다 할당이 덜 발생한다.
   * https://learn.microsoft.com/ko-kr/dotnet/api/system.span-1.slice?view=net-8.0
 
-* `+`로 문자열을 연결하지 않고 `StringBuilder` 또는 문자열 보간을 이용한다.
-  * 예: `string s = "a" + 1 + "b" + 2;`의 코드에서는 `"a1b2"`를 만들기 위해 `string.Concat()`이 호출되면서 `1`과 `2`가 `object` 타입으로 캐스팅되는 [boxing](#c-boxing--unboxing)이 발생한다.
+* 반복적인 문자열 구성은 StringBuilder 등을 검토합니다. 짧은 연결·보간의 비용은 컴파일러 변환과 사용 위치에 따라 비교합니다.
+  * object 인자를 받는 Concat 경로의 값 타입은 박싱될 수 있습니다. 모든 + 표현식이 반드시 그 오버로드로 변환된다고 단정하지 않습니다.
   * `System.Text.StringBuilder`과 유사하지만 특정 사용 경로의 중간 할당을 줄이는 서드 파티 라이브러리도 있다. (예: Cysharp의 [`ZString`](https://github.com/Cysharp/ZString))
 
 #### 빈 문자열 확인
 
-* 속도가 가장 빠른 방법은 `string.Length == 0`을 확인하는 것이다.
+* 이미 null이 아니라고 보장된 문자열은 Length == 0으로 비었는지 확인할 수 있습니다. 속도 순위는 환경별 측정 없이 단정하지 않습니다.
   * 다만 이는 string이 `null`이 아님이 확실한 상황에서만 사용할 수 있다.
-  * 평소에 빈 문자열을 반환할 때 `null`이나 `""`보다는 `string.Empty`를 반환하는 것이 좋다.
+  * null과 빈 문자열의 의미를 API 계약에 맞춥니다. 빈 리터럴과 string.Empty 중 하나를 고르는 것만으로 성능 향상이 보장되지는 않습니다.
 * `string.IsNullOrEmpty()`를 쓰면 안전하다.
 
 ### `this`
+
+> 원본 예제 표기 주의: 아래 `Myclass`는 클래스 이름 `MyClass`와 대소문자가 달라 생성자 선언으로 사용할 수 없습니다. 이 코드는 개념을 읽는 자료이며 실행 확인본이 아닙니다.
 
 <a id="recall-35"></a>
 <!-- RECALL_CARD_START -->
@@ -1308,6 +1240,8 @@ this는 현재 호출 대상 인스턴스입니다. 정적 멤버는 인스턴�
 
 ### `delegate` & `event`
 
+문헌 대조: [Microsoft delegate 규칙](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/using-delegates).
+
 <a id="recall-36"></a>
 <!-- RECALL_CARD_START -->
 **먼저 이해하기**
@@ -1327,11 +1261,11 @@ delegate는 호출 대상을 표현하고 event는 알림의 구독 경계를 �
 * `delegate`는 함수 대리자이다.
   * 함수를 타입처럼 취급하고 함수에 대한 참조를 갖는다.
   * 인자 수, 인자 타입, 반환 타입을 통해 정의된다.
-    * 같은 함수 시그니처끼리는 모두 호환된다.
+    * 시그니처·변성 규칙을 확인합니다. 이름이 다른 delegate 타입이 시그니처만 같다고 자동 호환되지는 않습니다.
   * 호출할 함수 목록을 담을 수 있다.
   * 이것이 가리키는 함수들을 순서대로 모두 호출할 수 있다.
 * `event`는 선언한 클래스에서만 호출할 수 있는 `delegate`이다.
-  * 다른 클래스에서는 함수를 등록하는 것만 가능하다.
+  * 외부에서는 공개 범위 안에서 구독과 구독 해제를 할 수 있습니다.
 * `Action`: 인자 타입이 T이고 반환 타입이 void인 함수 대리자 템플릿
 * `Func<T, TResult>`: 인자 타입이 T이고 반환 타입이 TResult인 함수 대리자 템플릿
 * `Predicate`: 인자 타입이 T이고 반환 타입이 bool인 함수 대리자 템플릿
@@ -1352,7 +1286,7 @@ delegate는 호출 대상을 표현하고 event는 알림의 구독 경계를 �
   * <details>
     <summary><i><b>퀴즈: 어디에서 할당이 일어났는지 맞혀보세요.</b> (클릭하면 펼쳐집니다.)</i></summary>
 
-    * 위 코드의 마지막 줄이 컴파일러에 의해 다음과 같이 변환된다.  
+    * 이런 delegate 생성 형태로 설명할 수 있습니다. 실제 캐싱 여부와 할당은 컴파일러·호출 대상에 따라 확인해야 합니다.
     ```csharp
     TakeDelegate(new Action(MyFunction));
     ```
@@ -1360,13 +1294,15 @@ delegate는 호출 대상을 표현하고 event는 알림의 구독 경계를 �
 
 * 호출할 함수가 `null`인 문제
   * 대리자의 함수 목록이 비어있음을 확인하지 않고 호출하면 `NullReferenceException`이 발생한다.
-  * `if`문으로 `null` 체크를 하는 것은 좋지 않다.
+  * 공유 delegate 필드를 검사한 뒤 다시 읽어 호출하면 경쟁이 생길 수 있습니다. 지역 복사본 검사·호출이나 ?.Invoke를 구분합니다.
     * 멀티스레딩 환경에서 `null` 체크 통과 후 다른 스레드에서 등록 취소를 하면 대리자가 `null`인 경우가 생길 수 있다.
   * `?.`(null conditional operator)를 사용하는 것이 스레드로부터 안전하다.
     * `?.Invoke`는 평가한 delegate가 null이 아니면 호출하여 검사와 재조회 사이의 경쟁을 피한다. 호출 전체나 콜백 내부의 공유 상태를 원자적으로 만드는 것은 아니다.
-    * 문제가 있다면, Unity에서는 `?.`이 의도대로 동작하지 않을 수 있다. [자세한 내용은 C#과 Unity의 `null` 참고.](#c과-unity의-null)
+    * UnityEngine.Object의 [특수 null 비교](#c과-unity의-null)를 delegate 검사와 혼동하지 않습니다.
 
 ### Lambda, Anonymous Method & Closure
+
+> 원본 익명 메서드 표기 주의: `delegate(x)`의 매개변수에는 `delegate(int x)`처럼 타입이 필요합니다. 람다의 타입 추론 문법과 구분합니다.
 
 <a id="recall-37"></a>
 <!-- RECALL_CARD_START -->
@@ -1410,11 +1346,11 @@ delegate는 호출 대상을 표현하고 event는 알림의 구독 경계를 �
   Func<int> increment = () => ++i;            // 람다 식 바깥의 지역 변수 i 포착
   ```
 
-* C#의 메서드 참조(delegate)는 참조 형식이므로 힙에 할당된다.
-  * 즉, 익명 메서드이든 미리 정의된 메서드이든 메서드 참조를 인자로 전달하면 임시 할당이 발생한다.
-* 익명 메서드를 클로저로 전환하면 메모리 양이 상당히 증가한다.
+* delegate는 참조 타입입니다. 객체를 새로 만드는 비용과 기존 delegate 참조를 전달하는 비용을 구분합니다.
+  * 기존 delegate를 전달하거나 컴파일러가 캐싱하면 매 전달마다 새 할당이 생기지는 않습니다. 생성·캡처·전달을 구분합니다.
+* 변수를 캡처하면 환경을 보존하는 객체 등이 필요할 수 있습니다. 구체 할당은 캡처 내용과 컴파일러에 따라 다릅니다.
   * 클로저를 만들면 정확한 값을 전달하기 위해 외부 범위 변수를 유지할 수 있는 익명 클래스를 만들고 이것을 인스턴스화하여 힙에 할당한다.
-  * 가급적 클로저보다는 익명 메서드를 쓰는 것이 좋다.
+  * 익명 메서드도 캡처할 수 있습니다. 문법 이름보다 캡처 필요성과 수명·할당을 판단합니다.
 * 클로저는 boxing에 의한 할당인가?
   * https://stackoverflow.com/questions/37977757/does-closure-involves-boxing
 * `static` 키워드를 붙여 [정적 익명 함수](https://learn.microsoft.com/ko-kr/dotnet/csharp/language-reference/proposals/csharp-9.0/static-anonymous-functions)를 만들면 지역 변수를 실수로 포착하여 클로저가 되는 현상을 방지할 수 있다.
@@ -1438,57 +1374,21 @@ delegate는 호출 대상을 표현하고 event는 알림의 구독 경계를 �
 </details>
 <!-- RECALL_CARD_END -->
 
-> https://gamedevbeginner.com/async-in-unity/  
-> https://tistory.jeon.sh/59
+| 방식 | 의미 | 주의할 조건 |
+|---|---|---|
+| Coroutine | yield로 중단·재개 | 일반 Unity 코루틴은 메인 스레드에서 실행; 큰 계산을 자동 분산하지 않음 |
+| async/await + Task | 비동기 완료를 기다리는 흐름 | async 자체는 새 스레드를 만들지 않음 |
+| UniTask | PlayerLoop 등에 연결하는 비동기 타입 | ThreadPool 전환도 가능; 모든 호출이 무할당인 것은 아님 |
+| Awaitable | Unity의 대기 가능 타입 | 풀링으로 할당 절감; 같은 인스턴스 반복 await 금지 |
 
-* 코루틴 (Coroutine)
-  * `IEnumerator` 타입으로 정의한다.
-    * 값을 반환할 수 없다.
-  * 여러 프레임에 걸쳐 실행해야 하는 로직을 짤 때 유용하다.
-    * 실행권을 놓았다가 나중에 이어서 실행하는 조건(`yield`)을 다양하게 정할 수 있다.
-    * `Update()` 문보다 편리하게 가독성 높은 코드를 작성할 수 있다.
-  * Unity 메인 스레드에서 돌아간다.
-  * Non-blocking으로 병렬적으로 돌아가는 것처럼 보이지만 실제로는 순차적으로 돌아간다.
-    * 함수를 쪼개서 중간중간에 다른 함수가 실행될 수 있도록 한 것이다.
-    * 매우 오래 걸리는 작업을 코루틴에 넣으면 그만큼 게임이 끊기고 멈춘다.
-  * 코루틴을 실행하는 컴포넌트가 `Destroy()`되면 실행이 멈춘다.
-  * `yield return` 문에 쓰이는 `new`도 할당을 유발한다.
-    * `WaitForSeconds()` 등을 캐싱하여 사용하는 것이 좋다.
+* 코루틴의 yield return은 최종 계산 결과 반환과 다릅니다. GameObject 비활성화와 컴포넌트 enabled 변경의 중지 조건도 구분합니다.
+* async 함수는 첫 미완료 await까지 호출 스레드에서 동기적으로 진행할 수 있습니다. CPU 계산의 분배와 I/O 대기는 서로 다른 문제입니다.
+* 재개 위치는 await 대상·동기화 컨텍스트·명시적 스케줄링에 따릅니다. 대부분의 Unity API는 메인 스레드에서 사용합니다.
+* 객체 파괴와 작업 취소는 자동으로 같은 사건이 아니므로 취소·예외 관찰·완료 시 유효성을 설계합니다. async void는 이벤트 핸들러 등 필요한 문맥으로 제한합니다.
+* UniTask 단일 소비 규칙과 Preserve 등의 명시적 재사용 수단을 구분합니다. Awaitable이 클래스라는 이유만으로 매 호출 새 할당을 가정하지 않습니다.
+* Web의 비동기 지원과 스레드 지원은 별개입니다. async 전체가 불가능하다고 단정하지 않습니다.
 
-* 비동기 함수 (`async` / `await`)
-  * `async void` 또는 `async Task` 또는 `async Task<TResult>` 타입으로 정의한다.
-    * `async Task<TResult>`를 사용하면 `TResult` 타입의 반환값을 가진다.
-    * `async void`와 `async Task`의 차이: https://stackoverflow.com/questions/12144077/async-await-when-to-return-a-task-vs-void
-  * Unity와 무관한 긴 작업을 처리할 때 유용하다.
-    * 예: 서버 API 호출, 큰 데이터 로드 등
-  * 메인 스레드가 아닌 스레드에서 실행된다. 멀티스레딩이다.
-    * 코루틴과 달리 실제로 병렬적이다. 따라서 Unity 로직의 실행을 가로막지 않는다.
-  * Unity의 `MonoBehaviour`에서 파생된 native API는 멀티스레딩을 지원하지 않으며, 메인 스레드에서만 호출할 수 있다.
-    * 예를 들어 UI를 변경해야 하는 경우 로직을 메인 스레드로 가져와 실행해야 한다.
-  * 함수를 실행한 오브젝트가 파괴되어도 취소 토큰을 사용하지 않는 한 끝까지 실행된다.
-  * Thread-safe하게 코드를 작성해야 한다.
-    * 서로 다른 스레드에서 공유 변수를 사용할 때에는 [`lock`을 잘 걸어야 한다.](#deadlock-교착-상태)
-  * WebGL에서 지원되지 않는 기능이다.
-
-* `UniTask`
-  * https://github.com/Cysharp/UniTask
-  * Cysharp에서 제공하는 서드 파티 라이브러리
-  * Unity에서 비동기 프로그래밍을 구현할 때 유용하다.
-  * Unity 메인 스레드에서 돌아간다.
-  * `Task`를 사용할 때보다 할당을 줄일 수 있다.
-    * 내부가 `struct`로 구현되어 있다.
-  * 한 `UniTask` 객체를 두 번 이상 `await`(재사용)할 수 없다.
-  * WebGL에서도 호환된다.
-
-* `Awaitable`
-  * https://docs.unity3d.com/kr/2023.2/Manual/AwaitSupport.html
-  * Unity에서 `async`, `await`을 사용할 수 있게 해준다.
-  * 백그라운드 스레드에서 실행하다가도 원할 때 메인 스레드로 돌아와 실행을 이어할 수 있다. 반대로도 가능하다.
-    * 실행하는 스레드를 너무 자주 전환하는 것은 안 좋다.
-  * `UniTask`와 달리 클래스로 구현되어 있어 할당이 발생한다.
-  * 풀 시스템으로 관리되므로, 한 `Awaitable` 객체를 두 번 이상 `await`(재사용)할 수 없다.
-  * Unity 2023.1 이후의 최신 버전에서만 사용할 수 있다.
-    * [Unity 6](#unity-6)로 오면서 기능이 더 추가되었지만 여전히 실전에서 사용하기에는 부족하다는 평가를 받는다.
+근거: [Unity — Awaitable](https://docs.unity3d.com/6000.0/Documentation/Manual/async-awaitable-introduction.html), [완료와 재개](https://docs.unity3d.com/6000.0/Documentation/Manual/async-awaitable-continuations.html), [UniTask](https://github.com/Cysharp/UniTask).
 
 ### C#과 Unity의 `null`
 
@@ -1508,65 +1408,15 @@ Unity 객체의 null 비교는 엔진 객체 상태도 반영합니다. 일반 C
 </details>
 <!-- RECALL_CARD_END -->
 
-> https://stackoverflow.com/questions/62678228/why-does-c-sharp-null-conditional-operator-not-work-with-unity-serializable-vari  
-> https://github.com/JetBrains/resharper-unity/wiki/Possible-unintended-bypass-of-lifetime-check-of-underlying-Unity-engine-object  
-> ⭐ **중요!**
+* UnityEngine.Object의 관리 래퍼와 네이티브 엔진 객체는 수명이 다를 수 있습니다. 네이티브 객체가 파괴된 뒤에도 관리 래퍼 참조가 남을 수 있습니다.
+* Unity는 ==/!= 연산자를 오버로드하여 엔진 대상의 존재를 반영합니다. System.Object의 기반 부분만 따로 null이 된다는 뜻은 아닙니다.
+* Destroy는 보통 현재 Update 루프 뒤 렌더링 전에 실제 파괴를 수행합니다. 호출 즉시 모든 메모리가 해제된다고 가정하지 않으며 지연 인자도 구분합니다.
+* is null·ReferenceEquals·?.·??·??=는 이 오버로드를 호출하지 않습니다. 관리 참조의 존재와 엔진 객체 사용 가능성은 다른 검사입니다.
+* delegate의 ?.Invoke는 정상적인 C# delegate 검사입니다. UnityEngine.Object의 특수 비교 문제를 모든 delegate 호출에 적용하지 않습니다.
+* 예외 종류와 비용은 에디터·플레이어·API에 따라 달라집니다. 특정 예외나 속도 순위를 항상 보장하지 않습니다.
+* 네이티브 엔진과 스크립팅 백엔드인 Mono·IL2CPP도 구분합니다.
 
-* *"Unity의 fake null에 대해 설명해 보세요."*
-
-* `null`은 [널]이라고 읽는다.
-* Unity 엔진의 백엔드는 C++(IL2CPP 또는 Mono)로 짜여 있고, Unity C#의 문법들은 이 C++ 엔진과 소통하기 위한 개발자 API이다.
-* `UnityEngine.Object`를 `Destroy()`하여 C++ 네이티브 엔진의 객체를 `null`로 만들고 `UnityEngine.Object`을 `null`인 것처럼 표시해도(fake null) .NET의 `System.Object`는 `null`이 아니다.
-  * 해당 `UnityEngine.Object`의 메타데이터가 잔존하고, 이를 가리키는 참조를 다른 게임오브젝트나 컴포넌트들이 여전히 가지고 있기 때문이다.
-  * .NET GC가 돌기 전까지는 객체가 메모리에서 해제되지 않으며, GC가 실행되어도 참조받고 있지 않은 객체만을 찾아 지우기 때문에 이 `UnityEngine.Object`의 base인 .NET의 `System.Object`가 즉시 `null`이 되지는 않는다.
-  * 그러나 C#에서 `Destroy()`를 호출하면 C++ 네이티브 엔진에서는 객체가 `null`이 된다.
-    * 참고로 이 과정은 무겁다. C++에서 객체를 없애는 함수를 호출하여, 룩업을 수행하고 C# 스크립트 레퍼런스를 C++ 네이티브 레퍼런스로 전환하는 과정을 거친다.
-  * 즉, `Destroy()` 호출 시 C++ 네이티브 엔진에서는 객체가 `null`이 되어 있지만 C#에서는 `System.Object`가 `null`이 아닌 상태로 남아 있고, 이것이 파괴된 C++의 객체를 가리키고 있게 된다.
-  * 이때 개발자가 `Destroy()`한 객체를 계속 사용하면 문제가 생긴다.
-  * 따라서 실제로는 `System.Object`가 `null`이 아니지만 `UnityEngine.Object`가 `null`인 것처럼 표시하여 이 객체를 Unity에서 사용하지 못하게 하는 것이다.
-  * 이를 위한 장치로써 Unity에서 `==`과 `!=`를 오버라이드하여 C++ 객체의 존재 유무를 확인하고 `System.Object`와 무관하게 `null` 여부를 반환한다.
-  * 이를 **fake null**이라고 한다.
-  * Unity에서 `Destroy()`한 오브젝트에 접근하는 경우 `NullReferenceException`이 아니라 `MissingReferenceException`이 뜨는데, 이는 Unity의 fake null 로직이 있기 때문이다.
-* 그러나 **`is null`(pattern matching), `?.`(null conditional operator), `??`(null coalescing operator)의 경우 `UnityEngine.Object`가 아니라 `System.Object`의 `null` 여부를 검사하기 때문에 `UnityEngine.Object`가 `Destroy()`되었는지 확인할 때에는 사용할 수 없다.**
-  * 이들 연산자는 C# 문법 상 오버라이드할 수 없다.
-* Unity의 `null` 비교는 느리다.
-  * `UnityEngine.Object`가 살아있는지 검사하는 로직이 무겁기 때문이다.
-  * 이것이 살아있다는 것이 확실하면(`Destroy()`된 객체가 아님을 보장할 수 있다면) 다음 세 가지 방법으로 `null` 비교 속도를 빠르게 할 수 있다.
-    1. `System.Object`로 캐스팅하는 방법
-    2. `System.Object.ReferenceEquals()`로 비교하는 방법
-    3. 패턴 매칭 `is null`을 이용하는 방법
-* **`== null` vs. `is null`**
-  * `== null`은 타입 별로 오버라이드된 `==` 연산자를 호출하여 계산한다.
-    * 따라서 `UnityEngine.Object`을 비교할 때에는 느리다.
-    * `== null`은 예외적인 상황을 내부에서 체크하므로 **가장 안전하다.**
-  * `is null`은 바로 `ceq` 인스트럭션 연산을 적용하기 때문에 빠르다.
-    * 다만 `UnityEngine.Object`처럼 `==`이 오버라이드된 경우 `is null`을 사용하면 의도하지 않은 동작이 나타날 수 있다.
-* 속도 비교
-  * `is null`과 `ReferenceEquals(null)`은 속도가 비슷하게 가장 빠르다.
-  * (가장 빠름) `is null` < `Equals(a, null)` < `a.Equals(null)` < `a == null` (가장 느림)
-
-> https://learn.microsoft.com/ko-kr/dotnet/csharp/language-reference/operators/member-access-operators#null-conditional-operators--and-
-
-* `?[]`(요소 액세스 null 조건부 연산자)
-  * 예: `a?[x]`
-    * `a`가 `null`이면 `null`을 반환한다.
-    * `a`가 `null`이 아니면 `a[x]`의 값을 반환한다.
-    * `x`가 `a`의 인덱스 범위 밖에 있는 경우 `IndexOutOfRangeException`을 띄운다.
-  * `==`이 오버라이드된 경우에 `?[]`을 사용하면 의도하지 않은 동작이 나타날 수 있다.
-
-> https://learn.microsoft.com/ko-kr/dotnet/csharp/language-reference/operators/null-coalescing-operator
-
-* `??`(null coalescing operator)
-  * 예: `return a ?? 3;`
-    * `a`가 `null`이 아니면 `a`를 반환하고, `null`이면 3을 반환
-  * 왼쪽 연산항이 `null`이 아니면 오른쪽 연산항을 평가하지 않는다.
-  * `==`이 오버라이드된 경우에 `??`를 사용하면 의도하지 않은 동작이 나타날 수 있다.
-  * `??`는 오버라이드할 수 없다.
-* `??=`(null coalescing assignment operator)
-  * 예: `a ??= 3;`
-    * `a`가 `null`일 때에만 `a`에 3을 대입
-  * `==`이 오버라이드된 경우에 `??=`을 사용하면 의도하지 않은 동작이 나타날 수 있다.
-  * `??=`는 오버라이드할 수 없다.
+근거: [Destroy](https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Object.Destroy.html), [Object 비교](https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Object-operator_eq.html).
 
 ### List & Dictionary
 
@@ -1586,59 +1436,22 @@ List는 순서 있는 원소를 다루고 Dictionary는 키로 값을 찾습니�
 </details>
 <!-- RECALL_CARD_END -->
 
-* `List<>`: 배열(ArrayList)
-  * 용량(capacity)을 초과하여 삽입하는 경우 용량을 늘린 새 배열을 할당하고 기존 배열의 값을 복사한다. 따라서 시간 복잡도가 $O(n)$이다. 이를 피하려면 미리 사용할 만큼의 용량을 할당할 필요가 있다.
-  * `TrimExcess()`를 쓰거나 `Capacity`를 직접 변경하여 낭비되는 공간을 줄이는 경우에도 새 배열을 할당한다. 따라서 시간 복잡도가 $O(n)$이다.
-  * `Remove()`는 배열의 용량을 변경하지 않는다.
-* `Dictionary< , >`: 해시 테이블
-* `HashSet<>`: 해시 테이블
-* `SortedSet<>`: 레드-블랙 트리
-* `SortedList< , >`: 배열
-* `SortedDictionary< , >`: 레드-블랙 트리
+| 컬렉션 | 구조·용도 | 대표 복잡도 |
+|---|---|---|
+| `List<T>` | 확장 가능한 배열 | 인덱스 O(1), 끝 추가 상각 O(1), 재할당·중간 삽입/삭제 O(n) |
+| `Dictionary<TKey,TValue>` | 해시 기반 키 조회 | 일반적 평균 조회 O(1), 충돌·해시 비용 영향 |
+| `HashSet<T>` | 중복 없는 해시 집합 | 포함 검사·중복 제거 |
+| `SortedDictionary<TKey,TValue>` | 정렬 트리 | 조회·삽입·삭제 O(log n) |
+| `SortedList<TKey,TValue>` | 정렬된 배열 | 조회 O(log n), 일반적 삽입·삭제 O(n) |
+| `Queue<T>` | 순환 배열 기반 FIFO | 뒤에 넣고 앞에서 꺼냄 |
 
-> https://stackoverflow.com/questions/3070644/ordered-list-of-keyvaluepairs
+* `List<T>`와 비제네릭 `ArrayList`는 별도 클래스이며 `SortedDictionary<TKey,TValue>`는 제네릭입니다.
+* Remove는 보통 용량을 줄이지 않습니다. TrimExcess도 사용량 조건에 따라 동작하므로 항상 재할당한다고 단정하지 않습니다.
+* 정렬 사전이 해시 맵보다 검색이 빠르다는 일반 법칙은 없습니다. Keys/Values도 매번 전체 내용을 새 List로 복사한다고 가정하지 않습니다.
+* 해시 충돌에는 연결 방식과 개방 주소 방식 등이 있습니다. 모든 해시 테이블이 linear probing을 쓰지는 않습니다.
+* 구체 내부 구현은 대상 런타임·버전에서 확인합니다.
 
-* `SortedList<TKey, TValue>`와 `SortedDictionary<TKey, TValue>`의 차이
-  * 둘 다 검색은 $O(\log{n})$
-  * 삽입, 삭제에서 차이가 있다.
-    * `SortedList< , >`는 삽입, 삭제가 $O(n)$
-    * `SortedDictionary< , >`는 삽입, 삭제가 $O(\log{n})$
-  * 메모리는 `SortedList< , >`가 더 적게 차지한다.
-  * 정렬된 데이터로부터 자료구조가 생성된 경우에는 `SortedList< , >`가 더 빠르다.
-  * `Keys`나 `Values` list를 반환해야 할 때 `SortedList`는 이 list를 그냥 반환하면 되고, `SortedDictionary`는 list를 생성해서 반환해야 한다.
-  * `SortedDictionary`는 generic이 아니다.
-* `List<KeyValuePair< , >>`의 용도
-  * 이것은 `SortedDictionary< , >`와 다르게, **삽입 순서를 보존한다.**
-  * generic이기도 하다.
-* `Dictionary`와 `SortedDictionary` 중 누가 더 나은가?
-  * 삽입과 삭제는 `Dictionary`가 더 빠르다.
-  * 검색에 있어서 `SortedDictionary`가 아주 조금 더 빠르다.
-  * 보통은 `Dictionary`를 쓰는 것이 낫다.
-
-* Hash Table
-  * 운이 좋으면 $O(1)$만에 삽입, 삭제, 검색이 가능하다.
-  * 운이 나쁘면(해시 함수가 계속 충돌하면) 최악의 경우 $O(n)$이 걸린다.
-  * 충돌 시 linear probing(+1, +2, +3, ...), quadratic probing(+1, +4, +9, ...), double hashing(두 개의 해시 함수 사용)을 통해 내부를 채워 나간다.
-
-* Red-black Tree
-  * self-balancing binary search tree
-  * 삽입, 삭제, 검색 모두 $O(\log{n})$이다.
-
-* **_퀴즈: C#의 `Queue`는 내부적으로 어떤 자료구조로 구현되어 있을까요?_**  
-  가. ArrayList  
-  나. Doubly linked list  
-  다. Hash table  
-  라. Red-black tree
-
-  <details>
-  <summary><i><b>정답을 확인하려면 클릭하세요.</b> (클릭하면 펼쳐집니다.)</i></summary>
-
-  * 정답: 가.
-  * Circular buffer로 구현되어 있고, 그 내부는 array입니다.
-  * https://learn.microsoft.com/ko-kr/dotnet/api/system.collections.generic.queue-1?view=net-8.0  
-  * https://github.com/dotnet/runtime/blob/5535e31a712343a63f5d7d796cd874e563e5ac14/src/libraries/System.Private.CoreLib/src/System/Collections/Generic/Queue.cs
-
-  </details>
+근거: [SortedDictionary](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.sorteddictionary-2), [List](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1), [Queue](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.queue-1).
 
 ### C# LINQ
 
@@ -1784,41 +1597,17 @@ var query2 = words.
 </details>
 <!-- RECALL_CARD_END -->
 
-> https://docs.unity3d.com/Packages/com.unity.addressables@2.3/manual/index.html  
-> https://unity.com/kr/blog/technology/tales-from-the-optimization-trenches-saving-memory-with-addressables  
-> https://medium.com/pinkfong/unity-addressable-asset-%EB%A5%BC-%EC%99%9C-3017f3fa2edc
+* Resources·AssetBundle·Addressables는 대표적인 에셋 로딩 경로입니다. 가능한 모든 데이터 로딩 방식의 전부는 아닙니다.
+* Addressables는 키·카탈로그·의존성·핸들 등으로 로딩을 관리합니다. 로컬 배포와 원격 배포는 오프라인 이용·초기 다운로드·갱신 요구에 따라 선택합니다.
+* 원격 배포에는 실패·재시도·카탈로그/번들 호환·캐시·CDN 비용이 따릅니다. 모든 코드 버그를 에셋 업데이트만으로 고치지는 못합니다.
+* 로드 핸들과 사용 수명을 연결합니다. 해제해도 같은 번들의 다른 에셋이 사용 중이면 메모리가 즉시 전부 반환되지 않을 수 있습니다.
+* 스토어 용량 제한은 플랫폼·배포 방식·시점별 정책입니다. 고정된 500MB/4GB 수치를 암기하지 않고 실제 배포 때 공식 정책을 확인합니다.
 
-* *"과거에 진행한 프로젝트에서 어드레서블을 사용해 본 경험을 말씀해 주세요."*
-* *"원격으로 리소스 콘텐츠를 배포할 때의 장점은 무엇인가요?"*
-
-* Unity에서 에셋을 런타임에 동적으로 로드하는 방법은 세 가지가 있다.
-  * `Resources` 폴더
-  * 에셋 번들 (Asset bundle)
-  * 어드레서블 (Addressable)
-* 그 중 어드레서블은 최근에 나온 에셋 관리 방법이다.
-  * [어드레서블을 통한 메모리 최적화](https://unity.com/kr/blog/technology/tales-from-the-optimization-trenches-saving-memory-with-addressables)를
-    읽으면 감을 잡는 데에 도움이 많이 된다.
-* 에셋을 원격으로 배포하고 동적으로 로드해야 하는 이유?
-  * 빌드 과정 중 에셋 패킹 과정이 있다.
-  * 빌트인 에셋: 모든 에셋을 빌드 파일에 담아서 배포
-    * 장점: 게임 설치 파일에 이미 들어있기 때문에 설치 후 인터넷 없이도, 추가 다운로드 없이도 플레이할 수 있다.
-    * 단점: 빌드 파일(`.apk`, `.aab`, `.ipa` 등)이 GB 단위의 용량을 쉽게 넘길 수 있다.
-  * 모바일 스토어에서는 용량이 큰 빌드 파일의 업로드를 제한한다.
-    * [Google Play Store](https://support.google.com/googleplay/android-developer/answer/9859372?hl=ko): `.apk` 100MB 이하 / `.aab` 4GB 이하 (200MB 초과 시 경고)
-    * [Apple App Store](https://developer.apple.com/kr/help/app-store-connect/reference/maximum-build-file-sizes/): 500MB 이하
-  * 원격 콘텐츠 배포: 에셋을 필요할 때 다운로드받아 동적 로드
-    * 장점
-      * 게임 설치 시 사용자의 부담이 크게 완화된다. 특히 200MB 초과 경고가 뜨면 설치하지 않는 사용자 비율이 유의미하게 늘어난다.
-      * 사용자 기기 용량 부족 시 우리 앱이 삭제될 확률을 줄인다. 삭제할 앱을 찾을 때 용량이 큰 것부터 지우기 때문이다.
-      * 앱 업데이트 없이 빠르게 에셋을 패치할 수 있다. 버그를 수정한 빌드를 스토어에 올리려면 심사가 오래 걸리므로 배포가 늦고 그동안 고객 문의 폭탄을 받을 것이다.
-      * Lazy 다운로드가 가능하다. 튜토리얼 할 때부터 최종 콘텐츠를 받아 놓을 필요는 없다.
-    * 단점
-      * 프로그래머로서 관리가 까다롭다.
-      * 게임 설치 후에도 추가 다운로드 시간과 셀룰러 데이터가 요구된다.
-      * 새 버전 배포 시 CDN(콘텐츠 전송 네트워크)에도 새 에셋을 올리는 과정이 필요하다.
-      * CDN 비용이 든다.
+근거: [Addressables 2.3 — 메모리 관리](https://docs.unity3d.com/Packages/com.unity.addressables@2.3/manual/MemoryManagement.html).
 
 ### Unity 프로파일러
+
+문헌 대조: [Unity 프로파일러 마커](https://docs.unity3d.com/6000.0/Documentation/Manual/profiler-markers.html).
 
 <a id="recall-43"></a>
 <!-- RECALL_CARD_START -->
@@ -1844,8 +1633,8 @@ var query2 = words.
 * *"모바일 기기의 발열량을 낮춰야 하는 이유는 무엇인가요?"*
 
 * CPU, GPU, Garbage Collection Profiling 등이 가능하다.
-* 대부분은 Rendering 관련 이슈일 것이다. 이 경우 CPU가 병목인지 GPU가 병목인지 찾아야 한다.
-  * `Gfx.WaitForPresent` 함수에서 병목이 생긴다면 이것은 CPU가 GPU 처리를 기다리고 있다는 뜻이다. 이때는 GPU가 병목이다.
+* 렌더링·스크립트·물리·GC의 비용을 먼저 구분하고 CPU와 GPU 중 제한 구간을 찾습니다.
+  * Gfx.WaitForPresent 계열 대기는 GPU뿐 아니라 VSync·프레임 제한·다른 스레드 진행과도 관련됩니다. 마커 하나로 확정하지 않고 Timeline과 GPU 시간을 함께 봅니다.
   * [여기](https://docs.unity3d.com/kr/2021.3/Manual/OptimizingGraphicsPerformance.html)를 보면서 문제를 찾고 해결을 시도한다.
 * CPU가 병목인 경우 다음을 시도한다.
   * GPU에 보낼 오브젝트 수 줄이기
@@ -1888,9 +1677,9 @@ var query2 = words.
 * *"과거에 진행했던 프로젝트에서 최적화를 해본 경험을 말씀해 주세요."*
 * *"개발 중 언제 최적화를 진행하시나요?"*
 
-* *제 생각에, 최적화를 개발 초기 단계부터 생각할 필요는 없습니다.*
+* 원본의 조언은 측정 없는 미세 최적화를 경계하는 개인 의견으로 읽습니다. 목표 기기·프레임 예산·데이터 규모·메모리 제한은 설계 초기부터 고려할 수 있습니다.
   * *최적화가 필요하다는 생각이 들면 정말 최적화가 꼭 필요한지 두 번 더 고민하세요.*
-  * *일단 돌아가는 코드를 짜서 기능을 만든 후에, 프로그램을 돌려보면서 병목이 생기면 그때 최적화를 고려해도 늦지 않습니다.*
+  * *대표 부하를 조기에 확인하고, 미세 최적화는 측정한 병목에 적용합니다. 큰 구조적 비용은 나중에 바꾸기 어려울 수도 있습니다.*
   * *무엇이 병목일지 모르는 상황에서 미리 대처해 봤자, 다른 곳에서 병목이 생기면 이전의 대처는 큰 의미가 없게 됩니다.*
   * *어떤 코드가 주어질 때 이것이 어떤 성능 문제를 일으킬 수 있는지 포착할 수 있고, 이를 어떻게 고쳐야 하는지 알고 있다면 충분합니다.*
 
@@ -1990,7 +1779,7 @@ var query2 = words.
 > ⭐ **중요!**
 
 * 드로우 콜: 그래픽스 API가 화면에 그릴 내용과 그릴 방법을 알려주는 것
-  * 드로우 콜은 draw primitive call(메시 버텍스 계산)과 렌더 상태 설정을 합친 것이다.
+  * 그리기 명령과 렌더 상태 설정은 구분합니다. SetPass는 셰이더 패스 전환 지표이며 드로우 콜 수와 다릅니다.
 * 드로우 콜을 호출하기 전에 준비 단계가 있는데, 이때 GPU의 렌더 상태 변경(SetPass call: 다른 매터리얼로 전환 등)에 리소스가 많이 든다.
 * 렌더 상태 변경 수 줄이는 법
   * 드로우 콜 전체 수를 줄인다.
@@ -2024,29 +1813,13 @@ var query2 = words.
 </details>
 <!-- RECALL_CARD_END -->
 
-* 여러 개체를 한 번의 그래픽스 API 호출(드로우 콜)로 결합하여 한번에 렌더링하는 기법
-* 장점
-  * 렌더링 함수 호출 횟수 감소: 동일한 매터리얼과 설정을 갖는 개체들을 그룹화하여 한 번의 API 호출로 그려내므로 오버헤드를 줄인다.
-  * 그래픽 카드 친화적: 많은 수의 개별적인 요청보다 한 번의 큰 요청을 병렬적으로 처리하는 데 특화된 그래픽 카드의 성능을 최대한으로 활용한다.
-  * FPS 향상
-  * 메모리 사용량 감소: 호출 횟수가 줄어들기 때문에 남는 메모리를 다른 곳에 더 활용할 수 있게 된다.
-* 배치 렌더링 활용 방법
-  * 매터리얼 공유
-  * 레이어 정렬: Sorting Layers와 Order in Layer를 통해 개체의 그룹화를 관리할 수 있다.
-    * 서로 다른 레이어는 서로 다른 배치에서 그려진다.
-    * https://docs.unity3d.com/kr/2021.3/Manual/class-SortingGroup.html
-  * GPU 인스턴스화: 동일한 메시와 매터리얼을 사용하는 여러 개체를 하나의 그래픽 API 호출로 처리할 수 있다.
+* 제출을 묶거나 공통 상태를 재사용하는 접근입니다. 모든 배칭이 드로우 콜 하나로 합쳐지는 것은 아닙니다.
+* 정적·동적 배칭과 인스턴싱의 조건은 다릅니다. SRP Batcher는 같은 셰이더 변형을 쓰는 호출의 CPU 준비 비용을 줄입니다.
+* 메시 결합은 컬링 단위를 크게 만들 수 있고 정적 배칭은 추가 메모리를 쓸 수 있습니다. FPS 향상과 메모리 감소를 보장하지 않습니다.
+* UI 배칭은 재질·텍스처·마스크·정렬·겹침 등에 영향을 받습니다.
+* **원본 퀴즈 정정:** Source Image가 None이라는 이유만으로 Image마다 드로우 콜이 추가된다는 일반 주장은 근거가 부족합니다. uGUI는 스프라이트가 없을 때 기본 텍스처 경로를 사용할 수 있습니다. 실제 배치 분리 이유는 해당 버전의 Frame Debugger에서 확인할 과제로 남깁니다.
 
-* <details>
-  <summary><i><b>퀴즈: UGUI의 Image 컴포넌트의 Source Image가 None으로 설정되어 있으면 성능이 굉장히 낮아집니다. 이유는 무엇일까요?</b> (클릭하면 펼쳐집니다.)</i></summary>
-  
-  * 이것이 None이면 배칭이 일어나지 않기 때문에 객체 하나 당 한 번씩의 드로우 콜이 추가된다.  
-    만약 이러한 Image 객체가 100개 있다면 100번의 드로우 콜이 추가되는 것이다.  
-    이는 Frame Debugger를 실행하고 실험해 보면 직접 확인할 수 있다.
-
-  * 이를 방지하려면 단색 네모를 표현할 때 Source Image로 아무 스프라이트라도 지정해 주어야 한다.
-  * Material이 None으로 설정되어 있는 것은 기본 매터리얼을 사용한다는 뜻이므로 괜찮다.
-  </details>
+근거: [SRP Batcher](https://docs.unity3d.com/6000.0/Documentation/Manual/SRPBatcher.html), [uGUI Image 소스](https://github.com/Unity-Technologies/uGUI/blob/main/com.unity.ugui/Runtime/UGUI/UI/Core/Image.cs).
 
 ### 스프라이트 아틀라스
 
@@ -2069,7 +1842,7 @@ var query2 = words.
 > https://docs.unity3d.com/kr/2021.3/Manual/class-SpriteAtlas.html  
 > ⭐ **중요!**
 
-* 여러 개의 텍스처를 단일 텍스처로 결합하여 **한 번의 드로우 콜로 처리**하는 기법
+* 스프라이트를 패킹하여 텍스처 전환과 배칭에 유리하게 하는 기법입니다. 재질·마스크·정렬 등 조건이 다르면 여러 드로우 콜이 필요합니다.
 * 큰 성능 소모 없이 패킹된 텍스처에 동시에 접근할 수 있다.
 * 사용법
   * Asset > Create > Sprite Atlas 메뉴를 통해 `*.spriteatlas` 파일을 생성한다.
@@ -2077,7 +1850,7 @@ var query2 = words.
 * 아틀라스 성능 최적화
   * 스프라이트가 씬에서 활성화될 때 Unity가 해당 스프라이트가 속한 스프라이트 아틀라스 전체를 로드한다. 이 크기가 너무 크고 씬에서 이 아틀라스의 텍스처를 거의 사용하지 않는 경우 오버헤드가 크다.
   * **같은 씬에서 활성화하는 대부분의 스프라이트가 동일한 아틀라스에 속해 있도록 하는 것이 좋다.**
-  * 아틀라스 팩 미리보기 기능을 통해 빈 공간이 과도하게 있는지 확인하고 줄이면 좋다. Max Texture Size를 줄이면 스프라이트 텍스처 크기를 줄이지는 않고 이 크기에 맞게 아틀라스의 빈 공간을 최대한 잘라낸다.
+  * 아틀라스 팩 미리보기 기능을 통해 빈 공간이 과도하게 있는지 확인하고 줄이면 좋다. Max Texture Size는 패킹·페이지 분할·플랫폼 임포트 결과에 영향을 줄 수 있습니다. 빈 공간만 제거한다고 보장하지 않고 이미지와 품질을 확인합니다.
   * 한 아틀라스에 묶인 텍스처의 매터리얼을 통일한다.
   * 아틀라스의 크기를 2의 제곱수 크기(POT: power of two)로 맞춘다.
 
@@ -2105,14 +1878,14 @@ var query2 = words.
 
 * 3D 오브젝트의 메시 표면에 걸쳐 적용되는 비트맵 이미지
 * 텍스처는 매터리얼을 사용해 오브젝트에 적용할 수 있고, 매터리얼은 셰이더를 사용해 메시 표면의 텍스처를 렌더링한다.
-* 텍스처는 2의 제곱수 크기(POT)로 만들어야 한다.
+* POT/NPOT 요구는 기기·포맷·임포트·샘플링 조건에 따릅니다. 모든 텍스처가 반드시 POT여야 하는 것은 아닙니다.
   * 예: 32x32, 64x64, 128x128, 256x256
   * 정사각형이 아니어도 된다.
-* 2의 제곱수 크기가 아니면(NPOT) 다음의 문제가 생긴다.
+* NPOT 텍스처는 플랫폼과 포맷에 따라 변환이 필요할 수 있어 다음 가능성을 확인합니다.
   * 모바일 기기 또는 텍스처 압축 방식에 따라 POT로 변환한 후, NPOT 원본과 변환된 POT를 둘 다 로드한다.
   * 변환 시간과 로드 시간이 오래 걸리고 메모리도 많이 잡아먹는다.
 * **텍스처 압축 포맷**
-  * 대표적인 압축 포맷으로 DTX5, ASTC, ETC2 등이 있다.
+  * 대표적인 압축 포맷으로 DXT5, ASTC, ETC2 등이 있다.
   * 플랫폼 및 기기에 따라 사용해야 하는 텍스처 압축 포맷이 다르다.
     * 기기에서 지원하는 포맷을 사용하면 별도의 변환 없이 바로 GPU에서 처리할 수 있다.
     * 기기에서 지원하지 않는 포맷을 사용하면, 비압축 포맷으로 변환한 다음, 압축된 원본과 비압축 포맷을 둘 다 로드한 상태에서 비압축 포맷을 처리한다.  
@@ -2156,6 +1929,8 @@ var query2 = words.
 
 ### Mip Map & LOD
 
+문헌 대조: [Unity 밉 레벨](https://docs.unity3d.com/6000.0/Documentation/Manual/texture-mipmaps-introduction.html).
+
 <a id="recall-51"></a>
 <!-- RECALL_CARD_START -->
 **먼저 이해하기**
@@ -2176,17 +1951,17 @@ Mip Map은 축소된 텍스처 단계, LOD는 거리에 따른 모델 등의 상
 
 * 밉맵 (Mip map)
   * 원본 텍스처에서 2의 거듭제곱만큼 가로와 세로 크기를 축소한 낮은 해상도의 텍스처 버전
-  * 3D 씬에서 오브젝트를 렌더링할 때, 더 높은 mip 레벨(고해상도)은 카메라에 가까운 오브젝트에 사용되고, 더 낮은 mip 레벨(저해상도)은 더 먼 오브젝트에 사용된다.
+  * 3D 씬에서 오브젝트를 렌더링할 때, mip 0이 원본이고 번호가 커질수록 저해상도입니다. 선택은 화면상의 텍셀 크기와 샘플링 조건에 따르며 거리는 그 조건에 영향을 줍니다.
     * 매번 새로 샘플링(크기 조절)하지 않고 미리 캐시해 놓는 것
     * 렌더링 작업 속도를 늘리고 렌더링 아티팩트를 줄일 수 있다.
-  * 밉맵을 사용하면 전체 텍스처 용량을 33% 늘린다.
+  * 같은 포맷의 충분히 큰 2D 텍스처에 전체 밉 체인을 더하면 약 1/3의 저장량이 추가됩니다. 압축 블록·작은 크기·스트리밍에 따라 실제 메모리는 다릅니다.
     * 항상 같은 크기로만 렌더링되는 UI 텍스처 등은 밉맵을 사용하지 않는 것이 유리하다.
 
 > https://docs.unity3d.com/kr/current/Manual/LevelOfDetail.html  
 > https://docs.unity3d.com/kr/current/Manual/class-LODGroup.html
 
 * Level Of Detail (LOD)
-  * 카메라와 3D 오브젝트 사이의 거리에 따라 오브젝트의 메시를 얼마나 자세히 표현할지를 정의한 것이다.
+  * 메시 등의 상세 수준을 선택합니다. Unity LODGroup은 대표적으로 화면 상대 높이를 기준으로 하므로 거리만으로 결정된다고 보지 않습니다.
   * 아주 멀리 있어서 작게 보이는 3D 메시의 렌더링해야 할 버텍스 수를 줄여 성능을 최적화한다.
 
 ## 객체지향 프로그래밍
@@ -2303,6 +2078,8 @@ SOLID는 변경 이유·확장 지점·타입 계약·인터페이스 범위·�
   * '가상 메서드'와 헷갈리지 않도록 하자.
 
 ### C# 다형성
+
+> 아래 주석의 `B ba = new A()`는 컴파일 오류이고 `(B)a`는 a가 실제 A인 경우 런타임 캐스트 실패입니다. 두 오류 단계를 구분합니다.
 
 <a id="recall-52"></a>
 <!-- RECALL_CARD_START -->
@@ -2479,9 +2256,11 @@ Null Object는 대상 없음이 정상인 상황을 무동작 구현으로 표�
 
 * 함수의 반환값으로 `null` 대신 `null`과 같은 역할을 하는 dummy 오브젝트를 생성하여 반환한다.
 * Dummy 오브젝트를 받으면 아무 연산도 수행하지 않도록 구현한다.
-* `null` 체크를 안 해도 된다.
+* 정상적인 대상 없음 분기를 줄일 수 있습니다. 필수 의존성의 초기화 실패까지 숨기거나 모든 null 검사가 불필요해진다고 보지는 않습니다.
 
 ### Dependency Injection
+
+문헌 대조: [Fowler의 DI 설명](https://martinfowler.com/articles/injection.html).
 
 <a id="recall-08"></a>
 <!-- RECALL_CARD_START -->
@@ -2514,10 +2293,10 @@ DI는 필요한 의존성을 외부에서 전달해 구체 구현의 생성과 �
 
 * 클래스 A가 다른 클래스 B의 인스턴스를 필요로 할 때(종속성이 있을 때), 클래스 A의 코드에 하드코딩하여 B의 인스턴스를 생성하지 않고, A의 생성자의 인자를 통해 외부에서 생성된 B의 인스턴스를 주입받도록 하는 설계이다.
   * 만약 B의 인스턴스 대신 B와 같은 인터페이스(또는 부모 클래스)를 구현하는 클래스 C의 인스턴스를 A가 필요로 한다면, 종속성 주입을 통해 A의 코드를 고치지 않고도 A가 B 또는 C의 인스턴스 중 하나를 자유롭게 종속성으로 가지도록 만들 수 있다.
-  * A가 갖는 종속성 B가 다른 종속성(D, E, ...)을 가질 때에도 종속성 주입을 사용하면 종속성을 차례로 해결하여 완전한 종속성 그래프를 A에게 반환한다.
+  * 중첩된 의존성을 구성하는 책임은 조립 코드나 컨테이너에 있습니다. DI 자체가 자동으로 모든 그래프를 해결하는 것은 아닙니다.
 * [객체 지향 프로그래밍의 5원칙](#5원칙-solid-원칙) 중 '의존성 역전 원칙'을 해결하는 데에 도움을 준다.
 * 제어 반전(inversion of control)을 일으킨다.
-  * 일반적인 제어의 흐름은 프로그래머가 외부 라이브러리 메서드를 호출하는 것이지만, 제어 반전이 일어나면 외부 라이브러리에서 프로그래머가 주입하는 인스턴스를 참조한다.
+  * 제어 반전은 생성·호출 등의 제어가 외부 구성으로 넘어가는 더 넓은 개념입니다. DI는 필요한 대상을 외부에서 전달하는 방법이며 외부 라이브러리가 필수인 것은 아닙니다.
 
 <details>
 <summary><span style="font-size:120%"><b>더 많은 디자인 패턴 알아보기</b></span> <i>(클릭하면 펼쳐집니다.)</i></summary>
@@ -2548,8 +2327,8 @@ Strategy는 같은 목적의 알고리즘을 교체 가능하게 분리합니다
 
 * *"Strategy 패턴과 Dependency Injection 패턴의 차이점이 무엇인가요?"*
 
-* 추상화된 인터페이스를 두어서 구현이 바뀌거나 교환되더라도 호출에서 코드를 수정하지 않아도 되게 하는 방법
-* 예: `Interact()` 하나로 `Portal.Interact()`, `Alter.Interact()`, `Monster.Interact()` 등을 수행할 수 있게 하는 방법
+* 같은 목적의 알고리즘을 교체 가능한 역할로 분리합니다. 인터페이스를 썼다는 사실만으로 Strategy가 되는 것은 아닙니다.
+* 예: 타깃 선택 알고리즘을 가까운 적 우선·낮은 체력 우선으로 교체합니다. 서로 다른 물체의 Interact 구현은 우선 다형성의 예로 구분합니다.
 
 ### Proxy 패턴
 
@@ -2725,11 +2504,11 @@ Observer는 한 소스의 변경을 구독자에게 전달하는 패턴입니다
 * 빅 엔디언
   * 16진수 int `1A2B3C4D`를 주소가 낮은 위치부터 높은 위치 순서대로 `1A`, `2B`, `3C`, `4D` 순으로 메모리에 저장한다.
   * 사람이 읽기 쉽다.
-  * 컴퓨터가 읽기 어렵다.
+  * 처리 비용은 CPU와 변환 요구에 따라 다릅니다.
 * 리틀 엔디언
   * 16진수 int `1A2B3C4D`를 주소가 낮은 위치부터 순서대로 `4D`, `3C`, `2B`, `1A` 순으로 저장한다.
   * 사람이 읽기 어렵다.
-  * 사칙연산에 유리하다.
+  * 한 바이트 안의 비트 순서가 아니라 여러 바이트의 배치 순서입니다.
   * x86 시스템은 리틀 엔디언을 사용한다.
 * ARM 같은 곳에서는 둘 다 사용하기도 한다.
 
@@ -2756,17 +2535,12 @@ Observer는 한 소스의 변경을 구독자에게 전달하는 패턴입니다
 
 <!-- RECALL_CARD_END -->
 
+* 프로세스는 주소 공간과 자원 등을 갖는 실행 환경입니다. 생성할 때 항상 부모 메모리를 전부 물리 복사하는 것은 아닙니다.
+* 스레드는 실행 흐름이며 각자의 레지스터 문맥과 스택을 가집니다. 기존 스택을 단순 복사한 것으로 정의하지 않습니다.
+* 같은 프로세스의 스레드는 주소 공간과 자원을 공유하므로 동기화가 필요합니다. 프로세스 간에도 공유 메모리·IPC로 협력할 수 있습니다.
+* 생성·전환 비용과 함께 격리·장애 전파·자원 소유 요구를 고려합니다.
 
-* 프로세스: OS의 작업 단위
-  * 스택, 힙, 코드, 데이터를 모두 복사해 가진다.
-  * 다른 프로세스와 독립적으로 돌아간다. (공유 메모리를 사용하지 않는다면)
-  * context switching 등이 무겁다.
-* 스레드: 프로세스 내에서의 실행 단위
-  * 스택만 복사하고 나머지 자원은 같은 프로세스 내에서 여러 스레드가 모두 공유한다.
-  * 가볍게 만들고 없앨 수 있다.
-* 멀티프로세스 vs. 멀티스레드
-  * 프로세스보다 스레드가 가볍기 때문에 멀티스레드를 더 자주 사용하게 된다.
-  * 멀티프로세스든 멀티스레드든 동기화 이슈는 중요하다.
+근거: [Microsoft — Processes and Threads](https://learn.microsoft.com/en-us/windows/win32/procthread/about-processes-and-threads).
 
 ### Memory Fragmentation
 
@@ -2786,34 +2560,13 @@ Observer는 한 소스의 변경을 구독자에게 전달하는 패턴입니다
 </details>
 <!-- RECALL_CARD_END -->
 
-> ⭐ **중요!**
+* 외부 단편화는 빈 공간 총합은 충분해도 요청한 연속 블록이 부족한 상황입니다. 내부 단편화는 할당 단위 안에서 요청보다 남는 공간입니다.
+* 페이징은 가상 페이지와 물리 프레임을 대응시킵니다. 디스크로 내보내는 스와핑과 같은 뜻은 아닙니다.
+* 페이지 테이블은 주소 변환 정보를 관리하고 TLB는 변환 정보를 캐시합니다. 디스크 데이터의 캐시가 아닙니다.
+* 빈 블록 병합과 이동 압축은 다른 대응이며 압축에는 참조 갱신 등 조건이 필요합니다.
+* 메모리 풀도 블록 크기·유휴 용량·풀 간 이동 제한에 따라 낭비가 남습니다. 내부·외부 단편화를 모두 없애지는 않습니다.
 
-* 외부 단편화
-  * 남은 메모리 총합은 충분한데 각각이 다 쪼개져 있어 하나의 큰 메모리 공간을 할당할 수 없는 경우
-* 내부 단편화
-  * 많이 할당해놓고 쓰지 않는 경우
-  * 페이징할 때 발생하기도 한다.
-* 외부 단편화 해결책
-  * 페이징
-    * 디스크 등의 보조 기억 장치를 활용해 메모리 일부를 일정한 페이지 단위로 쪼개 거기에 옮겨 놓고, 다시 불러오고 하는 방법
-    * 어느 주소에 있는지 기억해야 하므로 페이지 테이블을 관리해야 한다.
-      페이지 테이블은 가상 페이지 주소와 물리 메모리(디스크에 있는 경우 메모리의 프레임에 먼저 로드함) 상의 프레임 주소를 연결하는 정보를 가지고 있다.
-    * 디스크까지 내려가는 데 너무 시간이 오래 걸리므로 TLB 등의 버퍼를 활용한다. TLB는 페이지 테이블에 대한 캐시이다.
-    * https://ko.wikipedia.org/wiki/%ED%8E%98%EC%9D%B4%EC%A7%95
-  * 압축 (조각 모음)
-    * 오래 걸린다.
-  * 통합
-    * 근처에 있는 메모리를 하나로 연결한다.
-* 내부 단편화 해결책
-  * 세그멘테이션
-    * 변동 크기로 잘라 관리한다.
-    * "필요한" 만큼만 할당한다.
-    * 외부 단편화가 생길 수 있으므로 그냥 이럴 바에는 페이징을 한다.
-* 두 단편화를 모두 해결하는 방법
-  * 메모리 풀 사용
-    * 매 번 새로운 메모리를 할당하는 것이 아니라, 풀(pool)에서 메모리를 빌려주고 다시 반환받으면 재사용할 수 있도록 하는 방법이다.
-    * 필요한 만큼만 할당하므로 내부 단편화가 일어나지 않는다.
-    * 메모리를 할당 해제한 후에 재사용할 수 있으므로 외부 단편화가 일어나지 않는다.
+근거: [OSTEP — Free-Space Management](https://pages.cs.wisc.edu/~remzi/OSTEP/vm-freespace.pdf), [Paging](https://pages.cs.wisc.edu/~remzi/OSTEP/vm-paging.pdf).
 
 ### 가상 메모리
 
@@ -2838,18 +2591,12 @@ Observer는 한 소스의 변경을 구독자에게 전달하는 패턴입니다
 
 <!-- RECALL_CARD_END -->
 
+* 가상 주소를 물리 메모리에 대응시켜 격리·보호·배치 유연성을 제공합니다. 주소 공간과 확보 가능한 메모리는 유한합니다.
+* MMU와 OS는 변환·접근 권한 정보를 이용합니다. 필요한 페이지를 지연 확보하거나 파일에서 가져올 수도 있습니다.
+* Page fault에는 디스크 읽기뿐 아니라 demand-zero·copy-on-write·접근 권한 문제 등이 있습니다. 모두 디스크 I/O나 오류 종료를 뜻하지는 않습니다.
+* TLB miss는 변환 캐시의 부재이며 page fault와 다릅니다. 페이지 교체 정책은 유지할 물리 페이지를 고르는 별도 문제입니다.
 
-* 메모리 가상화를 하는 이유
-  * 사용자에게는 메모리가 무한한 것처럼 보여준다.
-  * 실제로는 보조 기억 장치(디스크 등)를 활용하여 부족한 메모리 공간을 관리한다.
-* MMU(Memory Management Unit)을 통해 관리
-* Page fault
-  * 원하는 페이지가 메모리에 없고 디스크에 있을 때 발생
-* 페이지 교체 정책
-  * 메모리에 남길 페이지와 디스크로 보낼 페이지를 결정한다.
-  * LRU (Least Recently Used)
-* TLB (Translation Lookaside Buffer)
-  * 자주 쓰이는 페이지의 물리 주소를 기억한다.
+근거: [Virtual Address Spaces](https://learn.microsoft.com/en-us/windows-hardware/drivers/gettingstarted/virtual-address-spaces), [OSTEP — Paging](https://pages.cs.wisc.edu/~remzi/OSTEP/vm-paging.pdf).
 
 ### Mutex & Semaphore
 
@@ -2872,21 +2619,12 @@ Mutex는 상호 배제, Semaphore는 동시 진입 가능한 개수 제어가 �
 
 <!-- RECALL_CARD_END -->
 
+* Mutex는 소유자가 있는 상호 배제 도구이며 보통 획득한 스레드가 해제합니다. 정확한 규칙은 API를 따릅니다.
+* Semaphore는 허가 수를 관리합니다. wait로 소비하고 post/release로 돌려주거나 다른 작업에 신호를 보낼 수 있습니다.
+* Binary semaphore는 상호 배제에 사용할 수 있어도 소유권 의미까지 mutex와 같지는 않습니다.
+* 블로킹·스핀 등 대기 방법, 자료 수명, 동기화 범위, 실패 시 반환을 함께 설계합니다.
 
-* Mutex
-  * 하나의 스레드가 mutex(lock) 객체를 갖는다.
-  * 다른 스레드나 프로세스는 누군가 이 mutex를 가지고 있는 동안 접근할 수 없다.
-  * 사용이 끝나면 mutex를 놓는다.
-  * Binary semaphore라고도 한다.
-* Counting Semaphore
-  * 둘 이상의, 정해진 수의 스레드가 동시에 접근할 수 있다.
-  * 카운터를 두고 있으며, 이것이 0이 되면(정해진 수의 스레드가 사용 중이면) 더 들어갈 수 없다.
-    * 사용할 때 카운터를 1 내린다.
-    * 사용이 끝나면 카운터를 1 올린다.
-  * try를 뜻하는 P(*사용할래요!*)와 increment를 뜻하는 V(*사용 끝났어요!*)를 사용한다.
-    * P - critical section - V 순으로 사용해야 한다.
-  * 잘못 사용하면 데드락이 되거나 상호 배제에 실패할 수 있다.
-* 사용 권한을 얻을 때까지 무한 루프를 돌면서 기다리거나, 이보다 효율적으로는 스레드를 sleep했다가 다른 스레드가 사용 권한을 놓을 때 sleep한 스레드를 깨우는 방식으로 구현할 수 있다.
+근거: [OSTEP — Semaphores](https://pages.cs.wisc.edu/~remzi/OSTEP/threads-sema.pdf).
 
 ### Deadlock (교착 상태)
 
@@ -2906,22 +2644,17 @@ Mutex는 상호 배제, Semaphore는 동시 진입 가능한 개수 제어가 �
 </details>
 <!-- RECALL_CARD_END -->
 
-> ⭐ **중요!**
+* A가 잠금 1을 보유하고 2를 기다리며 B가 2를 보유하고 1을 기다리면 서로 진행할 수 없습니다.
+* 고전적인 필요 조건은 상호 배제·점유 대기·비선점·순환 대기입니다. 비선점은 자원을 강제로 회수할 수 없다는 뜻입니다.
+* 필요 조건과 충분 조건을 구분합니다. 여러 인스턴스가 있는 자원 그래프의 사이클만으로 항상 교착을 확정하지 않습니다.
+* 잠금 순서 통일·일괄 획득·실패 시 해제 후 재시도를 검토합니다. 타임아웃도 상태 정리 정책이 필요합니다.
+* 복구는 취소·롤백·자원 회수·작업 종료 등 시스템 정책에 따릅니다. 반드시 프로세스를 차례로 강제 종료해야 하는 것은 아닙니다.
 
-* A를 잡은 스레드가 B를 갖고 싶어하고, B를 잡은 스레드가 A를 갖고 싶어하는데, A와 B 모두 상호 배제가 필요한 자원이고, 서로가 자신이 가진 것을 놓을 생각이 없다면 데드락이 발생한다. 이때 누구라도 A와 B를 모두 잡는 경우는 평생 생기지 않는다.
-* 다음 네 가지 조건을 **모두 만족해야** 데드락이 발생한다.
-  1. 어떤 자원에 대해 상호 배제가 필요하다.
-  2. 한 자원을 잡으면서 다른 자원을 기다리는 상황이 있다.
-  3. 선취 불가능하다(non-preemptive). 다른 프로세스를 종료시킬 수 없다.
-  4. 자원을 얻고자 하는 프로세스를 방향이 있는 그래프로 나타낼 때 사이클이 존재한다.
-    * 예: 어떤 곳에서는 A -> B 순으로 mutex를 잡고, 다른 곳에서는 B -> A 순으로 mutex를 잡는다면 사이클이 발생하여 데드락에 걸릴 수 있다.
-* 위의 조건 중 하나라도 해결하면 데드락이 풀린다.
-  * 조건 1.은 없앨 수 없다. 상호 배제를 안 해도 된다면 mutex를 쓸 이유가 없다.
-  * 대부분은 조건 4.의 사이클을 제거하여 해결한다.
-  * 조건 3.에 대해 선취 가능하게 만들어 해결하는 방법도 있다.
-* 데드락이 발생하면 해당 프로세스들을 차례로 강제 종료하여 해결해야 한다.
+근거: [OSTEP — Concurrency Bugs](https://pages.cs.wisc.edu/~remzi/OSTEP/threads-bugs.pdf).
 
 ### CPU 스케줄러 알고리즘
+
+문헌 대조: [OSTEP 스케줄링](https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched.pdf).
 
 <a id="recall-56"></a>
 <!-- RECALL_CARD_START -->
@@ -2946,16 +2679,15 @@ Mutex는 상호 배제, Semaphore는 동시 진입 가능한 개수 제어가 �
 * SJF: Shortest Job First
   * 가장 짧은 일을 우선적으로 처리한다.
   * Preemptive하게 할 수도, 아니게 할 수도 있다.
-  * Preemptive한 경우 긴 프로세스는 계속 처리되지 못한다. (Starvation)
+  * 짧은 작업이 계속 들어오는 조건 등에서는 긴 작업이 기아 상태에 빠질 수 있습니다.
   * 얼마나 걸릴지를 예측해야 하는데, 이전에 실행했던 프로세스의 예상 수행 시간과 실제 수행 시간을 바탕으로 예측한다.
 * Priority
   * 프로세스마다 나름의 우선순위를 둔다.
-  * 우선순위가 높은 프로세스가 오면 하던 걸 멈추고 그걸 먼저 한다.
-    * Preemptive하다.
+  * 우선순위 기반 정책에는 선점형과 비선점형이 있습니다. 선점형은 더 높은 우선순위의 준비 작업이 기존 실행을 중단시킬 수 있습니다.
   * 역시 starvation 문제가 있고, 이를 해결하기 위해 오랫동안 실행이 안 되면 aging을 도입해 우선순위를 조금씩 높여준다.
 * RR: Round Robin
   * 일정 시간 단위를 정하고 이보다 넘어가면 무조건 다른 프로세스로 바꿔 실행한다.
-  * 시간 단위가 `q`이고 `N`개의 프로세스가 있으면 한 프로세스가 `(N-1) * q` 이상 기다리는 경우는 없다.
+  * 동일 우선순위의 준비 작업 N개가 고정되고 전환 비용을 무시하는 단순 모형에서 다음 차례까지 약 (N-1)q로 설명합니다. 실제 OS의 보편적 보장은 아닙니다.
   * 우선순위를 부여하지 않는다.
 * SRTF: Shortest Remaining Time First
   * 가장 짧게 남은 프로세스를 먼저 처리한다.
@@ -3171,6 +2903,8 @@ C++ 기본 독립 프로그램 15개와 추가 자원 이동·템플릿 분리 �
 
 <a id="cpp-01"></a>
 ### 객체의 수명과 저장 공간
+
+문헌 보충: 클래스 객체의 수명 종료는 엄밀히 소멸자 호출의 시작과 연결됩니다. 생성·소멸 중 멤버 사용에는 별도 규칙이 있으므로 “수명 전후에는 어떤 접근도 불가능”으로 과장하지 않습니다. [C++ 작업 초안 — lifetime](https://eel.is/c++draft/basic.life). 이 링크는 갱신되는 초안이며 최신 규칙 전체를 C++17에 그대로 적용하지 않습니다.
 
 <!-- RECALL_CARD_START -->
 **기억할 기준: 공간은 자리, 수명은 사용 가능한 기간**
@@ -3903,6 +3637,8 @@ reserve 직후 원소 수는 0입니다. 기본 allocator의 int 원소는 resiz
 <a id="cpp-09"></a>
 ### vector와 참조 무효화
 
+구체 조건: 재할당 없는 push_back도 기존 end 반복자는 무효화합니다. erase는 삭제 위치 **및 그 이후**의 반복자·참조에 영향을 줍니다. [C++ 작업 초안 — vector modifiers](https://eel.is/c++draft/vector.modifiers).
+
 <!-- RECALL_CARD_START -->
 **기억할 기준: 재할당하면 예전 원소 주소가 남지 않음**
 
@@ -3941,7 +3677,7 @@ reserve 직후 원소 수는 0입니다. 기본 allocator의 int 원소는 resiz
 
 예제의 삭제 전후 ID를 비교하면 인덱스가 범위 안이어도 선택 대상이 바뀔 수 있음을 볼 수 있습니다. ID로 다시 찾는 구조는 저장 위치와 대상 식별을 분리합니다. ID 역시 재사용 정책이 필요하므로 오래된 ID가 새 개체를 가리키지 않도록 세대 번호 등을 선택할 수 있습니다.
 
-재할당이 없는 push_back은 기존 원소 참조를 유지하지만 기존 end 반복자는 바뀝니다. 중간 erase는 삭제 지점 이후 참조·반복자를 무효화합니다. 안전성을 판단할 때는 reserve 호출 유무보다 실제로 수행한 연산과 보관한 핸들의 종류를 봅니다.
+재할당이 없는 push_back은 기존 원소 참조를 유지하지만 기존 end 반복자는 바뀝니다. 중간 erase는 삭제 지점 및 그 이후 참조·반복자를 무효화합니다. 안전성을 판단할 때는 reserve 호출 유무보다 실제로 수행한 연산과 보관한 핸들의 종류를 봅니다.
 
 ~~~cpp
 #include <algorithm>
@@ -4924,6 +4660,8 @@ PlayerState: 같은 플레이어의 점수 등
 <a id="ue-07"></a>
 ### 변수 복제와 RPC
 
+문헌 보충: Unreal RPC는 반환값을 직접 받는 일반 함수 호출과 다릅니다. 서버 응답이 필요하면 복제 상태나 별도 응답 경로를 설계합니다. 클라이언트에서 NetMulticast를 호출한다고 서버와 모든 클라이언트로 전파되지는 않습니다. [Epic — RPC 실행 규칙](https://dev.epicgames.com/documentation/en-us/unreal-engine/remote-procedure-calls-in-unreal-engine).
+
 <!-- RECALL_CARD_START -->
 **기억할 기준: 상태 전달과 사건 요청을 구분**
 
@@ -5446,7 +5184,7 @@ W 키 자체가 월드 이동을 수행하는 것은 아닙니다. Mapping Conte
 
 콜백이 없으면 Context·소유·바인딩을, 값은 있는데 방향이 틀리면 축과 좌표계를, 방향도 맞는데 못 움직이면 이동 모드·충돌·이동 구현을 봅니다. 로그 한 줄에 모두 정상이라고 표시하지 말고 경계별 값을 확인합니다.
 
-입력 장치 → Action 값 → Context 적용 → 바인딩 → 이동 방향 → 이동 수행을 분리합니다.
+적용된 Mapping Context의 키 대응 → Modifier·Trigger 평가 → Action 이벤트와 값 → 바인딩한 함수 → 이동 방향 → 이동 수행을 분리합니다.
 
 ~~~cpp
 // Axis2D 입력을 읽는 핸들러 일부:
@@ -5693,6 +5431,8 @@ OnLoaded(requestId, weakView, asset):
 
 <a id="ue-18"></a>
 ### GAS의 활성화·비용·종료
+
+문헌 보충: EndAbility는 실행 종료이며 이미 적용한 모든 효과와 비용의 자동 환불이 아닙니다. Task와 외부 구독의 정리, 환불 정책을 구분합니다. [Epic — GAS 실행 흐름](https://dev.epicgames.com/documentation/en-us/unreal-engine/understanding-the-unreal-engine-gameplay-ability-system).
 
 <!-- RECALL_CARD_START -->
 **기억할 기준: 시작할 수 있음과 비용 확정·종료를 나누기**
@@ -6535,6 +6275,13 @@ C++ 15개, Unreal 18개, 공통 기초 3개에 필요한 이유·실행 과정·
 - 성공 구성은 `/W4 /WX`를 적용했습니다. 의도한 실패 구성은 실행하지 않고 빌드 종료 코드와 링크 진단을 확인했습니다.
 
 Delegate 설명은 [Epic의 멀티캐스트 등록·Broadcast·해제 규칙](https://dev.epicgames.com/documentation/en-us/unreal-engine/multicast-delegates-in-unreal-engine), 템플릿 실험은 [Microsoft의 소스 구성 설명](https://learn.microsoft.com/en-us/cpp/cpp/source-code-organization-cpp-templates?view=msvc-170)과 대조했습니다. Unreal 추가 설명은 엔진 실행 검증을 대신하지 않으며, 앞서 표시한 미검증 범위가 유지됩니다.
+
+
+### 개념 문헌 검토 — 실행하지 않음
+
+2026-09-11 후속 개정은 [개념 검토 기록](./docs/concept-review.md)에 정리했습니다. 원본 Unity/C#·CS와 C++·Unreal을 공식 문서 등과 대조하고 잘못된 전제와 조건을 수정했습니다. 이번에는 컴파일·코드 실행·엔진·네트워크·성능 실험을 하지 않았습니다. 위 C++ PASS는 앞선 개정의 이력이며 이번 문헌 검토의 실행 결과가 아닙니다.
+
+본문 링크와 Markdown 구조의 점검은 프로그램 예제 실행과 구분합니다. 원본의 모든 코드 조각이 실행 가능한 완성본이라는 뜻은 아닙니다.
 
 
 <!-- INLINE_STUDY_END -->

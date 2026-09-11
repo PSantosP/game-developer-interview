@@ -78,3 +78,10 @@ C++ 15개, Unreal 18개, 공통 기초 3개에 필요한 이유·실행 과정·
 - 성공 구성은 `/W4 /WX`를 적용했습니다. 의도한 실패 구성은 실행하지 않고 빌드 종료 코드와 링크 진단을 확인했습니다.
 
 Delegate 설명은 [Epic의 멀티캐스트 등록·Broadcast·해제 규칙](https://dev.epicgames.com/documentation/en-us/unreal-engine/multicast-delegates-in-unreal-engine), 템플릿 실험은 [Microsoft의 소스 구성 설명](https://learn.microsoft.com/en-us/cpp/cpp/source-code-organization-cpp-templates?view=msvc-170)과 대조했습니다. Unreal 추가 설명은 엔진 실행 검증을 대신하지 않으며, 앞서 표시한 미검증 범위가 유지됩니다.
+
+
+## 개념 문헌 검토 — 실행하지 않음
+
+2026-09-11 후속 개정은 [개념 검토 기록](concept-review.md)에 정리했습니다. 원본 Unity/C#·CS와 C++·Unreal을 공식 문서 등과 대조하고 잘못된 전제와 조건을 수정했습니다. 이번에는 컴파일·코드 실행·엔진·네트워크·성능 실험을 하지 않았습니다. 위 C++ PASS는 앞선 개정의 이력이며 이번 문헌 검토의 실행 결과가 아닙니다.
+
+본문 링크와 Markdown 구조의 점검은 프로그램 예제 실행과 구분합니다. 원본의 모든 코드 조각이 실행 가능한 완성본이라는 뜻은 아닙니다.

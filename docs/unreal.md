@@ -192,6 +192,8 @@ Controller의 조종, Pawn의 몸, PlayerState의 플레이어 상태를 구분�
 <a id="ue-07"></a>
 ## 변수 복제와 RPC
 
+문헌 보충: Unreal RPC는 반환값을 직접 받는 일반 함수 호출과 다릅니다. 서버 응답이 필요하면 복제 상태나 별도 응답 경로를 설계합니다. 클라이언트에서 NetMulticast를 호출한다고 서버와 모든 클라이언트로 전파되지는 않습니다. [Epic — RPC 실행 규칙](https://dev.epicgames.com/documentation/en-us/unreal-engine/remote-procedure-calls-in-unreal-engine).
+
 <!-- RECALL_CARD_START -->
 **기억할 기준: 상태 전달과 사건 요청을 구분**
 
@@ -534,6 +536,8 @@ Montage의 재생·중단·블렌드 종료와 Notify의 역할을 나눕니다.
 
 <a id="ue-18"></a>
 ## GAS의 활성화·비용·종료
+
+문헌 보충: EndAbility는 실행 종료이며 이미 적용한 모든 효과와 비용의 자동 환불이 아닙니다. Task와 외부 구독의 정리, 환불 정책을 구분합니다. [Epic — GAS 실행 흐름](https://dev.epicgames.com/documentation/en-us/unreal-engine/understanding-the-unreal-engine-gameplay-ability-system).
 
 <!-- RECALL_CARD_START -->
 **기억할 기준: 시작할 수 있음과 비용 확정·종료를 나누기**
